@@ -1,0 +1,31 @@
+name: Feature request
+description: Suggest a concrete improvement to MiliUI
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Broad ideas are welcome in Discord first. Use this form when the request is concrete enough to track.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+      description: Describe the API or user-facing behavior you would like.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Current workaround / alternatives
+  - type: textarea
+    id: context
+    attributes:
+      label: Additional context
