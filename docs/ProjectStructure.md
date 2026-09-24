@@ -337,24 +337,36 @@ local function BuildPage(parent, page)
         disableKeyEventPassthrough = true,
     })
 
-    UI.Heading(screen, {
-        text = "Updates",
-        needsTranslation = true,
+    local content = UI.Column(screen, {
+        name = "UpdatesContent",
+        fillWidth = true,
+        fitHeight = true,
+        gap = 16,
+        align = "center",
+        justify = "start",
     })
 
-    UI.Label(screen, {
-        y = -70,
-        width = 700,
+    UI.Heading(content, {
+        name = "UpdatesTitle",
+        text = "Updates",
+        textId = "Updates.Title",
+        fitWidth = true,
+    })
+
+    UI.Label(content, {
+        name = "UpdatesSummary",
         text = UpdatesData.items[1].summary,
         needsTranslation = true,
+        fitWidth = true,
+        maxWidth = "80%",
     })
 
-    local backButton = UI.Button(screen, {
-        y = -300,
-        width = 160,
+    local backButton = UI.Button(content, {
+        name = "BackButton",
+        fitContent = true,
         label = {
             text = "BACK",
-            needsTranslation = true,
+            textId = "Common.Back",
         },
     })
 
@@ -545,19 +557,30 @@ local function BuildPage(parent, page)
         disableKeyEventPassthrough = true,
     })
 
-    UI.Heading(screen, {
-        text = "Settings",
-        needsTranslation = true,
+    local content = UI.Column(screen, {
+        name = "SettingsContent",
+        fitContent = true,
+        gap = 16,
+        align = "center",
     })
 
-    UI.Toggle(screen, {
+    UI.Center(content)
+
+    UI.Heading(content, {
+        name = "SettingsTitle",
+        text = "Settings",
+        textId = "Settings.Title",
+        fitWidth = true,
+    })
+
+    UI.Toggle(content, {
         id = "Music Enabled",
+        name = "MusicToggle",
         remember = true,
-        y = -70,
         width = 360,
         label = {
             text = "Music",
-            needsTranslation = true,
+            textId = "Settings.Music",
         },
         value = true,
     })
@@ -843,6 +866,7 @@ function OnStart()
     UI.Heading(screen, {
         text = "Hello",
         needsTranslation = false,
+        fitWidth = true,
     })
 end
 
