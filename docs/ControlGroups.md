@@ -103,7 +103,9 @@ if that is the behavior you want. MiliUI does not inspect or modify those Layer 
 
 A HUD does not need `UI.Pages` if it is just one UI tree that should exist whenever the HUD Control Group exists.
 
-Attach this script to the HUD Control Group's Client Control Container:
+Attach this script to the HUD Control Group's Client Control Container.
+
+The following example keeps `InitTemplates()` inside the Controller so it can be copied by itself. In a larger project, move that same complete mapping to the persistent shared setup described above.
 
 ```lua
 local UI = require("MiliUI/init")
@@ -130,24 +132,25 @@ function OnStart()
     InitTemplates()
     UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
 
-    local card = UI.Card(script.object, {
+    local content = UI.Column(script.object, {
+        name = "HudContent",
         x = -560,
         y = 330,
-        width = 360,
-        height = 120,
+        fitContent = true,
+        gap = 6,
+        align = "start",
     })
 
-    UI.Heading(card.content, {
+    UI.Heading(content, {
         text = "HUD",
         needsTranslation = false,
-        y = 28,
+        fitWidth = true,
     })
 
-    UI.Label(card.content, {
+    UI.Label(content, {
         text = "This exists because the HUD Control Group exists.",
         needsTranslation = false,
-        y = -22,
-        width = 300,
+        fitWidth = true,
     })
 end
 
@@ -165,6 +168,8 @@ The server graph does not need to send a second signal telling this script to sh
 ## Simple example: Menu with Pages
 
 Use `UI.Pages` when one Control Group can contain multiple logical screens, or when open pages should be remembered across temporary root recreation.
+
+This is also a standalone example, so it repeats the complete template mapping for copyability. Projects using one shared Global setup can remove `InitTemplates()` and its call.
 
 ```lua
 local UI = require("MiliUI/init")
@@ -196,22 +201,25 @@ local function BuildMainMenu(parent, page)
         disableKeyEventPassthrough = true,
     })
 
-    local card = UI.Card(screen, {
-        width = 520,
-        height = 300,
+    local content = UI.Column(screen, {
+        name = "MainMenuContent",
+        fitContent = true,
+        gap = 12,
+        align = "center",
     })
 
-    UI.Heading(card.content, {
+    UI.Center(content)
+
+    UI.Heading(content, {
         text = "MAIN MENU",
         needsTranslation = false,
-        y = 80,
+        fitWidth = true,
     })
 
-    UI.Label(card.content, {
+    UI.Label(content, {
         text = "This page belongs to the Menu host.",
         needsTranslation = false,
-        y = 20,
-        width = 420,
+        fitWidth = true,
     })
 
     return screen
