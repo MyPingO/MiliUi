@@ -32,25 +32,25 @@ function OnStart()
 
     -- A simple HUD does not need UI.Pages. Its UI exists whenever this Control
     -- Group instance exists.
-    local card = UI.Card(script.object, {
+    local content = UI.Column(script.object, {
+        name = "HudContent",
         x = -560,
         y = 330,
-        width = 360,
-        height = 120,
+        fitContent = true,
+        gap = 6,
+        align = "start",
     })
 
-    UI.Heading(card.content, {
+    UI.Heading(content, {
         text = "HUD",
         needsTranslation = false,
-        y = 28,
         fitWidth = true,
     })
 
-    UI.Label(card.content, {
+    UI.Label(content, {
         text = "Control Group = visible HUD",
         needsTranslation = false,
-        y = -22,
-        width = 300,
+        fitWidth = true,
     })
 end
 
