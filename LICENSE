@@ -1,107 +1,52 @@
-MiliUI Public Use License
-Version 1.0 — Draft for Public Beta
+# MiliUI Usage Terms
 
 Copyright (c) 2026 MyPingO. All rights reserved.
 
-1. Definitions
+MiliUI is **not open source**. It is provided for Miliastra creators to use in
+their own projects while keeping MiliUI itself as one maintained project.
 
-"MiliUI" means the MiliUI runtime, MiliUI Manager, MiliUI IntelliSense package,
-documentation, branding, and other files distributed by the copyright holder.
+## You may
 
-"Official Release" means a copy of MiliUI distributed by the copyright holder
-through an official MiliUI distribution channel.
+- use official MiliUI releases in your own Miliastra projects;
+- publish and monetize Miliastra projects that use MiliUI;
+- write and modify your own game/UI code that uses MiliUI;
+- copy and adapt the public example files for projects that use MiliUI;
+- share links to the official MiliUI repository and official releases;
+- report bugs, suggest features, and contribute documentation/examples.
 
-"Miliastra Project" means a game, experience, prototype, or other user-created
-project made for Miliastra Wonderland.
+## Please do not
 
-2. Permission to Use
+- fork MiliUI and publish it as your own framework;
+- redistribute, mirror, or re-upload MiliUI itself as a separate download;
+- publish modified, repackaged, or renamed versions of MiliUI;
+- bundle MiliUI into another UI framework/toolkit for redistribution;
+- sell or sublicense MiliUI itself;
+- remove or misrepresent MiliUI authorship/ownership;
+- use the MiliUI name or branding to make an unofficial build look official;
+- publish or redistribute private MiliUI development source if you obtain access
+  to it.
 
-Subject to this license, you may:
+Using the official MiliUI runtime inside your own Miliastra project is allowed
+and is not considered prohibited redistribution.
 
-(a) use unmodified Official Releases of the MiliUI runtime in your own Miliastra
-Projects;
+## Your own work remains yours
 
-(b) publish, share, and monetize Miliastra Projects that use MiliUI, subject to
-the rules and terms of the platform on which those projects are distributed;
+Your game code, UI code, assets, and other original work built around MiliUI
+remain your own. These terms only apply to MiliUI itself and the files distributed
+as part of MiliUI.
 
-(c) copy and adapt files explicitly provided as public examples solely for use in
-Miliastra Projects that use MiliUI; and
+## Contributions and feedback
 
-(d) make ordinary application code that calls or integrates with MiliUI.
+If you send documentation, examples, fixes, or other material specifically for
+possible inclusion in MiliUI, you allow the MiliUI project to use, edit, and
+include that contribution.
 
-3. Restrictions
+## Beta software
 
-Except where applicable law expressly gives you a right that cannot be waived,
-you may not:
+MiliUI may change during beta, including API changes. No guarantee is made that
+every beta release will remain compatible with earlier versions.
 
-(a) redistribute, mirror, republish, sublicense, sell, rent, or otherwise provide
-MiliUI itself as a standalone library, framework, toolkit, installer, package, or
-download;
+MiliUI is provided as-is, without a warranty.
 
-(b) publish or distribute modified versions, forks, derivative frameworks, or
-repackaged versions of MiliUI;
-
-(c) present MiliUI, a modified MiliUI build, or a substantially derived framework
-as your own product or framework;
-
-(d) remove or misrepresent copyright, license, authorship, or attribution notices;
-
-(e) use the MiliUI name, logo, or other project branding in a way that implies
-your modified or unofficial distribution is an official MiliUI release;
-
-(f) sell or sublicense access to MiliUI itself; or
-
-(g) use this license as permission to obtain, publish, or redistribute the private
-development source code.
-
-For clarity, including the official MiliUI runtime as a dependency inside your
-own Miliastra Project is permitted by Section 2 and is not considered prohibited
-standalone redistribution.
-
-4. Modifications to Your Own Project
-
-This license does not restrict your ownership of original game code, UI code,
-assets, or other content that you create around MiliUI. You may freely modify
-your own code that uses MiliUI.
-
-This license does not grant permission to modify and redistribute MiliUI itself.
-
-5. Feedback and Contributions
-
-If you voluntarily submit documentation, examples, fixes, suggestions, or other
-material for possible inclusion in MiliUI, you grant the copyright holder a
-perpetual, worldwide, royalty-free, irrevocable, non-exclusive right to use,
-modify, reproduce, distribute, sublicense, and incorporate that submission into
-MiliUI and related documentation. You represent that you have the right to grant
-that permission.
-
-6. No Trademark Grant
-
-No trademark rights are granted by this license. "MiliUI" and associated branding
-remain controlled by the copyright holder.
-
-7. Updates and Compatibility
-
-Official Releases may change over time. No promise is made that beta versions,
-APIs, or behavior will remain compatible with earlier versions.
-
-8. Termination
-
-Your rights under this license terminate automatically if you materially violate
-its terms and fail to cure that violation after receiving notice where cure is
-reasonably possible. Upon termination, you must stop distributing Miliastra
-Projects containing MiliUI until your right to use MiliUI is restored by the
-copyright holder.
-
-9. Disclaimer
-
-MILIUI IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
-INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
-PARTICULAR PURPOSE, AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW,
-THE COPYRIGHT HOLDER IS NOT LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
-ARISING FROM THE USE OF OR INABILITY TO USE MILIUI.
-
-10. Other Rights
-
-All rights not expressly granted by this license are reserved by the copyright
-holder.
+If you are unsure whether something you want to do is allowed, ask before
+redistributing MiliUI itself.
