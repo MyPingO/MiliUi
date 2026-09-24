@@ -37,7 +37,7 @@ The readable MiliUI framework source is **not** distributed from this repository
 
 The Miliastra creator Discord is the primary place for questions, feedback, and discussion. Confirmed framework bugs can be tracked here as GitHub Issues.
 
-Before reporting a bug, see [Support and Bug Reports](SUPPORT.md).
+Before reporting a bug, see [Support and Bug Reports](SUPPORT.md). Common project/licensing questions are covered in the [FAQ](docs/FAQ.md).
 
 ## License
 
