@@ -1,4 +1,5 @@
--- Recommended simple Control Group pattern.
+-- Standalone Control Group pattern. Larger projects should normally move
+-- the complete shared template mapping into one persistent client Global Script.
 --
 -- Put this script on the Client Control Container inside a HUD entry in the
 -- Miliastra UI Control Group Library. The Server Node Graph shows/hides the HUD
@@ -17,6 +18,11 @@ local function InitTemplates()
         text = script:GetParam("TextTemplateId"),
         button = script:GetParam("ButtonTemplateId"),
         cursorArea = script:GetParam("CursorAreaTemplateId"),
+        animation = script:GetParam("UIAnimationTemplateId"),
+        fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+        keyHint = script:GetParam("KeyHintTemplateId"),
+        textWindow = script:GetParam("TextWindowTemplateId"),
+        gridScroller = script:GetParam("GridScrollerTemplateId"),
     })
 end
 
@@ -37,7 +43,7 @@ function OnStart()
         text = "HUD",
         needsTranslation = false,
         y = 28,
-        width = 300,
+        fitWidth = true,
     })
 
     UI.Label(card.content, {
