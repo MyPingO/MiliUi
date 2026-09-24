@@ -4,11 +4,18 @@ The examples use two different patterns. This distinction is important.
 
 ## Start here
 
-If you are new to MiliUI, read these first:
+If you are completely new to MiliUI, begin with the deliberately small [getting-started examples](getting-started/README.md):
 
-1. [`ControlGroupHud.lua`](ControlGroupHud.lua) — the smallest complete Control Group + Host example.
-2. [`ControlGroupMenu.lua`](ControlGroupMenu.lua) — a Control Group + Host + Page + Session example.
-3. [`../docs/ControlGroups.md`](../docs/ControlGroups.md) — the full beginner explanation.
+1. [`getting-started/HelloMiliUI.lua`](getting-started/HelloMiliUI.lua) — one Screen, Card, heading, and Button.
+2. [`getting-started/SimpleMenu.lua`](getting-started/SimpleMenu.lua) — a small vertical menu.
+3. [`getting-started/SimpleSettings.lua`](getting-started/SimpleSettings.lua) — a Toggle and Slider with callbacks.
+4. [`../QUICK_START.md`](../QUICK_START.md) — installation and editor setup from zero.
+
+After that, the framework-level examples are:
+
+1. [`ControlGroupHud.lua`](ControlGroupHud.lua) — a complete Control Group + Host example.
+2. [`ControlGroupMenu.lua`](ControlGroupMenu.lua) — Control Group + Host + Page + Session.
+3. [`../docs/ControlGroups.md`](../docs/ControlGroups.md) — the full lifecycle explanation.
 
 The recommended game architecture is:
 
