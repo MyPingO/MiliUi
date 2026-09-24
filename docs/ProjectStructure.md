@@ -109,16 +109,16 @@ local UI = require("MiliUI/init")
 
 local function InitTemplates()
     UI.InitTemplates({
-        container = script:GetParam("Container Template Id"),
-        image = script:GetParam("Image Template Id"),
-        text = script:GetParam("Text Template Id"),
-        button = script:GetParam("Button Template Id"),
-        cursorArea = script:GetParam("Cursor Area Template Id"),
-        animation = script:GetParam("UI Animation Template Id"),
-        fullscreenAnimation = script:GetParam("Fullscreen Animation Template Id"),
-        gridScroller = script:GetParam("Grid Scroller Template Id"),
-        keyHint = script:GetParam("Key Hint Template Id"),
-        textWindow = script:GetParam("Text Window Template Id"),
+        container = script:GetParam("Container Template ID"),
+        image = script:GetParam("Image Template ID"),
+        text = script:GetParam("Text Template ID"),
+        button = script:GetParam("Button Template ID"),
+        cursorArea = script:GetParam("Cursor Area Template ID"),
+        animation = script:GetParam("UI Animation Template ID"),
+        fullscreenAnimation = script:GetParam("Screen Animation Template ID"),
+        gridScroller = script:GetParam("Grid Scroller Template ID"),
+        keyHint = script:GetParam("Key Hint Template ID"),
+        textWindow = script:GetParam("Text Window Template ID"),
     })
 end
 
@@ -159,16 +159,16 @@ local UI = require("MiliUI/init")
 
 local function InitTemplates()
     UI.InitTemplates({
-        container = script:GetParam("Container Template Id"),
-        image = script:GetParam("Image Template Id"),
-        text = script:GetParam("Text Template Id"),
-        button = script:GetParam("Button Template Id"),
-        cursorArea = script:GetParam("Cursor Area Template Id"),
-        animation = script:GetParam("UI Animation Template Id"),
-        fullscreenAnimation = script:GetParam("Fullscreen Animation Template Id"),
-        gridScroller = script:GetParam("Grid Scroller Template Id"),
-        keyHint = script:GetParam("Key Hint Template Id"),
-        textWindow = script:GetParam("Text Window Template Id"),
+        container = script:GetParam("Container Template ID"),
+        image = script:GetParam("Image Template ID"),
+        text = script:GetParam("Text Template ID"),
+        button = script:GetParam("Button Template ID"),
+        cursorArea = script:GetParam("Cursor Area Template ID"),
+        animation = script:GetParam("UI Animation Template ID"),
+        fullscreenAnimation = script:GetParam("Screen Animation Template ID"),
+        gridScroller = script:GetParam("Grid Scroller Template ID"),
+        keyHint = script:GetParam("Key Hint Template ID"),
+        textWindow = script:GetParam("Text Window Template ID"),
     })
 end
 
@@ -845,16 +845,16 @@ local HOST_ID = "Example"
 
 function OnStart()
     UI.InitTemplates({
-        container = script:GetParam("Container Template Id"),
-        image = script:GetParam("Image Template Id"),
-        text = script:GetParam("Text Template Id"),
-        button = script:GetParam("Button Template Id"),
-        cursorArea = script:GetParam("Cursor Area Template Id"),
-        animation = script:GetParam("UI Animation Template Id"),
-        fullscreenAnimation = script:GetParam("Screen Animation Template Id"),
-        keyHint = script:GetParam("Key Hint Template Id"),
-        textWindow = script:GetParam("Text Window Template Id"),
-        gridScroller = script:GetParam("Grid Scroller Template Id"),
+        container = script:GetParam("Container Template ID"),
+        image = script:GetParam("Image Template ID"),
+        text = script:GetParam("Text Template ID"),
+        button = script:GetParam("Button Template ID"),
+        cursorArea = script:GetParam("Cursor Area Template ID"),
+        animation = script:GetParam("UI Animation Template ID"),
+        fullscreenAnimation = script:GetParam("Screen Animation Template ID"),
+        keyHint = script:GetParam("Key Hint Template ID"),
+        textWindow = script:GetParam("Text Window Template ID"),
+        gridScroller = script:GetParam("Grid Scroller Template ID"),
     })
 
     UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
