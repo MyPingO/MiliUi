@@ -223,7 +223,7 @@ UI.Theme.Apply({
 })
 ```
 
-The shared scrollbar section also controls lane width/gap, arrow size/image/colors, button spacing, and minimum thumb height. See `library/theme.lua` for the full typed field list.
+The shared scrollbar section also controls lane width/gap, arrow size/image/colors, button spacing, and minimum thumb height. The MiliUI IntelliSense extension exposes the full typed field list in VS Code.
 
 ## Select themes
 
@@ -306,7 +306,7 @@ borderImage
 borderStretch
 ```
 
-If no custom image is supplied, MiliUI continues using the existing radius-based rounded assets from `Systems/Surface.lua`.
+If no custom image is supplied, MiliUI continues using its built-in radius-based rounded surfaces.
 
 This means custom and standard surfaces can be mixed freely.
 
@@ -386,7 +386,7 @@ Alert                shellImage
 Modal                overlayImage
 ```
 
-Most of these also have matching `...Stretch`, `...BorderImage`, or `...BorderStretch` fields where applicable. ProgressBar and Slider use rounded level `6` for the default background/track and level `5` for the default fill; `fillRadius` can override the fill independently. When `radius` is explicitly supplied and `fillRadius` is omitted, the fill follows that explicit radius for compatibility. VS Code/LuaLS declarations under `library/` contain the exact property list.
+Most of these also have matching `...Stretch`, `...BorderImage`, or `...BorderStretch` fields where applicable. ProgressBar and Slider use rounded level `6` for the default background/track and level `5` for the default fill; `fillRadius` can override the fill independently. When `radius` is explicitly supplied and `fillRadius` is omitted, the fill follows that explicit radius for compatibility. The MiliUI IntelliSense extension contains the exact typed property list.
 
 ## Colors and assets remain extensible
 
@@ -408,10 +408,6 @@ UI.Theme.Apply({
 
 Color-token strings continue to work anywhere MiliUI accepts a `MiliUI.ColorValue`.
 
-## Architecture
+## Runtime behavior
 
-`Systems/Theme.lua` owns theme data, defaults, `Apply`, and `Reset`.
-
-Most components receive their component-specific defaults through `Components/ThemeWrapper.lua`. `UI.Select` resolves its shared `Theme.scrollbar` values and `Theme.components.select` defaults through `Style.Merge` because its field, menu, option, and scrollbar surfaces are composed internally and are then built through the already-themed `UI.Panel`/`UI.Button` constructors.
-
-The theme system remains creation-time only: changing the active theme does not repaint controls that already exist. The active theme is global to the MiliUI Lua runtime, not scoped per Host.
+Theme defaults are resolved when a control is created. Changing the active theme does not repaint controls that already exist, and the active theme is shared across the MiliUI Lua runtime rather than scoped per Host.
