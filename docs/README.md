@@ -6,8 +6,9 @@ Start with:
 
 1. [Quick Start](../QUICK_START.md)
 2. [Installation](Installation.md)
-3. [Control Groups](ControlGroups.md)
-4. [Components](Components.md)
+3. [MiliUI Manager](Manager.md)
+4. [Control Groups](ControlGroups.md)
+5. [Components](Components.md)
 
 ## Building interfaces
 
@@ -25,8 +26,10 @@ Start with:
 - [Session](Session.md)
 - [Runtime Lifecycle](RuntimeLifecycle.md)
 
-## Editor tooling
+## Releases and tooling
 
+- [Versioning](Versioning.md)
+- [MiliUI Manager](Manager.md)
 - [IntelliSense](IntelliSense.md)
 
 ## Help
