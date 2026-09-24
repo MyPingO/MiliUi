@@ -34,29 +34,31 @@ local function BuildMainMenu(parent)
         disableKeyEventPassthrough = true,
     })
 
-    local card = UI.Card(screen, {
-        width = 560,
-        height = 320,
+    local content = UI.Column(screen, {
+        name = "MainMenuContent",
+        fitContent = true,
+        gap = 14,
+        align = "center",
     })
 
-    UI.Heading(card.content, {
+    UI.Center(content)
+
+    UI.Heading(content, {
         text = "MAIN MENU",
         needsTranslation = false,
-        y = 90,
         fitWidth = true,
     })
 
-    UI.Label(card.content, {
+    UI.Label(content, {
         text = "This page belongs to the Example Menu host.",
         needsTranslation = false,
-        y = 30,
-        width = 440,
+        fitWidth = true,
     })
 
-    UI.Toggle(card.content, {
+    UI.Toggle(content, {
         id = "Example Toggle",
+        name = "RememberToggle",
         remember = true,
-        y = -45,
         width = 320,
         label = {
             text = "Remember me",
