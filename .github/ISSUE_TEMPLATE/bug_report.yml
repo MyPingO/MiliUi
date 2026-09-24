@@ -1,0 +1,83 @@
+name: Bug report
+description: Report a reproducible problem with MiliUI
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        For setup questions or uncertain problems, Discord is usually faster. Use this form for reproducible MiliUI bugs.
+  - type: input
+    id: version
+    attributes:
+      label: MiliUI version
+      description: Example: 0.9.0-beta.1
+    validations:
+      required: true
+  - type: input
+    id: manager-version
+    attributes:
+      label: MiliUI Manager version
+      description: Leave blank if installed manually.
+  - type: dropdown
+    id: input-device
+    attributes:
+      label: Input device
+      options:
+        - Keyboard and mouse
+        - Controller
+        - Mobile/touch
+        - Mobile controller
+        - Not relevant
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: display
+    attributes:
+      label: Resolution / aspect ratio
+      description: Required for layout or visual bugs when known.
+  - type: input
+    id: component
+    attributes:
+      label: Affected component or API
+      placeholder: ScrollArea, Button, Pages, Manager, etc.
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the actual behavior and what you expected instead.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Give the smallest reliable sequence that reproduces the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: code
+    attributes:
+      label: Minimal relevant code
+      render: lua
+  - type: textarea
+    id: logs
+    attributes:
+      label: Error / stack trace
+      render: text
+  - type: textarea
+    id: media
+    attributes:
+      label: Screenshots or video
+      description: Drag media here when it helps explain the problem.
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Before submitting
+      options:
+        - label: I removed account credentials and other sensitive information.
+          required: true
+        - label: I checked that this is not already listed in Known Issues.
+          required: true
