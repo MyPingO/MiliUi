@@ -1,0 +1,107 @@
+MiliUI Public Use License
+Version 1.0 — Draft for Public Beta
+
+Copyright (c) 2026 MyPingO. All rights reserved.
+
+1. Definitions
+
+"MiliUI" means the MiliUI runtime, MiliUI Manager, MiliUI IntelliSense package,
+documentation, branding, and other files distributed by the copyright holder.
+
+"Official Release" means a copy of MiliUI distributed by the copyright holder
+through an official MiliUI distribution channel.
+
+"Miliastra Project" means a game, experience, prototype, or other user-created
+project made for Miliastra Wonderland.
+
+2. Permission to Use
+
+Subject to this license, you may:
+
+(a) use unmodified Official Releases of the MiliUI runtime in your own Miliastra
+Projects;
+
+(b) publish, share, and monetize Miliastra Projects that use MiliUI, subject to
+the rules and terms of the platform on which those projects are distributed;
+
+(c) copy and adapt files explicitly provided as public examples solely for use in
+Miliastra Projects that use MiliUI; and
+
+(d) make ordinary application code that calls or integrates with MiliUI.
+
+3. Restrictions
+
+Except where applicable law expressly gives you a right that cannot be waived,
+you may not:
+
+(a) redistribute, mirror, republish, sublicense, sell, rent, or otherwise provide
+MiliUI itself as a standalone library, framework, toolkit, installer, package, or
+download;
+
+(b) publish or distribute modified versions, forks, derivative frameworks, or
+repackaged versions of MiliUI;
+
+(c) present MiliUI, a modified MiliUI build, or a substantially derived framework
+as your own product or framework;
+
+(d) remove or misrepresent copyright, license, authorship, or attribution notices;
+
+(e) use the MiliUI name, logo, or other project branding in a way that implies
+your modified or unofficial distribution is an official MiliUI release;
+
+(f) sell or sublicense access to MiliUI itself; or
+
+(g) use this license as permission to obtain, publish, or redistribute the private
+development source code.
+
+For clarity, including the official MiliUI runtime as a dependency inside your
+own Miliastra Project is permitted by Section 2 and is not considered prohibited
+standalone redistribution.
+
+4. Modifications to Your Own Project
+
+This license does not restrict your ownership of original game code, UI code,
+assets, or other content that you create around MiliUI. You may freely modify
+your own code that uses MiliUI.
+
+This license does not grant permission to modify and redistribute MiliUI itself.
+
+5. Feedback and Contributions
+
+If you voluntarily submit documentation, examples, fixes, suggestions, or other
+material for possible inclusion in MiliUI, you grant the copyright holder a
+perpetual, worldwide, royalty-free, irrevocable, non-exclusive right to use,
+modify, reproduce, distribute, sublicense, and incorporate that submission into
+MiliUI and related documentation. You represent that you have the right to grant
+that permission.
+
+6. No Trademark Grant
+
+No trademark rights are granted by this license. "MiliUI" and associated branding
+remain controlled by the copyright holder.
+
+7. Updates and Compatibility
+
+Official Releases may change over time. No promise is made that beta versions,
+APIs, or behavior will remain compatible with earlier versions.
+
+8. Termination
+
+Your rights under this license terminate automatically if you materially violate
+its terms and fail to cure that violation after receiving notice where cure is
+reasonably possible. Upon termination, you must stop distributing Miliastra
+Projects containing MiliUI until your right to use MiliUI is restored by the
+copyright holder.
+
+9. Disclaimer
+
+MILIUI IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A
+PARTICULAR PURPOSE, AND NON-INFRINGEMENT. TO THE MAXIMUM EXTENT PERMITTED BY LAW,
+THE COPYRIGHT HOLDER IS NOT LIABLE FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY
+ARISING FROM THE USE OF OR INABILITY TO USE MILIUI.
+
+10. Other Rights
+
+All rights not expressly granted by this license are reserved by the copyright
+holder.
