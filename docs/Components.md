@@ -4,39 +4,11 @@ Practical reference for the current public API. VS Code hover documentation cont
 
 ## Initialization
 
-A normal Control Group script configures the shared templates, attaches its own Host, then builds UI under that Host root:
+For a project with several interfaces, initialize the complete supported template set once in a persistent client setup script, then let each Control Group script attach only the Host it owns:
 
 ```lua
 local UI = require("MiliUI/init")
 
-local HOST_ID = "Components Example"
-
-function OnStart()
-    UI.InitTemplates({
-        container = script:GetParam("ContainerTemplateId"),
-        image = script:GetParam("ImageTemplateId"),
-        text = script:GetParam("TextTemplateId"),
-        button = script:GetParam("ButtonTemplateId"),
-        cursorArea = script:GetParam("CursorAreaTemplateId"),
-    })
-
-    UI.Hosts.Attach(HOST_ID, script.object)
-
-    -- Build MiliUI controls here, after the Host is attached.
-end
-
-function OnDestroy()
-    if UI.Hosts.IsAttached(HOST_ID) then
-        UI.Hosts.Detach(HOST_ID)
-    end
-end
-```
-
-Do not instantiate MiliUI controls at Lua file scope. Client controls must be created after the native root exists and its MiliUI Host is attached, normally from `OnStart()` or a registered Page factory.
-
-Optional native wrappers add their own shared templates:
-
-```lua
 UI.InitTemplates({
     container = script:GetParam("ContainerTemplateId"),
     image = script:GetParam("ImageTemplateId"),
@@ -51,13 +23,34 @@ UI.InitTemplates({
 })
 ```
 
-`cursorArea` is required by `UI.Hitbox` and by composed controls that use invisible pointer regions such as Slider/Scrollbar interaction surfaces. Hitboxes use the native Cursor Event Area control so they do not inherit Preset Button click audio. `animation` is required only by `UI.Animation`, and `fullscreenAnimation` is required only by `UI.FullscreenAnimation`.
+The mapping covers every native Client UI type currently used by MiliUI. A `ReferenceControl` mapping is not required; arbitrary editor templates can be instantiated directly with `UI.Native(...)`.
 
-Repeated `InitTemplates(...)` calls are safe when they agree. Compatible entries are merged so a Host that supplies only the common primitive/interaction templates does not erase optional templates configured by another Host. Supplying a different ID for an already-configured template kind is treated as a configuration error.
+A Host-owning UI Controller then follows the native lifecycle:
 
-`UI.Native(...)` does not require its template to be registered in `InitTemplates`; pass that template index directly.
+```lua
+local UI = require("MiliUI/init")
 
-For the recommended Control Group lifecycle and Layer model, see [ControlGroups.md](ControlGroups.md).
+local UI_INDEX = 1001
+local HOST_ID = "Components Example"
+
+function OnStart()
+    UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
+
+    -- Build MiliUI controls here, after the Host is attached.
+end
+
+function OnDestroy()
+    if UI.Hosts.IsAttached(HOST_ID) then
+        UI.Hosts.Detach(HOST_ID)
+    end
+end
+```
+
+For a small project it is also valid to call `UI.InitTemplates(...)` in the same Controller before `Attach`. Repeated compatible mappings are merged; conflicting IDs for the same template kind are configuration errors.
+
+Do not instantiate MiliUI controls at Lua file scope. Client controls must be created after the native root exists and its MiliUI Host is attached, normally from `OnStart()` or a registered Page factory.
+
+For the complete editor setup and recommended project structure, see [ProjectStructure.md](ProjectStructure.md). For the Control Group lifecycle and Layer model, see [ControlGroups.md](ControlGroups.md).
 
 ## Localized text
 
@@ -154,7 +147,7 @@ Destroy
 UI.Heading(parent, {
     text = "SETTINGS",
     textId = "Settings.Title",
-    width = 400,
+    fitWidth = true,
 })
 
 UI.Label(parent, {
@@ -179,8 +172,7 @@ local button = UI.Button(parent, {
         textId = "MainMenu.Play",
     },
     variant = "primary",
-    width = 180,
-    height = 54,
+    fitContent = true,
 })
 
 button:OnClick(function(eventData)
@@ -198,6 +190,8 @@ button:SetEnabled(false)
 A disabled Button is inert: click, enter, exit, down, and up callbacks are suppressed until `SetEnabled(true)` restores interaction.
 
 Variants: `primary`, `secondary`, `ghost`, `success`, `danger`.
+
+For content-sized actions, prefer `fitContent = true` and let the localized label/icon/padding determine the natural Button size. Use explicit `width` / `height` when the design actually requires fixed/shared geometry, not simply because the English label happens to fit it. See [IntrinsicSizing.md](IntrinsicSizing.md).
 
 `UI.IconButton` adds `icon`, `iconSize`, and `iconColor` while forwarding Button props.
 
@@ -509,7 +503,7 @@ submit = {
 
 The Server Node Graph must declare matching scalar parameter types in the same order. Client-submitted gameplay values remain untrusted; authoritative server logic should prefer stable IDs and derive sensitive values server-side.
 
-See [Select.md](Select.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance. A runnable example is under `examples/Components/Select.lua`.
+See [Select.md](Select.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance.
 
 ## MultipleChoiceWindow
 
@@ -579,7 +573,7 @@ submit = {
 
 The Server Node Graph must declare matching parameter types in the same order. Client-submitted gameplay values are not automatically trustworthy; authoritative server logic should prefer stable IDs and look up sensitive values server-side.
 
-See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the full grid, styling, custom renderer, disabled-state, submit, and security guide. A runnable example is under `examples/Components/MultipleChoiceWindow.lua`.
+See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the full grid, styling, custom renderer, disabled-state, submit, and security guide.
 
 ## Tabs
 
