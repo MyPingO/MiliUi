@@ -1,0 +1,62 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/MyPingO/MiliUI/blob/main/manifest.schema.json",
+  "title": "MiliUI Public Release Manifest",
+  "type": "object",
+  "required": ["schemaVersion", "channel", "runtime"],
+  "properties": {
+    "schemaVersion": {
+      "const": 1
+    },
+    "channel": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runtime": {
+      "$ref": "#/$defs/asset"
+    },
+    "manager": {
+      "allOf": [
+        { "$ref": "#/$defs/asset" },
+        {
+          "type": "object",
+          "properties": {
+            "minimumVersion": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            }
+          }
+        }
+      ]
+    },
+    "intellisense": {
+      "$ref": "#/$defs/asset"
+    },
+    "releaseNotesUrl": {
+      "type": "string",
+      "pattern": "^https://"
+    }
+  },
+  "$defs": {
+    "asset": {
+      "type": "object",
+      "required": ["version", "url", "sha256"],
+      "properties": {
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "url": {
+          "type": "string",
+          "pattern": "^https://"
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-fA-F]{64}$"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
