@@ -1,0 +1,58 @@
+name: Validate public documentation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Check local Markdown links
+        shell: python
+        run: |
+          from pathlib import Path
+          import re
+          import sys
+
+          root = Path(".").resolve()
+          failures = []
+
+          for markdown in root.rglob("*.md"):
+              text = markdown.read_text(encoding="utf-8")
+              for match in re.finditer(r"\[[^\]]+\]\(([^)]+)\)", text):
+                  target = match.group(1).strip()
+                  if (
+                      not target
+                      or target.startswith(("http://", "https://", "mailto:", "#"))
+                  ):
+                      continue
+
+                  target = target.split("#", 1)[0]
+                  if not target:
+                      continue
+
+                  resolved = (markdown.parent / target).resolve()
+                  try:
+                      resolved.relative_to(root)
+                  except ValueError:
+                      failures.append(f"{markdown}: link escapes repository: {target}")
+                      continue
+
+                  if not resolved.exists():
+                      failures.append(f"{markdown}: missing local target: {target}")
+
+          if failures:
+              print("\n".join(failures))
+              sys.exit(1)
+
+          print("Public Markdown links are valid.")
