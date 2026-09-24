@@ -153,7 +153,7 @@ UI.Hosts.Detach("Menu")
 After a replacement Control Group/root is attached, restoration remains explicit:
 
 ```lua
-UI.Hosts.Attach("Menu", newRoot)
+UI.Hosts.Attach(1002, "Menu", newRoot)
 UI.Pages.Restore("Menu")
 ```
 
