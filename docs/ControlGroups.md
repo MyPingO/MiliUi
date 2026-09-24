@@ -28,17 +28,20 @@ There are four different things involved. Keeping them separate makes the system
 | **MiliUI Host** | MiliUI's name and runtime ownership for that root | MiliUI |
 | **MiliUI Page** | A logical screen inside one host | MiliUI |
 
-A useful analogy is a building:
+Rather than mapping these concepts to a real-world object, follow the ownership chain directly:
 
 ```text
-Control Group = the building itself
-UI Index      = the building's Miliastra ID
-Layer         = which building is visually in front
-Host          = MiliUI's name for one building
-Pages         = rooms inside that building
+Miliastra UI Control Group
+├── UI Index: the integer identity used by Miliastra/server UI logic
+├── Layer: ordering against other Control Groups
+└── Client Control Container: the native root created for this UI
+    └── MiliUI Host: MiliUI's stable name/ownership for that live root
+        ├── Page: one logical screen
+        ├── Page: another logical screen
+        └── controls/listeners/tweens owned by this Host
 ```
 
-MiliUI can reorder rooms inside one building. It cannot move one building in front of another. Cross-group ordering belongs to Miliastra's **Layer** setting.
+The important boundary is simple: **Miliastra owns Control Group existence and cross-group Layer ordering; MiliUI owns the UI created inside each attached root.** Pages can be reordered inside one Host, but MiliUI does not move one Control Group above another.
 
 ## What is global and what is per Host?
 
@@ -115,6 +118,11 @@ local function InitTemplates()
         text = script:GetParam("TextTemplateId"),
         button = script:GetParam("ButtonTemplateId"),
         cursorArea = script:GetParam("CursorAreaTemplateId"),
+        animation = script:GetParam("UIAnimationTemplateId"),
+        fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+        keyHint = script:GetParam("KeyHintTemplateId"),
+        textWindow = script:GetParam("TextWindowTemplateId"),
+        gridScroller = script:GetParam("GridScrollerTemplateId"),
     })
 end
 
@@ -172,6 +180,11 @@ local function InitTemplates()
         text = script:GetParam("TextTemplateId"),
         button = script:GetParam("ButtonTemplateId"),
         cursorArea = script:GetParam("CursorAreaTemplateId"),
+        animation = script:GetParam("UIAnimationTemplateId"),
+        fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+        keyHint = script:GetParam("KeyHintTemplateId"),
+        textWindow = script:GetParam("TextWindowTemplateId"),
+        gridScroller = script:GetParam("GridScrollerTemplateId"),
     })
 end
 
@@ -457,52 +470,89 @@ Host IDs and UI Indexes are both one-to-one identities. Reusing the same Host ID
 
 With fixed IDs like `"Menu"` and `"HUD"`, only one live instance of each host may be attached at a time. Accidentally instantiating two copies of a fixed `"Menu"` prefab at once produces a duplicate-host error instead of silently mixing the two roots.
 
-## Template setup in multiple host scripts
+## Recommended shared template setup
 
-Primitive template IDs are shared by all MiliUI hosts. It is fine for each independently-instantiated Control Group script to call `UI.InitTemplates(...)` before attaching, as long as they all provide the same template mapping.
+Template IDs are shared by every MiliUI Host in the same client runtime. For projects with more than one interface, the recommended setup is to initialize the complete supported template set once from a persistent client Global Script.
 
-This is often simpler than requiring a separate permanent global bootstrap script.
+Create one editor template for each Client UI control type currently used by MiliUI:
+
+```text
+container              -> ContainerControl
+image                  -> ImageControl
+text                   -> TextBoxControl / normal text template
+button                 -> PresetButton
+cursorArea             -> CursorEventArea
+animation              -> UIAnimationControl
+fullscreenAnimation    -> Fullscreen UI Animation
+keyHint                -> KeyHintControl
+textWindow              -> TextWindowControl
+gridScroller            -> GridScrollerControl
+```
+
+A `ReferenceControl` template is not part of `UI.InitTemplates(...)`. Arbitrary editor templates can still be instantiated with `UI.Native(...)` when needed.
+
+Supplying all currently supported templates up front is recommended even if the first screen only uses a few of them. It keeps the project ready for MiliUI components that rely on those native controls and avoids revisiting shared setup later. A future MiliUI feature that introduces a genuinely new native control type could still require a new template.
+
+Independently-instantiated Control Group scripts may also call `UI.InitTemplates(...)`; repeated compatible mappings are safe. For a larger project, however, one persistent shared setup script is easier to understand and keeps template configuration in one place.
+
+See [ProjectStructure.md](ProjectStructure.md) for the recommended scalable arrangement.
 
 ## A practical project layout
 
-One possible game-side structure is:
+Public MiliUI installs contain only the production runtime:
 
 ```text
-MiliUI/
-├── init.lua
-├── Systems/Core.lua
-├── Systems/Hosts.lua
-├── Systems/Pages.lua
-├── Systems/Session.lua
-└── ...
-
-Client UI Logic/
-├── Menu UI.lua
-└── HUD UI.lua
-
-Game UI/
-├── Main Menu Page.lua
-├── Inventory Page.lua
-└── UI Data.lua
+external_lua_file/
+├── MiliUI/
+│   └── init.lua
+│
+├── Global/
+│   └── MiliUI Global.lua
+│
+├── Client UI Logic/
+│   ├── Menu UI.lua
+│   └── HUD UI.lua
+│
+└── Game UI/
+    ├── Main Menu Page.lua
+    ├── Inventory Page.lua
+    └── UI Data.lua
 ```
 
-The important distinction is not the folder name. It is that the scripts attached to the instantiated Client Control Containers own `Attach` / `Detach`, while reusable page modules only build content.
+You will **not** have MiliUI's private `Systems/` or `Components/` source folders in a normal project. The Manager installs only `MiliUI/init.lua`.
+
+The folder names above are only an organizational suggestion. The important distinction is responsibility:
+
+```text
+MiliUI Global.lua   -> shared templates/theme/player context
+Menu UI.lua         -> native Menu Host lifecycle
+Main Menu Page.lua  -> reusable UI construction
+UI Data.lua         -> editable game content/configuration
+```
+
+Scripts attached to instantiated Client Control Containers own `Attach` / `Detach`; reusable Page modules build content and do not own the native root lifecycle.
 
 ## Beginner checklist
+
+For the project:
+
+1. Install the production `MiliUI/init.lua`.
+2. Create the full supported Client UI template set once and expose those template IDs to a persistent client setup script.
+3. Call `UI.InitTemplates(...)` from that shared setup.
+4. If the project uses `UI.Player`, register the local Player Entity from a game-defined initialization signal and make sure that signal is sent again after a full client reconnect/refresh.
 
 For each Control Group:
 
 1. Put a **Client Control Container** inside the Control Group.
-2. Attach one Lua bootstrap/UI script to that container.
-3. In `OnStart`, call `UI.InitTemplates(...)`.
-4. Register any Pages with an `IsRegistered` guard.
-5. Call `UI.Hosts.Attach(uiIndex, "YourHostName", script.object)` using that UI entry's Miliastra Index.
-6. Explicitly `Open` a default page or `Restore` remembered pages.
-7. In `OnDestroy`, call `UI.Hosts.Detach("YourHostName")`.
-8. Use the Control Group's **Layer** for ordering against other Control Groups.
-9. Let the Server Node Graph instantiate/remove the Control Group to control whether it exists.
-10. Decide whether later re-instantiation should resume the old Page stack or start fresh; call `CloseAll(hostId)` first when a fresh start is desired.
-11. Do not add a second "show UI" signal unless the game actually needs a separate event for some other reason.
+2. Attach one UI Controller script to that container.
+3. Register any Pages with an `IsRegistered` guard.
+4. Call `UI.Hosts.Attach(uiIndex, "YourHostName", script.object)` using that UI entry's Miliastra Index.
+5. Explicitly `Open` a default page or `Restore` remembered pages.
+6. In `OnDestroy`, call `UI.Hosts.Detach("YourHostName")`.
+7. Use the Control Group's **Layer** for ordering against other Control Groups.
+8. Let the Server Node Graph instantiate/remove the Control Group to control whether it exists.
+9. Decide whether later re-instantiation should resume the old Page stack or start fresh; call `CloseAll(hostId)` first when a fresh start is desired.
+10. Do not add a second "show UI" signal unless the game actually needs a separate event for some other reason.
 
 For runnable patterns, see [`../examples/README.md`](../examples/README.md), [`../examples/ControlGroupHud.lua`](../examples/ControlGroupHud.lua), and [`../examples/ControlGroupMenu.lua`](../examples/ControlGroupMenu.lua).
 
