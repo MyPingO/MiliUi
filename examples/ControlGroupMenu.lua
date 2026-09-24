@@ -1,4 +1,5 @@
--- Recommended Control Group + Pages pattern.
+-- Standalone Control Group + Pages pattern. Larger projects should normally
+-- move the complete shared template mapping into one persistent client Global Script.
 --
 -- Put this script on the Client Control Container inside a Menu entry in the
 -- Miliastra UI Control Group Library. The Server Node Graph shows/hides the Menu
@@ -17,6 +18,11 @@ local function InitTemplates()
         text = script:GetParam("TextTemplateId"),
         button = script:GetParam("ButtonTemplateId"),
         cursorArea = script:GetParam("CursorAreaTemplateId"),
+        animation = script:GetParam("UIAnimationTemplateId"),
+        fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+        keyHint = script:GetParam("KeyHintTemplateId"),
+        textWindow = script:GetParam("TextWindowTemplateId"),
+        gridScroller = script:GetParam("GridScrollerTemplateId"),
     })
 end
 
@@ -37,7 +43,7 @@ local function BuildMainMenu(parent)
         text = "MAIN MENU",
         needsTranslation = false,
         y = 90,
-        width = 440,
+        fitWidth = true,
     })
 
     UI.Label(card.content, {
