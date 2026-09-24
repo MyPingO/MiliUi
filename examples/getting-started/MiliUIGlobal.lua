@@ -19,22 +19,16 @@ local function InitTemplates()
     })
 end
 
-local function InitTheme()
-    -- Optional project-wide Button audio.
-    local clickAudioId = script:GetParam("Button Click Audio ID")
-
-    if type(clickAudioId) == "number" and clickAudioId > 0 then
-        UI.Theme.Apply({
-            sounds = {
-                buttonClick = clickAudioId,
-            },
-        })
-    end
-end
-
 function OnStart()
     InitTemplates()
-    InitTheme()
+
+    -- Optional project-wide polish can also live here. For example:
+    --
+    -- UI.Theme.Apply({
+    --     sounds = {
+    --         buttonClick = 123456, -- Replace with your Audio Resource ID.
+    --     },
+    -- })
 
     -- Optional Player context:
     -- Uncomment this when the game has a server -> client signal that sends
