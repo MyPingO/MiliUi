@@ -2,66 +2,22 @@
 
 MiliUI uses Lua Language Server (LuaLS / LuaCATS) annotations to provide completion, signature help, props-table suggestions, and hover documentation.
 
-## Design
+## How it works
 
-There is one declaration source:
+The MiliUI IntelliSense extension ships editor-only LuaLS declarations separately from the runtime installed in your Miliastra project.
 
-```text
-library/*.lua
-```
-
-It contains editor-only classes for:
-
-- the main `MiliUI` API;
-- named Hosts and host-owned timers;
-- Pages and Page contexts;
-- Session state/persistence helpers;
-- component props;
-- component return objects and methods;
-- theme tokens;
-- layout, interaction, motion, style, surface, stack, and core APIs;
-- the native UI-control surface needed by MiliUI return values;
-- `CursorEventData` used by cursor callbacks.
-
-`library/api.lua` owns the single top-level `MiliUI` class declaration, including
-fields such as `Hosts`, `Pages`, `Session`, and `Player`, plus top-level methods
-such as `InitTemplates`.
-
-Specialized declaration files remain split by responsibility:
+Your game project still contains only:
 
 ```text
-library/hosts.lua
-library/pages.lua
-library/session.lua
-library/player.lua
+MiliUI/
+└── init.lua
 ```
 
-Those files define the detailed API types referenced by the top-level class
-(`MiliUI.HostsAPI`, `MiliUI.PagesAPI`, and so on) instead of reopening the
-`MiliUI` class. Keeping one authoritative top-level declaration avoids LuaLS
-losing hover/signature metadata when class fragments are resolved differently.
-
-The actual runtime modules bind their implementation tables to those types:
-
-```lua
----@type MiliUI
-local UI = { ... }
-```
-
-or:
-
-```lua
----@type MiliUI.MotionAPI
-local Motion = {}
-```
-
-This is intentional. The old shadow-module approach was removed because multiple files claiming to represent the same `require(...)` path can make LuaLS resolve the wrong table and show fields as `unknown`.
+The declaration files live in VS Code's extension storage and describe MiliUI's public APIs, props, return objects, native control methods, lifecycle helpers, and theme fields. They are not copied into `external_lua_file` and do not run in Miliastra.
 
 ## VS Code extension
 
-The repository's `library/*.lua` files are packaged into the separate **MiliUI
-IntelliSense** VS Code extension. They are not installed into
-`external_lua_file` and never become part of the Miliastra runtime payload.
+The editor declarations are packaged into the separate **MiliUI IntelliSense** VS Code extension. They are not installed into `external_lua_file` and never become part of the Miliastra runtime payload.
 
 The production `init.lua` keeps one editor-only return-type bridge:
 
@@ -77,12 +33,16 @@ The generated local name may differ, but the annotation lets LuaLS connect
 The extension detects MiliUI whether VS Code is opened directly at
 `external_lua_file` or at a parent folder containing it.
 
-If the workspace has no LuaLS config file, enabling adds the bundled declaration
-folder to VS Code's `Lua.workspace.library` setting. If `.luarc.json` or
-`.luarc.jsonc` exists at the workspace root, the extension also adds MiliUI to
-that config's `workspace.library` array while preserving existing entries.
-This matters because LuaLS gives its workspace config file precedence over normal
-VS Code Lua settings.
+A `.luarc.json` file is **not required**. When MiliUI is detected, the extension
+automatically adds its bundled declaration folder to VS Code's
+`Lua.workspace.library` setting. In a normal single-folder project this is a
+workspace setting; in a multi-root workspace it is scoped to the matching
+workspace folder.
+
+If `.luarc.json` or `.luarc.jsonc` already exists at the workspace root, the
+extension also adds MiliUI to that config's `workspace.library` array while
+preserving existing entries. This matters because LuaLS gives its workspace
+config file precedence over normal VS Code Lua settings.
 
 The extension does not modify the MiliUI runtime.
 
@@ -127,9 +87,14 @@ UI.InitTemplates({
     text = script:GetParam("TextTemplateId"),
     button = script:GetParam("ButtonTemplateId"),
     cursorArea = script:GetParam("CursorAreaTemplateId"),
+    animation = script:GetParam("UIAnimationTemplateId"),
+    fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+    keyHint = script:GetParam("KeyHintTemplateId"),
+    textWindow = script:GetParam("TextWindowTemplateId"),
+    gridScroller = script:GetParam("GridScrollerTemplateId"),
 })
 
-UI.Hosts.Attach("Menu", script.object)
+UI.Hosts.Attach(1002, "Menu", script.object)
 UI.Pages.Open("Inventory")
 ```
 
@@ -207,8 +172,16 @@ Ctrl+Shift+P
 
 or reload the VS Code window.
 
-## Maintenance rule
+## Troubleshooting
 
-Every public runtime API change must update `library/*.lua` in the same commit. Lifecycle changes should also update [ControlGroups.md](ControlGroups.md), [Hosts.md](Hosts.md), [Pages.md](Pages.md), or [RuntimeLifecycle.md](RuntimeLifecycle.md) when behavior visible to game code changes.
+If MiliUI fields appear as `unknown` or `any`, run:
 
-See [Architecture.md](Architecture.md) for ownership rules.
+```text
+MiliUI: Diagnose IntelliSense
+```
+
+A healthy setup should report that the MiliUI library exists and that `Lua.workspace.library` contains MiliUI.
+
+A `.luarc.json` file is not required. If the declaration path exists but is not registered, use `MiliUI: Enable IntelliSense for Workspace` and then restart the Lua Language Server.
+
+For normal API usage, the declaration package is only an editor aid; the Miliastra runtime remains the single production `MiliUI/init.lua`.

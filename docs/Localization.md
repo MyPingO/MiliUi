@@ -281,7 +281,7 @@ local text = UI.ResolveText({
 
 ## Generating the editor CSV
 
-MiliUI includes:
+MiliUI includes the public [localization extraction utility](../tools/extract_localization.py):
 
 ```text
 tools/extract_localization.py

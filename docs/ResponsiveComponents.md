@@ -190,10 +190,6 @@ Use meaningful `name` values on important page/layout controls so warnings ident
 
 Diagnostics report geometry mistakes; they do not automatically clip or redesign invalid content.
 
-## Runtime galleries
+## Testing guidance
 
-`examples/ResponsiveComponentGallery.lua` exercises the composed responsive components.
-
-`examples/ResponsiveFoundation.lua` demonstrates the single-tree responsive pattern, automatic grid-density changes, focus fallback, safe-area stress testing, and layout diagnostics.
-
-`examples/ResponsiveStress.lua` exercises larger child counts, mixed minimum useful sizes, nested Responsive layouts, asymmetric safe-area changes, and runtime remove/re-add behavior.
+The responsive component set is covered by internal stress tests across wide, narrow, short, and nested-scroll layouts. Public projects should still test their own information density, minimum useful sizes, and localization because responsive layout cannot infer every game's design priorities.

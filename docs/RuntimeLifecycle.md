@@ -67,6 +67,11 @@ UI.InitTemplates({
     text = script:GetParam("TextTemplateId"),
     button = script:GetParam("ButtonTemplateId"),
     cursorArea = script:GetParam("CursorAreaTemplateId"),
+    animation = script:GetParam("UIAnimationTemplateId"),
+    fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+    keyHint = script:GetParam("KeyHintTemplateId"),
+    textWindow = script:GetParam("TextWindowTemplateId"),
+    gridScroller = script:GetParam("GridScrollerTemplateId"),
 })
 ```
 
@@ -205,6 +210,8 @@ MiliUI releases Menu-owned live input flags, listeners, tweens, persistence bind
 The logical Menu open-page order remains in Session and the Menu -> UI Index mapping remains available so a replacement root can restore it or client code can identify that server-owned UI entry.
 
 Other hosts are unaffected.
+
+This host recreation is different from a **full client reconnect/refresh**. Host/Page/Session state can survive a native UI root recreation inside the same Lua runtime, but a newly-created client Lua runtime starts with fresh process-local state. If the game uses `UI.Player`, its Player Entity must be supplied again after such a reconnect. See [Player.md](Player.md).
 
 ## Recreated host
 

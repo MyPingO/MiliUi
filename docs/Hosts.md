@@ -33,7 +33,7 @@ MiliUI does **not** emulate cross-root layers. If Menu should appear above HUD, 
 
 ## Template setup
 
-Primitive templates are shared by every host:
+Template IDs are shared by every Host. The recommended project setup is to configure the complete supported mapping once from a persistent client Global Script:
 
 ```lua
 UI.InitTemplates({
@@ -42,15 +42,19 @@ UI.InitTemplates({
     text = script:GetParam("TextTemplateId"),
     button = script:GetParam("ButtonTemplateId"),
     cursorArea = script:GetParam("CursorAreaTemplateId"),
+    animation = script:GetParam("UIAnimationTemplateId"),
+    fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
     keyHint = script:GetParam("KeyHintTemplateId"),
     textWindow = script:GetParam("TextWindowTemplateId"),
     gridScroller = script:GetParam("GridScrollerTemplateId"),
 })
 ```
 
-It is fine for independently-instantiated UI scripts to call `InitTemplates` during their own `OnStart`.
+It is also valid for independently-instantiated UI scripts to call `InitTemplates` during their own `OnStart`.
 
-Repeated calls **merge compatible entries**. A HUD script that supplies only `container`, `image`, `text`, `button`, and `cursorArea` therefore does not erase an optional `textWindow` or `gridScroller` mapping previously configured by Menu. If two calls supply different IDs for the same template kind, MiliUI raises a configuration error instead of silently changing the shared mapping.
+Repeated calls **merge compatible entries**. A script that supplies only a subset therefore does not erase mappings already configured elsewhere. If two calls supply different IDs for the same template kind, MiliUI raises a configuration error instead of silently changing the shared mapping.
+
+For a new project, supplying all supported template kinds once is preferred over maintaining a minimal per-screen subset. See [ProjectStructure.md](ProjectStructure.md).
 
 The old single-root `UI.Init(root, templates)` lifecycle is intentionally removed. Stale calls raise a migration error directing the game to `InitTemplates` plus `Hosts.Attach`.
 
