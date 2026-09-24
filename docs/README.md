@@ -34,4 +34,5 @@ Start with:
 
 ## Help
 
+- [FAQ](FAQ.md)
 See [Support and Bug Reports](../SUPPORT.md).
