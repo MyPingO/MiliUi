@@ -1,21 +1,35 @@
 # MiliUI 0.9.0-beta.1
 
-MiliUI's first planned public beta packages the framework for real creator testing while keeping framework development centralized.
+MiliUI's first public beta packages the framework for real Miliastra creator testing while keeping framework development centralized.
 
 ## Highlights
 
 - reusable Lua UI primitives and composed components;
-- responsive Row/Column layouts and Screen helpers;
+- responsive Row/Column layouts, intrinsic sizing, and Screen helpers;
 - theming and localization support;
-- ScrollArea and Scrollbar;
+- ScrollArea and Scrollbar with pressable-child drag cancellation;
 - Hosts, Pages, and Session state;
 - keyboard/mouse and controller interaction;
-- native controller navigation and Confirm activation;
-- animated controller focus indicators;
-- motion, audio, and selected native-control wrappers;
-- MiliUI Manager for installation and verified runtime updates;
+- native controller navigation, Confirm activation, and focus indicators;
+- motion, managed audio, and selected native-control wrappers;
+- MiliUI Manager for installation, backup, and verified runtime updates;
 - MiliUI IntelliSense for VS Code/LuaLS;
-- public Quick Start and beginner examples.
+- public Quick Start, controller guide, component docs, and beginner examples.
+
+## Release-candidate hardening
+
+Before the public beta, the runtime and documentation received a focused in-game validation pass covering:
+
+- text clipping and localization-safe sizing;
+- theme apply/restore behavior;
+- managed audio;
+- native UI Animation controls;
+- explicit controller focus/navigation between UI regions;
+- native GridScroller behavior;
+- the `UI.Native` escape hatch;
+- ScrollArea gesture ownership for Buttons, Toggle, Checkbox, Tabs, SegmentedControl, Select triggers, MultipleChoiceWindow choices, PlayingCard, and ordinary click Hitboxes.
+
+Drag-owning controls such as Slider and Scrollbar retain their own drag behavior rather than moving an ancestor ScrollArea.
 
 ## Installation
 

@@ -62,11 +62,24 @@ UI.Checkbox(column, {
 })
 ```
 
-A Button inside `area.content` participates in grab-to-scroll automatically. A press that moves far enough for Miliastra to emit `CursorBeginDrag` is claimed by the ScrollArea: MiliUI cancels that Button's pending click, clears its pressed state, and suppresses its click audio. Releasing after the drag therefore finishes scrolling rather than selecting whichever list item received the original press. A press/release that never becomes a drag remains a normal Button click.
+Pressable controls inside `area.content` participate in grab-to-scroll automatically. This includes Buttons/IconButtons, Toggle, Checkbox, Stepper Buttons, SegmentedControl segments, Tabs, Select triggers, MultipleChoiceWindow choices, PlayingCard, and ordinary `UI.Hitbox` click surfaces.
 
-Nested ScrollAreas are supported when a real interface needs independent inner and outer scroll regions. The recent stress test covered nested ScrollAreas, a long Select using the shared scrollbar, Tabs, several input components, a standalone Scrollbar inside a Row, and dynamic content-height changes with `layoutIssues=0` and `textIssues=0`.
+When a press moves far enough for Miliastra to emit `CursorBeginDrag`, the ScrollArea claims that gesture. MiliUI cancels the child's pending activation and resets its pressed/hover transform before scrolling. Releasing after the drag therefore scrolls instead of accidentally toggling, selecting, opening, or clicking the control that received the original press. A press/release that never becomes a drag remains the control's normal activation.
 
-Use nesting deliberately; one ScrollArea is easier to navigate when the design does not genuinely need independent scroll regions.
+Drag-owning controls intentionally keep their own gesture. `UI.Slider` keeps horizontal slider dragging and `UI.Scrollbar` keeps thumb/arrow interaction rather than moving an ancestor ScrollArea. Custom `UI.Button` and `UI.Hitbox` controls can make the same choice with `parentScroll = false`:
+
+```lua
+local dragSurface = UI.Hitbox(area.content, {
+    width = 240,
+    height = 80,
+    parentScroll = false,
+})
+```
+
+Focusable Buttons and click Hitboxes that participate in parent scrolling also let the containing ScrollArea consume Right Stick scrolling while they are focused.
+
+Nested ScrollAreas are supported when a real interface needs independent inner and outer scroll regions. Use nesting deliberately; one ScrollArea is easier to navigate when the design does not genuinely need independent scroll regions.
+
 
 ## Coordinate model
 

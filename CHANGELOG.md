@@ -2,25 +2,33 @@
 
 All notable public MiliUI releases will be recorded here.
 
-MiliUI is currently preparing for its first public beta.
-
 ## [0.9.0-beta.1] - Unreleased
 
-Initial planned public beta.
+Initial public beta.
 
-Expected public-beta baseline includes:
+### Added
 
 - production single-file MiliUI runtime;
-- MiliUI Manager installer/updater;
-- MiliUI IntelliSense package;
+- MiliUI Manager installer/updater with backup and SHA-256 verified runtime updates;
+- MiliUI IntelliSense package for VS Code/LuaLS;
 - responsive layouts and common UI primitives;
-- composed inputs and display components;
-- ScrollArea and Scrollbar;
+- composed inputs, display components, ScrollArea, and Scrollbar;
 - Hosts, Pages, and Session state;
-- theming and localization support;
-- interaction, motion, audio, and native-control helpers;
+- theming and localization helpers;
+- interaction, motion, managed audio, and native-control wrappers;
 - keyboard/mouse and controller navigation support;
-- controller focus indicators;
-- public Quick Start and beginner examples.
+- controller focus indicators and explicit directional navigation guidance;
+- public Quick Start, component documentation, and beginner examples.
 
-Final release notes will be generated from the tested release candidate.
+### Hardened before release
+
+- localization-safe intrinsic text/Button sizing and wrapped TextWindow guidance;
+- ScrollArea drag cancellation across ordinary pressable controls;
+- Slider/Scrollbar drag ownership inside parent ScrollAreas;
+- controller Confirm/focus examples;
+- GridScroller runtime behavior and documentation;
+- UI.Native guidance and native-control examples.
+
+### Known limitations
+
+See [KNOWN_ISSUES.md](KNOWN_ISSUES.md).
