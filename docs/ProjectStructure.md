@@ -351,6 +351,7 @@ local function BuildPage(parent, page)
         text = "Updates",
         textId = "Updates.Title",
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Label(content, {
@@ -358,6 +359,7 @@ local function BuildPage(parent, page)
         text = UpdatesData.items[1].summary,
         needsTranslation = true,
         fitWidth = true,
+        fitWidthPadding = 16,
         maxWidth = "80%",
     })
 
@@ -571,6 +573,7 @@ local function BuildPage(parent, page)
         text = "Settings",
         textId = "Settings.Title",
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Toggle(content, {
@@ -867,6 +870,7 @@ function OnStart()
         text = "Hello",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 end
 
