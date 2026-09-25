@@ -1,12 +1,14 @@
 # Recommended Game Project Structure
 
-MiliUI does not force one project layout, but larger games are much easier to maintain when **shared setup**, **native UI lifecycle**, **page construction**, and **game content/data** are kept separate.
+MiliUI does not force one project layout. For one small interface, keeping everything in one script can be perfectly reasonable.
 
-This guide shows a beginner-friendly structure that scales from one UI screen to several independent interfaces such as an Updates screen, Settings screen, HUD, inventory, or overlay.
+As a project grows, code becomes easier to read, maintain, and debug when different jobs are kept in different files. This is called **separation of concerns**: instead of one large script handling setup, Control Group behavior, UI layout, and editable content, each file has one main responsibility.
+
+This guide shows one beginner-friendly structure that can grow from a single screen into several interfaces such as an Updates screen, Settings screen, HUD, inventory, or overlay.
 
 > **Rule of thumb:** one shared setup, one controller per Host, one module per Page.
 
-This is a recommendation, not a framework requirement. A small project can keep everything in one attached script. The structure below becomes more useful as soon as the game has multiple MiliUI screens or Control Groups.
+This is a recommendation, not a MiliUI requirement. Split files when doing so makes the project easier to understand, not simply because more files look more organized.
 
 ---
 
@@ -16,10 +18,10 @@ A clean MiliUI game usually has four different kinds of Lua files.
 
 | File type | Responsibility | Attached to a UI object? |
 | --- | --- | --- |
-| **Persistent shared setup script** | Initializes shared primitive templates and optional player context | No Client Control Container required |
-| **UI Controller** | Owns one native UI Host lifecycle and knows that UI entry's Index | **Yes** |
-| **Page module** | Builds one logical MiliUI Page | No |
-| **Data module** | Stores content/configuration used by a Page | No |
+| **Global/shared setup script** | Sets up MiliUI once for the whole project, such as template IDs and optional Player registration | No Client Control Container required |
+| **UI Controller** | Attached to a Control Group; handles the related logic when that Control Group is created or removed | **Yes** |
+| **Page module** | Used by the controller to build the actual UI controls for a Page | No |
+| **Data module** | Used by the Page while building the UI; stores editable content or configuration | No |
 
 Think of the flow like this:
 
@@ -40,9 +42,9 @@ Server activates a UI Control Group
 The most important distinction for beginners is:
 
 ```text
-Controller = attached script that owns the native UI lifecycle
-Page       = required Lua module that builds interface content
-Data       = required Lua module containing content/configuration
+Controller = attached to the Control Group and handles what happens when it appears/disappears
+Page       = loaded by the controller and builds the actual interface
+Data       = loaded by the Page and supplies editable content/configuration
 ```
 
 A Page module is normally **not attached directly** to a Client Control Container.
@@ -218,11 +220,13 @@ All repeated mappings must agree. Do not configure `button` as one template ID i
 
 ---
 
-## 4. A UI Controller owns one Host
+## 4. A UI Controller handles one Control Group and Host
 
-The UI Controller is the script attached to the Client Control Container created by the Control Group.
+The UI Controller is the script attached to the Client Control Container inside the Control Group.
 
-Its job is lifecycle, not detailed UI construction.
+Its job is to handle the logic related to that Control Group being created or removed: attach its MiliUI Host, register/open/restore the correct Page, and detach the Host when the Control Group goes away.
+
+The detailed UI layout normally belongs in the Page module instead of being mixed into this controller.
 
 A controller normally knows:
 
@@ -448,7 +452,7 @@ end
 
 A data module is useful when a Page has content that changes independently from its layout.
 
-For an Updates screen, keep dates, titles, patch notes, roadmap items, and similar content in `Updates Data.lua` rather than mixing everything into the layout code.
+The Page loads the Data module and uses those values while it creates the UI controls. For an Updates screen, keep dates, titles, patch notes, roadmap items, and similar content in `Updates Data.lua` rather than mixing everything into the layout code.
 
 Example:
 
@@ -920,4 +924,4 @@ Or, in one sentence:
 
 > **Put shared configuration in shared setup, native lifecycle in controllers, UI construction in Pages, and editable content in data modules.**
 
-That separation keeps each file understandable and lets the project grow without coupling unrelated interfaces together.
+That separation keeps each file focused on one job. In practice, this usually makes the project easier to read, easier to change later, and much easier to debug because you know which file is responsible for each kind of problem.
