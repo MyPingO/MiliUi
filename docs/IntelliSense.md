@@ -17,6 +17,19 @@ The declaration files live in VS Code's extension storage and describe MiliUI's 
 
 ## VS Code extension
 
+Public users can install MiliUI IntelliSense from the `MiliUI-IntelliSense.vsix` file attached to the matching MiliUI GitHub Release.
+
+In VS Code:
+
+1. Download `MiliUI-IntelliSense.vsix`.
+2. Open the **Extensions** view.
+3. Open the Extensions `...` menu.
+4. Choose **Install from VSIX...**.
+5. Select the downloaded file.
+6. Reload VS Code if prompted.
+
+The extension depends on Lua Language Server (LuaLS). It only adds editor help such as autocomplete, hover information, and type hints; it does **not** install or change the MiliUI runtime inside your Miliastra project.
+
 The editor declarations are packaged into the separate **MiliUI IntelliSense** VS Code extension. They are not installed into `external_lua_file` and never become part of the Miliastra runtime payload.
 
 The production `init.lua` keeps one editor-only return-type bridge:
