@@ -145,12 +145,14 @@ function OnStart()
         text = "HUD",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Label(content, {
         text = "This exists because the HUD Control Group exists.",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 end
 
@@ -214,12 +216,14 @@ local function BuildMainMenu(parent, page)
         text = "MAIN MENU",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Label(content, {
         text = "This page belongs to the Menu host.",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     return screen

@@ -42,6 +42,8 @@ UI.Text(parent, {
     text = "PLAY",
     textId = "MainMenu.Play",
     needsTranslation = true,
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 ```
 
@@ -85,6 +87,8 @@ Literal/non-localized text simply omits `textId`:
 UI.Caption(parent, {
     text = "v1.4.2",
     needsTranslation = false,
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 ```
 
@@ -225,6 +229,8 @@ UI.Text(parent, {
     args = {
         count = 17,
     },
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 ```
 

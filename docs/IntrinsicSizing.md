@@ -126,6 +126,7 @@ For a single-line text element whose width should follow the current localized s
 ```lua
 UI.Label(parent, {
     fitWidth = true,
+    fitWidthPadding = 16,
     text = "PAST UPDATE",
     textId = "Updates.PastUpdate",
     size = 18,
@@ -134,9 +135,70 @@ UI.Label(parent, {
 
 MiliUI uses the actual resolved localized string and a conservative, script-aware font-width estimate. Miliastra currently exposes font size and adaptive sizing but no documented native preferred-text-width API, so this is an intentionally safe estimate rather than a claim of pixel-perfect font measurement.
 
-CJK, Hangul, Kana, Cyrillic, Greek, Thai, Arabic, Hebrew, Latin, digits, punctuation, spaces, and combining marks are handled separately. A small safety margin favors extra breathing room over clipping.
+CJK, Hangul, Kana, Cyrillic, Greek, Thai, Arabic, Hebrew, Latin, digits, punctuation, spaces, and combining marks are handled separately.
+
+Miliastra does not expose the native preferred width, so `fitWidth` is still an estimate. Runtime testing found that some font/style combinations can need more breathing room than the default estimate. Use `fitWidthPadding` when clipping would be unacceptable:
+
+```lua
+UI.Heading(parent, {
+    text = "Hello, MiliUI!",
+    fitWidth = true,
+    fitWidthPadding = 16,
+})
+```
 
 Use `maxWidth` when a localized element must stay inside a known region.
+
+## Avoiding clipped text
+
+Raw text controls still need an explicit sizing strategy. Do not rely on the default rectangle when the text may change through localization, runtime values, or setters.
+
+For a short single-line label whose width should follow the resolved text, use `fitWidth = true`:
+
+```lua
+UI.Label(parent, {
+    text = "PAST UPDATE",
+    textId = "Updates.PastUpdate",
+    fitWidth = true,
+    fitWidthPadding = 16,
+})
+```
+
+If the control must stay inside a fixed-width region, let the region own the width and give the text room to adapt:
+
+```lua
+UI.Label(parent, {
+    fillWidth = true,
+    text = "A potentially longer localized label",
+    textId = "Example.Label",
+    adaptiveFontSize = true,
+    minimumFontSize = 12,
+})
+```
+
+For sentences or paragraphs that may wrap, use `UI.TextWindow` with `fillWidth = true` and `fitContentHeight = true` instead of forcing prose into a one-line `UI.Text` / `UI.Label` rectangle.
+
+```lua
+UI.TextWindow(parent, {
+    fillWidth = true,
+    fitContentHeight = true,
+    interactable = false,
+    showScrollBar = false,
+    text = "This explanation can wrap without cutting off the next line.",
+    needsTranslation = false,
+})
+```
+
+A useful rule:
+
+```text
+short single-line text     -> fitWidth + fitWidthPadding when exact clipping matters
+fixed-width single line    -> fillWidth/width + adaptiveFontSize
+wrapped prose              -> TextWindow + fitContentHeight
+explicit fixed text height -> UI.SafeTextHeight(...) / UI.SafeTextWindowHeight(...)
+```
+
+This applies equally to initial constructor text and later `SetText`, `SetLabel`, or localization updates.
 
 ## Wrapped TextWindow Height
 
@@ -187,6 +249,17 @@ Explicit `height` / `fillHeight` remains authoritative. If either is supplied, `
 
 Miliastra does not currently expose a documented native preferred wrapped-text height, so MiliUI uses a conservative script-aware estimate. The optional `fitContentHeightInsetX` adjusts the assumed native horizontal inset per side; its default is `8`.
 
+If the final wrapped line is clipped because Miliastra wrapped slightly earlier than the estimate, increase that inset so the estimator assumes less usable width and reserves the extra line:
+
+```lua
+UI.TextWindow(parent, {
+    fillWidth = true,
+    fitContentHeight = true,
+    fitContentHeightInsetX = 24,
+    text = "A paragraph whose complete final line must remain visible.",
+})
+```
+
 `fitContentHeight` should be treated as a layout convenience, not an exact measurement contract. For arbitrary-length localized text where clipping would be a correctness failure, prefer a native wrapping `TextWindow` inside explicit/flexible bounds or a scrolling layout. Those structures remain usable even when the estimate differs slightly from Miliastra's actual line breaking.
 
 For localized paragraphs inside a `ScrollColumn`, `fitContentHeight` can still remove the need to guess line counts or insert manual `\n` characters when the surrounding scroll layout can tolerate small measurement differences. The resolved language is allowed to wrap naturally and the surrounding scroll content grows with it.
@@ -211,6 +284,7 @@ UI.Icon(action, {
 
 UI.Text(action, {
     fitWidth = true,
+    fitWidthPadding = 16,
     text = "BACK",
     textId = "Common.Back",
     size = 17,
@@ -293,6 +367,8 @@ local notes = UI.ScrollColumn(parent, {
 UI.Heading(notes.column, {
     text = "WHAT'S NEW",
     textId = "Updates.WhatsNew",
+    fitWidth = true,
+    fitWidthPadding = 16,
 })
 ```
 
