@@ -1,8 +1,8 @@
 # Hosts
 
-A **Host** is MiliUI's name for one Miliastra Client UI root together with the Miliastra **UI Index** that identifies that UI entry on the server.
+A **Host** is MiliUI's name for one active Miliastra Client UI root, together with the **UI Index** Miliastra uses to identify that UI entry.
 
-The recommended real-game setup is to put that root inside a **UI Control Group Library** entry. Miliastra decides when the Control Group exists and what Layer it uses; MiliUI manages the controls created under that root.
+In a normal project, that root comes from a **Client Control Container** inside a UI Control Group. Miliastra decides when the Control Group exists and which Layer it uses. MiliUI then manages the controls created inside that Client UI root.
 
 For a beginner-friendly setup guide, start with [ControlGroups.md](ControlGroups.md).
 
@@ -17,8 +17,8 @@ Miliastra UI entry
     -> contains a Client UI root
         -> attached Lua script starts with the UI
             -> UI.Hosts.Attach(uiIndex, "Menu", script.object)
-                -> MiliUI remembers "Menu" -> uiIndex
-                -> MiliUI owns runtime work under that root
+                -> MiliUI remembers that this root is Host "Menu"
+                -> MiliUI tracks the controls/listeners/work created for that Host
 ```
 
 Typical hosts might be:
@@ -111,7 +111,7 @@ function OnDestroy()
 end
 ```
 
-Do **not** use `UI.DestroyAll()` as normal per-Host teardown. `DestroyAll` affects all currently attached hosts; `Detach("Menu")` releases only Menu-owned runtime state.
+Do **not** use `UI.DestroyAll()` as the normal cleanup for one Host. `DestroyAll` affects every currently attached Host. `Detach("Menu")` only cleans up the live UI work belonging to Menu.
 
 ## UI Index metadata survives detach
 
@@ -241,7 +241,7 @@ A modal created inside Menu can cover Menu content. If something must always sit
 
 ## Detach versus close
 
-Host detach means the native hierarchy is temporarily unavailable. It preserves logical page state **and the Host's registered UI Index**:
+Detaching a Host means its current Client UI root is gone. MiliUI cleans up the live controls/listeners tied to that root, but keeps remembered Page state **and the Host's registered UI Index**:
 
 ```lua
 UI.Hosts.Detach("Menu")
@@ -253,6 +253,6 @@ Actual page closure is separate:
 UI.Pages.Close("Updates")
 ```
 
-This distinction allows teleport/native-root recreation to preserve open pages and remembered component state without making host attachment perform hidden work.
+This difference matters when Miliastra recreates the UI, such as during a teleport. Detach can remove the old live root without telling MiliUI that the user intentionally closed every Page.
 
 See [RuntimeLifecycle.md](RuntimeLifecycle.md) for the full teardown/recreation sequence and [Pages.md](Pages.md) for page behavior inside a host.
