@@ -2,17 +2,17 @@
 
 These examples are deliberately small and are intended to be read in order.
 
-1. **MiliUIGlobal.lua** — recommended shared template setup, optional project-wide Button audio, and the optional Player-registration hook.
-2. **HelloMiliUI.lua** — the barebones first interface: Host, Screen, intrinsic Column, Heading, and Button.
-3. **PolishedHelloMiliUI.lua** — the same idea with localization fallback text, semantic styling, shared sound, controller-ready input, and diagnostics-friendly names.
+1. **MiliUIGlobal.lua** — shared MiliUI setup used by all interfaces, plus optional project-wide Button audio and Player registration.
+2. **HelloMiliUI.lua** — the smallest first interface: Host, Screen, Column, Heading, and Button.
+3. **PolishedHelloMiliUI.lua** — the same idea with localization, shared sound, controller-ready input, clearer control names, and theme-based Button styling.
 4. **SimpleMenu.lua** — a small localized vertical menu using fit-content Buttons with a useful minimum width.
 5. **SimpleSettings.lua** — a small form showing when fixed control width is intentional rather than accidental.
 
-The examples intentionally prefer MiliUI's higher-level layout features over manual coordinate arithmetic:
+The examples prefer MiliUI's layout helpers instead of manually calculating the position of every control:
 
-- text uses `fitWidth` when its rectangle should follow content;
-- Buttons use `fitContent` when their label should determine size;
-- Rows/Columns use content fitting and gaps instead of hand-positioning every child;
-- explicit dimensions remain appropriate when the design itself requires a shared width/height, such as a settings form or data viewport.
+- text uses `fitWidth` when the text box should grow with the text;
+- Buttons use `fitContent` when the label should decide the Button's size;
+- Rows and Columns use automatic sizing and `gap` instead of manually positioning every child;
+- fixed width/height values are still useful when the design actually calls for them, such as a settings form or data area.
 
 Read the [Quick Start](../../QUICK_START.md) first for the editor setup, complete Client UI template list, and a block-by-block explanation of the starter code.

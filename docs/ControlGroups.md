@@ -1,6 +1,6 @@
 # Control Groups and MiliUI Hosts
 
-For most games, the easiest way to use MiliUI is to let **Miliastra own when a UI exists** and let **MiliUI own what happens inside that UI**.
+For most games, the easiest setup is to let **Miliastra decide when a UI Control Group exists**, then let **MiliUI build and manage the controls inside that Control Group's Client Control Container**.
 
 The recommended setup is:
 
@@ -25,8 +25,8 @@ There are four different things involved. Keeping them separate makes the system
 | --- | --- | --- |
 | **UI Control Group** | A prefab / packaged UI instance with a Layer and UI Index | Miliastra |
 | **Client Control Container** | The native root MiliUI is allowed to build under | Miliastra |
-| **MiliUI Host** | MiliUI's name and runtime ownership for that root | MiliUI |
-| **MiliUI Page** | A logical screen inside one host | MiliUI |
+| **MiliUI Host** | MiliUI's name for one active Client UI root, such as `"Menu"` | MiliUI |
+| **MiliUI Page** | One logical screen inside a Host, such as Settings or Inventory | MiliUI |
 
 Rather than mapping these concepts to a real-world object, follow the ownership chain directly:
 
@@ -35,13 +35,13 @@ Miliastra UI Control Group
 ├── UI Index: the integer identity used by Miliastra/server UI logic
 ├── Layer: ordering against other Control Groups
 └── Client Control Container: the native root created for this UI
-    └── MiliUI Host: MiliUI's stable name/ownership for that live root
+    └── MiliUI Host: MiliUI's name for this active root
         ├── Page: one logical screen
         ├── Page: another logical screen
-        └── controls/listeners/tweens owned by this Host
+        └── controls/listeners/tweens created for this Host
 ```
 
-The important boundary is simple: **Miliastra owns Control Group existence and cross-group Layer ordering; MiliUI owns the UI created inside each attached root.** Pages can be reordered inside one Host, but MiliUI does not move one Control Group above another.
+The important boundary is simple: **Miliastra decides whether each Control Group exists and which Control Group Layer is above another. MiliUI manages the controls created inside each attached Client UI root.** Pages can be reordered inside one Host, but MiliUI does not change the Layer order between separate Control Groups.
 
 ## What is global and what is per Host?
 
@@ -447,7 +447,7 @@ means the logical page is no longer open. It is removed from that host's open-pa
 UI.Hosts.Detach("Menu")
 ```
 
-means the native Menu root is gone. MiliUI releases live native references, listeners, tweens, input ownership, and bindings, but keeps logical open-page state and the Host's UI Index mapping.
+means the Menu's Client UI root is gone. MiliUI stops using the controls, listeners, animations/tweens, and other live UI work that belonged to that root, but it keeps the remembered Page state and the Host's UI Index.
 
 Do not use `Close` as a substitute for native host teardown, and do not use `Detach` as a substitute for a logical page close.
 

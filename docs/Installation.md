@@ -6,12 +6,12 @@ MiliUI Manager is the recommended way to install and update MiliUI on Windows.
 
 The Manager:
 
-- scans for Miliastra projects;
+- looks for Miliastra projects on your computer;
 - lets you choose exactly one project at a time;
-- detects whether MiliUI is missing, current, or different;
-- backs up an existing MiliUI folder before replacement;
+- tells you whether MiliUI is missing, already current, or different from the official version;
+- backs up an existing MiliUI folder before replacing it;
 - installs the official production runtime;
-- verifies the downloaded runtime before installation.
+- checks the downloaded file before installing it.
 
 A managed project contains only:
 
@@ -33,15 +33,15 @@ The readable MiliUI development source is not installed into game projects.
 
 ## Updating
 
-Once remote updates are enabled for the public beta, the Manager will check the official public release manifest and offer the newest runtime.
+Once remote updates are enabled for the public beta, the Manager will check MiliUI's small online release file to see which runtime version is current.
 
 The update flow is designed to:
 
 1. download the official runtime;
-2. verify its SHA-256 digest;
+2. check its SHA-256 file hash (a fingerprint used to confirm the file matches the official release);
 3. back up the existing MiliUI folder;
-4. atomically install the new runtime;
-5. leave other project files untouched.
+4. replace the MiliUI runtime in one controlled step;
+5. leave the rest of your project files untouched.
 
 ## Manual installation
 
@@ -55,7 +55,7 @@ If replacing an existing install manually, make your own backup first.
 
 ## Development/custom installs
 
-MiliUI Manager intentionally treats a MiliUI folder containing additional framework files as a development/custom install. Replacing it with the production build removes those extra files from the project after creating a backup.
+If your MiliUI folder contains extra framework files instead of only the normal production `init.lua`, the Manager treats it as a development/custom install. If you choose to replace it with the production build, the Manager creates a backup first and then installs the normal production folder.
 
 ## IntelliSense
 

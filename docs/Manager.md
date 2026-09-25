@@ -6,15 +6,15 @@ MiliUI Manager is the recommended Windows installer/updater for MiliUI.
 
 The Manager:
 
-- finds Miliastra projects under the normal local project-storage paths;
+- finds Miliastra projects in the normal project folders on your computer;
 - lets you select exactly one project at a time;
 - can also accept a project folder manually;
-- detects missing/current/different/custom MiliUI installations;
-- checks the official MiliUI release manifest;
+- tells you whether MiliUI is missing, current, different, or a custom/development install;
+- checks MiliUI's official online release information;
 - downloads the current official runtime when needed;
-- verifies the runtime's SHA-256 digest before installation;
+- checks the runtime's SHA-256 file hash before installation to make sure the download matches the official file;
 - backs up an existing MiliUI folder;
-- atomically replaces only the selected project's MiliUI folder.
+- safely replaces only the selected project's MiliUI folder.
 
 It intentionally does not provide an "update every project" button.
 
@@ -22,7 +22,7 @@ It intentionally does not provide an "update every project" button.
 
 The Manager contains the MiliUI runtime that was current when that Manager build was released.
 
-If the online update check is unavailable, the bundled runtime remains usable.
+If the online update check is unavailable, you can still install the runtime bundled with that Manager version.
 
 ## Files installed into a project
 
@@ -54,4 +54,4 @@ Downloaded verified runtimes are cached under:
 
 Most MiliUI runtime updates do not require a new Manager.
 
-If a release requires a newer Manager, the release manifest declares a minimum Manager version and the old Manager will tell you to update it before installing that runtime.
+If a runtime release needs a newer Manager, the online release information includes the minimum Manager version. An older Manager will tell you to update the Manager before installing that runtime.

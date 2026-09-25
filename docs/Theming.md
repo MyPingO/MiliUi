@@ -178,7 +178,11 @@ UI.Theme.Apply({
 
 ## Sound defaults
 
-`Theme.sounds` stores optional semantic audio resource IDs. MiliUI does not ship guessed sound IDs; projects opt in with their own configured audio resources.
+`Theme.sounds` stores optional audio resource IDs for common UI sounds.
+
+These are the actual SFX/audio resource IDs from Miliastra. Find the sound you want to use in Miliastra, copy its resource ID, and use that number here.
+
+MiliUI does not guess which sound your project wants, so these values are left unset until you configure them.
 
 ```lua
 UI.Theme.Apply({
@@ -189,7 +193,11 @@ UI.Theme.Apply({
 })
 ```
 
-`buttonClick` controls the MiliUI-managed click sound for Buttons created afterward. MiliUI captures the Preset Button template's configured `clickAudioId` as the fallback, silences native playback, and plays that audio only after an accepted click. This prevents a drag-to-scroll gesture from making a premature button sound. `sliderCommit` is opt-in and plays only after an interaction actually changed the Slider value and then committed it.
+`buttonClick` becomes the normal click sound for MiliUI Buttons created afterward. If you do not set it, MiliUI can fall back to the click sound configured on the Preset Button template.
+
+MiliUI plays the Button sound only after the press is accepted as a real click. This prevents a drag inside a ScrollArea from playing a click sound when the user was only trying to scroll.
+
+`sliderCommit` is optional and plays after the user actually changes a Slider value and finishes the interaction.
 
 Per-instance `clickAudioId` and `commitAudioId` props override these shared sound defaults.
 
