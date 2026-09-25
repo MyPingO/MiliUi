@@ -529,6 +529,67 @@ Use `updateItem` to react visually to state changes rather than building a secon
 
 If replacement behavior is desired, implement that game policy explicitly. For mutually-exclusive behavior, `maximumSelected = 1` is supported.
 
+## Do not leave raw text without a sizing strategy
+
+A raw `UI.Text`, `UI.Label`, `UI.Caption`, or `UI.Heading` can render correctly in English and then clip when the resolved string is longer.
+
+Avoid examples like:
+
+```lua
+UI.Text(parent, {
+    text = "Overview page",
+    textId = "Tabs.Overview.Page",
+})
+```
+
+For short single-line text, make the width intrinsic:
+
+```lua
+UI.Text(parent, {
+    text = "Overview page",
+    textId = "Tabs.Overview.Page",
+    fitWidth = true,
+    fitWidthPadding = 16,
+})
+```
+
+Because Miliastra does not expose native preferred text width, `fitWidth` is estimated. If a specific heading/font still clips at runtime, add explicit breathing room:
+
+```lua
+UI.Heading(parent, {
+    text = "Hello, MiliUI!",
+    fitWidth = true,
+    fitWidthPadding = 16,
+})
+```
+
+For a fixed-width line, keep the width constrained but allow the font to adapt:
+
+```lua
+UI.Label(parent, {
+    fillWidth = true,
+    text = "A localized status label",
+    textId = "Status.Label",
+    adaptiveFontSize = true,
+    minimumFontSize = 12,
+})
+```
+
+For prose that may wrap, use a `TextWindow` with natural wrapped height:
+
+```lua
+UI.TextWindow(parent, {
+    fillWidth = true,
+    fitContentHeight = true,
+    interactable = false,
+    showScrollBar = false,
+    text = "A longer explanation that should be allowed to wrap.",
+    needsTranslation = false,
+})
+```
+
+Do not solve wrapped prose by guessing one English-sized fixed height. See `IntrinsicSizing.md` and `TextGeometry.md` for the full sizing rules.
+
 ## When a diagnostic warning looks impossible
 
 Before changing framework code, check these in order:
