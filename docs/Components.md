@@ -60,6 +60,8 @@ Raw text controls use `text`, `textId`, `needsTranslation`, and optional `args` 
 UI.Text(parent, {
     text = "PLAY",
     textId = "MainMenu.Play",
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 ```
 
@@ -148,16 +150,21 @@ UI.Heading(parent, {
     text = "SETTINGS",
     textId = "Settings.Title",
     fitWidth = true,
+fitWidthPadding = 16,
 })
 
 UI.Label(parent, {
     text = "Music",
     textId = "Settings.Music",
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 
 UI.Caption(parent, {
     text = "v1.0",
     needsTranslation = false,
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 ```
 
@@ -234,6 +241,8 @@ controllerFocusIndicator = {
 
 Set `animation = false` to keep a static selector, or
 `controllerFocusIndicator = false` to disable the selector entirely.
+
+For controller navigation between regions, explicit directional targets, programmatic focus, and navigation isolation, see [ControllerSupport.md](ControllerSupport.md).
 
 Global creation-time defaults live under `UI.Theme.controllerFocusIndicator`:
 
@@ -607,6 +616,8 @@ local tabs = UI.Tabs(parent, {
 UI.Text(tabs:GetContent(1), {
     text = "Overview page",
     textId = "Tabs.Overview.Page",
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 ```
 
@@ -688,10 +699,15 @@ UI.Shell(panel, {
 ## ToastManager
 
 ```lua
-local toasts = UI.ToastManager(page, {
-    x = 720,
-    y = 400,
+local toasts = UI.ToastManager(screen.root, {
+    anchorX = 1,
+    anchorY = 1,
+    pivotX = 1,
+    pivotY = 1,
+    x = -36,
+    y = -36,
     width = 380,
+    height = 420,
 })
 
 toasts:Show({
@@ -726,6 +742,8 @@ local modal = UI.Modal(page, {
 UI.Text(modal.content, {
     text = "Build any MiliUI content here.",
     textId = "Modal.Example.Body",
+    fitWidth = true,
+fitWidthPadding = 16,
 })
 
 modal:Open()
@@ -800,19 +818,24 @@ Fullscreen controls do not expose regular UI Animation's native `PlayAnimation()
 
 ## Native escape hatch
 
-Use `UI.Native` when an editor-created Client UI template has specialized behavior that MiliUI should not pretend to normalize.
+Use `UI.Native` when an editor-created Client UI template has specialized behavior that MiliUI should not pretend to normalize. It instantiates the supplied template and applies normal layout props; the return value is the raw native Client UI control.
 
 ```lua
-local effect = UI.Native(
+local nativeControl = UI.Native(
     parent,
-    script:GetParam("UIAnimationTemplateId"),
+    script:GetParam("SpecialNativeTemplateId"),
     {
-        name = "SparkleEffect",
-        x = 120,
-        y = 20,
+        name = "ProjectSpecificControl",
+        width = 320,
+        height = 120,
     }
 )
+
+nativeControl:SetVisible(false)
+nativeControl:SetVisible(true)
 ```
+
+The template index must refer to a real editor Client UI template. A harmless template such as a KeyHint is valid for verifying the escape hatch itself. In production code, prefer a dedicated MiliUI wrapper when one already covers that native control.
 
 For a text-bearing native control:
 
@@ -854,20 +877,25 @@ local textWindow = UI.TextWindow(parent, {
 
 ## Native GridScroller
 
-Requires `templates.gridScroller`:
+Requires `templates.gridScroller`.
+
+The GridScroller is a native repeated-item scrolling surface for things such as inventories, rosters, level lists, and other grids of editor-authored cells. It does not invent item visuals. `itemPrefabIndex` points to an editor-created Client UI item template, and Miliastra clones/reuses that template for visible cells. The refresh callback receives each runtime item control so game code can populate the prefab.
 
 ```lua
 local grid = UI.GridScroller(parent, {
     width = 700,
     height = 440,
     itemPrefabIndex = 12,
-    scrollProgress = 1,
 })
 
 grid:Refresh(50, function(control, runtimeIndex)
-    -- Use runtimeIndex exactly as supplied by the host.
+    -- Populate this runtime item using runtimeIndex exactly as supplied.
 end)
+
+grid:SetProgress(1)
 ```
+
+If the configured item prefab is visually blank and the callback does not populate it, the GridScroller will also look blank even though item creation succeeded. Runtime testing currently shows the callback index is zero-based (`0` through `itemCount - 1`), so use `runtimeIndex` exactly as supplied rather than assuming Lua-style 1-based indexing. When an exact initial position matters, set it after `Refresh`, because the native refresh can change scroll position.
 
 `SetProgress` clamps to `0-1` and preserves native direction. Runtime testing confirms a vertical GridScroller uses `1 = top/start` and `0 = bottom/end`.
 
