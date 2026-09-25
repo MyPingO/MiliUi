@@ -169,30 +169,152 @@ For the first example below, replace `1001` with your actual UI Index.
 
 ## 6. Build the smallest useful MiliUI screen
 
-Attach this script to the Client Control Container:
+Attach a Lua UI Controller script to the Client Control Container.
+
+For this first screen, build it in small pieces so each part has one clear job. After the walkthrough, the complete copy/paste version is shown in one block.
+
+### 6.1 Load MiliUI and name this UI
 
 ```lua
 local UI = require("MiliUI/init")
 
--- Miliastra owns this integer. Replace it with this Control Group's UI Index.
 local UI_INDEX = 1001
+local HOST_ID = "Quick Start"
+```
 
--- This is MiliUI's stable name for the native UI root.
+`require("MiliUI/init")` loads the installed MiliUI runtime.
+
+`UI_INDEX` is Miliastra's integer identity for this Control Group. Replace `1001` with the real UI Index from your project.
+
+`HOST_ID` is MiliUI's stable name for this live UI root. The UI Index and Host ID identify the same interface at two different layers: Miliastra owns the numeric Control Group identity, while MiliUI uses the Host name for runtime ownership and cleanup.
+
+### 6.2 Attach the Client Control Container as a Host
+
+Start the controller with:
+
+```lua
+function OnStart()
+    UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
+end
+```
+
+`script.object` is the Client Control Container this script is attached to.
+
+`UI.Hosts.Attach(...) ` tells MiliUI that this native root currently exists. Controls, listeners, tweens, bindings, and other runtime resources created under it can now be owned and cleaned up as part of this Host.
+
+Do not attach this Host from the persistent Global setup script. The controller that actually owns the Client Control Container should attach and detach it.
+
+### 6.3 Create a screen
+
+Add this inside `OnStart()` after `Attach`:
+
+```lua
+local screen = UI.Screen(script.object, {
+    padding = 40,
+    background = "page",
+    showCursor = true,
+})
+```
+
+`UI.Screen` creates the page-sized root for this interface.
+
+For this simple interactive example:
+
+- `padding = 40` keeps content away from the screen edges;
+- `background = "page"` uses the theme's normal page background;
+- `showCursor = true` makes the cursor available while this UI is open.
+
+### 6.4 Add a content layout
+
+Now add a small vertical layout:
+
+```lua
+local content = UI.Column(screen, {
+    name = "QuickStartContent",
+    fitContent = true,
+    gap = 16,
+    align = "center",
+})
+
+UI.Center(content)
+```
+
+A `Column` stacks its children vertically.
+
+`fitContent = true` lets this simple container size itself from its children instead of hard-coding a rectangle that may stop fitting when content changes.
+
+`UI.Center(content)` places the finished group in the middle of the screen.
+
+### 6.5 Add text and a Button
+
+Create a heading:
+
+```lua
+UI.Heading(content, {
+    text = "Hello, MiliUI!",
+    needsTranslation = false,
+    fitWidth = true,
+    fitWidthPadding = 16,
+})
+```
+
+For short single-line text, `fitWidth = true` lets the width follow the resolved text. `fitWidthPadding = 16` adds extra breathing room because Miliastra does not expose exact native preferred text width and some font/style combinations can otherwise clip close to the edge.
+
+Now add a content-sized Button:
+
+```lua
+local button = UI.Button(content, {
+    label = {
+        text = "CLICK ME",
+        needsTranslation = false,
+    },
+    fitContent = true,
+})
+
+button:OnClick(function()
+    print("MiliUI button clicked!")
+end)
+```
+
+`fitContent = true` sizes the Button from its label and padding rather than assuming one fixed English-sized width.
+
+`OnClick` registers the normal activation callback. MiliUI Buttons also participate in native controller focus/navigation by default.
+
+### 6.6 Detach the Host when Miliastra removes this UI
+
+Add the controller cleanup function:
+
+```lua
+function OnDestroy()
+    if UI.Hosts.IsAttached(HOST_ID) then
+        UI.Hosts.Detach(HOST_ID)
+    end
+end
+```
+
+When Miliastra removes this Control Group, its Client Control Container no longer exists. `Detach` releases only the live runtime resources owned by this Host.
+
+Do not use `UI.DestroyAll()` as normal per-Control-Group cleanup because it affects every currently attached MiliUI Host.
+
+### 6.7 Complete copy/paste example
+
+The pieces above combine into this small controller:
+
+```lua
+local UI = require("MiliUI/init")
+
+local UI_INDEX = 1001
 local HOST_ID = "Quick Start"
 
 function OnStart()
-    -- Attach the Client Control Container to MiliUI.
     UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
 
-    -- Screen creates the page-sized MiliUI root and handles the normal content area.
     local screen = UI.Screen(script.object, {
         padding = 40,
         background = "page",
         showCursor = true,
     })
 
-    -- A fit-content Column sizes itself from its children instead of requiring
-    -- hand-authored width/height values for this simple layout.
     local content = UI.Column(screen, {
         name = "QuickStartContent",
         fitContent = true,
@@ -202,14 +324,13 @@ function OnStart()
 
     UI.Center(content)
 
-    -- fitWidth lets the heading follow the actual text width.
     UI.Heading(content, {
         text = "Hello, MiliUI!",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
-    -- fitContent lets the Button size from its label + padding.
     local button = UI.Button(content, {
         label = {
             text = "CLICK ME",
@@ -224,26 +345,13 @@ function OnStart()
 end
 
 function OnDestroy()
-    -- Detach only the Host owned by this Control Group.
     if UI.Hosts.IsAttached(HOST_ID) then
         UI.Hosts.Detach(HOST_ID)
     end
 end
 ```
 
-### Why each block exists
-
-The two constants separate Miliastra's UI identity (`UI_INDEX`) from MiliUI's logical identity (`HOST_ID`).
-
-`UI.Hosts.Attach(...)` tells MiliUI that this native root currently exists. MiliUI can then own controls, listeners, tweens, and cleanup under that Host.
-
-`UI.Screen(...)` gives the interface a normal page/content root. `showCursor = true` is appropriate for this mouse-driven test screen.
-
-`UI.Column(..., { fitContent = true })` is used instead of hard-coding a container rectangle because this tiny layout should naturally follow its contents.
-
-The Heading uses `fitWidth = true`, and the Button uses `fitContent = true`. Fixed dimensions are still useful when the design actually requires them, but they should not be added only because one English string happens to fit.
-
-`OnDestroy()` detaches only this Host. Do not use `UI.DestroyAll()` as normal Control Group cleanup because that would affect unrelated MiliUI Hosts too.
+This example intentionally stays small. The persistent setup from sections 2-4 already owns shared template initialization and optional Player registration; this controller only owns its own Host lifecycle and UI.
 
 ## 7. Test it
 
@@ -320,6 +428,7 @@ function OnStart()
         text = "WELCOME",
         textId = "QuickStart.Welcome",
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Label(content, {
@@ -327,6 +436,7 @@ function OnStart()
         text = "Your MiliUI setup is working.",
         textId = "QuickStart.Message",
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     local continueButton = UI.Button(content, {
