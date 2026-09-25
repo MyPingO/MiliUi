@@ -653,12 +653,14 @@ A simple way to think about the split is:
 
 ```text
 MiliUI Global.lua      -> setup shared by all interfaces
-Menu UI Controller.lua -> handles one Control Group appearing/disappearing
-Main Menu Page.lua     -> builds the actual menu controls
-UI Data.lua            -> stores editable game/menu data
+Menu UI Controller.lua -> attached to the Control Group and handles its related logic when the Control Group is created or removed
+Main Menu Page.lua     -> used by the controller to build the actual menu controls
+UI Data.lua            -> used by the Page while building the menu; stores editable game/menu data
 ```
 
 You do not need to split a tiny interface into several files immediately. Do it when the project becomes large enough that keeping everything in one file is harder to manage.
+
+This is called **separation of concerns**: each file has one main job instead of one script trying to handle setup, Control Group lifecycle, UI layout, and editable data all at once. Good separation keeps code cleaner, easier to read, easier to maintain, and usually much easier to debug when something goes wrong.
 
 Read [Recommended Game Project Structure](docs/ProjectStructure.md) when you are ready for that step.
 
