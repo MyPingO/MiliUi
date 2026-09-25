@@ -423,6 +423,17 @@ The `IsAttached` check simply makes sure the Host is currently attached before t
 
 For normal Control Group cleanup, detach this one Host instead of calling `UI.DestroyAll()`. `UI.DestroyAll()` is much broader: it affects all currently attached MiliUI Hosts, including other interfaces that may still be open.
 
+#### Detach is different from Close
+
+You may also see `UI.Pages.Close(...)` in other MiliUI examples. It has a different job.
+
+- **Detach** is used when the Client Control Container for a Host disappears. It tells MiliUI that the native UI root is gone.
+- **Close** is used when you are working with `UI.Pages` and the user or game is finished with one logical Page.
+
+For example, closing a Settings Page does not automatically mean the whole Menu Control Group disappeared. The Menu Host may still be attached and showing other Pages.
+
+This Quick Start does not use `UI.Pages` yet, so its `OnDestroy()` only needs to detach the Host.
+
 ### 6.8 Complete copy/paste example
 
 All of the pieces above combine into this small controller:
