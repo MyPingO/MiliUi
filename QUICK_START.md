@@ -125,9 +125,9 @@ For a very small project with only one interface, putting the same `UI.InitTempl
 
 ## 4. Optional: register the local Player Entity
 
-Some projects need the local Player Entity in client Lua, usually because one of their ServerSignals expects a Player Entity parameter.
+Some projects need a reference to the local Player Entity in their Client Scripts, often because a Client Script sends a signal to the server and that signal requires a Player Entity parameter.
 
-MiliUI can store that Player Entity so different UI scripts can access the same reference:
+MiliUI can store that Player Entity so different UI scripts can access the same reference when they need it:
 
 ```lua
 function OnStart()
