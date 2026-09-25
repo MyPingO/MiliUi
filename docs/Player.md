@@ -1,14 +1,14 @@
 # Player Context
 
-MiliUI can optionally keep the local Player Entity reference available to every Lua UI module in the same client runtime.
+MiliUI can optionally keep a reference to the local Player Entity so your Client Scripts and UI modules can use the same reference.
 
-This is useful when client Lua needs to send a server signal whose schema requires an explicit Player Entity parameter.
+Some projects need this because a Client Script sends a signal to the server and that signal requires a Player Entity parameter.
 
-MiliUI does not discover the player automatically and does not impose any server-signal naming or parameter conventions on game code. The game remains responsible for providing the authoritative Player Entity reference.
+MiliUI does not try to guess which Player Entity is the local player. Your game still provides that reference; MiliUI simply stores it in one shared place after it is received.
 
 ## Recommended setup
 
-Use a persistent client Global Script so registration is not tied to whether a particular UI Control Group is currently active.
+Use a persistent client Global Script so the Player registration is available even when a particular UI Control Group is not currently on screen.
 
 The registration signal must send the local Player Entity as its first parameter.
 
@@ -29,7 +29,7 @@ end
 
 No extra signal-name Script Parameter is required.
 
-The `script` argument is still required. In Miliastra, a required Lua module has its own `script` context rather than automatically inheriting the Script instance that called it. Passing the persistent Script instance explicitly ensures MiliUI registers and later unregisters the signal handler on the correct Script.
+The `script` argument tells MiliUI which Script should listen for the signal. Pass the Global Script's `script` value here. Required Lua modules have their own `script` context, so MiliUI should not guess which Script you meant.
 
 When the signal arrives, MiliUI stores its first parameter as the local Player Entity reference. Sending the registration signal again replaces the stored Entity, so games may refresh the reference if their player lifecycle requires it.
 
