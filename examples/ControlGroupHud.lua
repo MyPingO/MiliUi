@@ -45,12 +45,14 @@ function OnStart()
         text = "HUD",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Label(content, {
         text = "Control Group = visible HUD",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 end
 
