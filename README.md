@@ -2,25 +2,25 @@
 
 MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable components, responsive layouts, theming, localization helpers, controller support, scrolling, navigation, Pages, Session state, motion, audio, and other UI infrastructure for Miliastra creators.
 
-> **Public Beta preparation**
+> **Public Beta — v0.9.0-beta.1**
 >
-> This repository is the public home for MiliUI releases, documentation, examples, and issue tracking. The framework's development source remains private.
+> MiliUI is available for real Miliastra creator testing. This repository is the public home for releases, documentation, examples, and issue tracking. The framework's development source remains private.
 
 ## Start here
 
 1. Read the [Quick Start](QUICK_START.md) for installation, the complete Client UI template setup, and a first working interface.
-2. Install MiliUI with **MiliUI Manager** when the first public beta release is available.
+2. Install MiliUI with **MiliUI Manager** from the latest GitHub Release.
 3. Follow the [getting-started examples](examples/getting-started/README.md), beginning with the shared Global setup and barebones first UI.
 4. Read the [Project Structure guide](docs/ProjectStructure.md) when your game grows beyond one interface.
 5. Use the [Documentation Index](docs/README.md) for the full API guides.
 
 ## Downloads
 
-Public beta downloads will be published under **GitHub Releases**.
+Public beta downloads are published under **GitHub Releases**.
 
 The recommended installation path is **MiliUI Manager**, which installs the production runtime into one selected Miliastra project and creates a backup before replacing an existing installation.
 
-A manual runtime download will also be provided for advanced users.
+Advanced users can also download the production `MiliUI-init.lua` runtime directly.
 
 ## What is public here?
 
@@ -48,4 +48,4 @@ In short: you may use official MiliUI releases in your Miliastra projects, but y
 
 ## Status
 
-The first planned public version is **v0.9.0-beta.1**. APIs are intended to be usable in real projects, but changes may still occur during the public beta as creator feedback reveals problems.
+The current public beta is **v0.9.0-beta.1**. APIs are intended to be usable in real projects, but changes may still occur before 1.0 as creator feedback reveals problems.
