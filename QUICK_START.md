@@ -528,7 +528,9 @@ From here, you can add features such as localization, shared Button sounds, bett
 
 ### Add a project-wide Button sound
 
-If most Buttons in your project should use the same click sound, add a positive Audio Resource ID as a Script Parameter on the shared MiliUI setup script. In this example the parameter is named `Button Click Audio ID`.
+If most Buttons in your project should use the same click sound, add a positive Audio Resource ID as a Script Parameter on the **Global Script (or whatever shared MiliUI setup script you are using)**. In this example the parameter is named `Button Click Audio ID`.
+
+The Audio Resource ID is the actual ID of the SFX/audio resource you want to play. You can find that ID on the sound/SFX resource in Miliastra and use that number here.
 
 Then add:
 
