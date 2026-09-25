@@ -47,12 +47,14 @@ local function BuildMainMenu(parent)
         text = "MAIN MENU",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Label(content, {
         text = "This page belongs to the Example Menu host.",
         needsTranslation = false,
         fitWidth = true,
+        fitWidthPadding = 16,
     })
 
     UI.Toggle(content, {
