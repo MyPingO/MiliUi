@@ -142,7 +142,7 @@ slider:SetValue(50, true)
 Primitive return values expose native control methods:
 
 ```lua
-local text = UI.Text(parent, { text = "Hello" })
+local text = UI.Text(parent, { text = "Hello", fitWidth = true, fitWidthPadding = 16 })
 text:SetAnchoredPosition(20, -10)
 text:GetSizeDelta()
 ```
