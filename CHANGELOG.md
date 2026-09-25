@@ -2,7 +2,7 @@
 
 All notable public MiliUI releases will be recorded here.
 
-## [0.9.0-beta.1] - Unreleased
+## [0.9.0-beta.1] - 2026-09-25
 
 Initial public beta.
 
