@@ -14,6 +14,7 @@ Start with:
 ## Building interfaces
 
 - [Intrinsic and Localization-Safe Sizing](IntrinsicSizing.md)
+- [Text Geometry](TextGeometry.md)
 - [Responsive Layout](ResponsiveLayout.md)
 - [Responsive Foundation](ResponsiveFoundation.md)
 - [Responsive Components](ResponsiveComponents.md)
@@ -26,6 +27,7 @@ Start with:
 - [Anchored Overlays](AnchoredOverlays.md)
 - [Masking](Masking.md)
 - [Data Views](DataViews.md)
+- [Controller Support](ControllerSupport.md)
 
 ## Application structure
 
