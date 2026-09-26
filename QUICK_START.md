@@ -44,7 +44,7 @@ Open the **UI Control Group Library** and switch to **Server Control Templates**
 
 Create a **Client Control Container** Server Template, give it a clear name such as `Hello MiliUI`, then open it for editing.
 
-Open the Client Control Container for editing, select its root `ContainerControl`, then open that control's **Script** tab and add:
+Open the Client Control Container for editing, go to its **Script** tab, and add:
 
 ```text
 Hello MiliUI Controller
@@ -52,9 +52,9 @@ Hello MiliUI Controller
 
 [![Create a Client Control Container Server Template and attach the controller script](docs/images/getting-started/attach-ui-controller-script.png)](docs/images/getting-started/attach-ui-controller-script.png)
 
-The **Client Control Container Server Template** is what the server activates. Inside it is a root-level `ContainerControl`, and that `ContainerControl` is the actual Client UI root.
+The **Client Control Container Server Template** is what the server activates. When it is created for a player, its Client UI hierarchy is instantiated and the controller script starts.
 
-The controller script is attached to that root `ContainerControl`. When Miliastra creates the Server Template for a player, the `ContainerControl` is created and the attached Client Script starts. In that script, `script.object` refers to the `ContainerControl` the script is mounted on.
+Inside a Client Script, `script.object` is the live Client Control instance that Miliastra mounted that script on. MiliUI uses that object as this controller's native Host root.
 
 ## 3. Open the controller script
 
@@ -100,7 +100,7 @@ UI_INDEX -> how Miliastra identifies this UI entry
 HOST_ID  -> how MiliUI identifies this interface
 ```
 
-### 4.2 Attach the root ContainerControl as a Host
+### 4.2 Attach this interface as a Host
 
 Add:
 
@@ -112,13 +112,13 @@ end
 
 A **Host** is MiliUI's name for one active UI root.
 
-This line registers the current root `ContainerControl` as the live root for the `"Hello MiliUI"` Host.
+This line registers `script.object` as the live native root for the `"Hello MiliUI"` Host.
 
 It does **not** decide where every control is physically placed. The parent you pass to `UI.Screen`, `UI.Button`, and other MiliUI controls does that.
 
 The Host tells MiliUI which interface owns the controls and related runtime work created under this root, such as listeners, tweens, layout state, and Pages. That lets MiliUI manage or clean up one interface without affecting another Host such as a HUD or overlay.
 
-Because this script is attached to the root `ContainerControl`, `script.object` refers to that control.
+`script.object` comes from Miliastra and refers to the Client Control instance this script is mounted on.
 
 ### 4.3 Create the Screen
 
@@ -142,7 +142,7 @@ UI.SomeControl(parent, {
 
 The **first argument** is the parent: where the new control should be placed.
 
-Here the parent is `script.object`, so the Screen is created inside the root `ContainerControl`.
+Here the parent is `script.object`, so the Screen is created inside the native Client Control that owns this controller.
 
 The settings mean:
 
@@ -242,7 +242,7 @@ function OnDestroy()
 end
 ```
 
-Miliastra calls `OnDestroy()` when the root `ContainerControl` this script is attached to is being removed.
+Miliastra calls `OnDestroy()` when the Client Control this script is mounted on is being removed.
 
 `UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's native root is gone, so MiliUI can release the live controls, listeners, tweens, and other runtime work associated with that Host.
 
@@ -352,7 +352,7 @@ If both the interface and Log message appear, the main path is working:
 MiliUI runtime loaded
 → shared templates were initialized
 → server activated the UI
-→ root ContainerControl created
+→ Client UI hierarchy created
 → controller script started
 → Host attached
 → MiliUI created the controls
