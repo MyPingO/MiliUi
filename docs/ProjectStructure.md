@@ -92,7 +92,7 @@ Layer: project-defined
     └── Settings UI Controller.lua
 ```
 
-Only the controller scripts are attached to the Client Control Containers.
+Only the controller scripts are attached to the top-level `ContainerControl` inside each Client Control Container.
 
 `Updates Page.lua`, `Updates Data.lua`, and `Settings Page.lua` are normal modules loaded with `require(...)`.
 
@@ -224,7 +224,7 @@ All repeated mappings must agree. Do not configure `button` as one template ID i
 
 ## 4. A UI Controller handles one Control Group and Host
 
-The UI Controller is the script attached to the Client Control Container inside the Control Group.
+The UI Controller is normally attached to the top-level `ContainerControl` inside that Client Control Container. Client Controls can each have their own attached scripts; attaching the controller to the root makes `script.object` the native root MiliUI should use for that Host.
 
 Its job is to handle the logic related to that Control Group being created or removed: attach its MiliUI Host, register/open/restore the correct Page, and detach the Host when the Control Group goes away.
 
