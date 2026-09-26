@@ -607,3 +607,31 @@ Before changing framework code, check these in order:
 11. Can the issue be reproduced in a stable state after motion settles?
 
 MiliUI diagnostics help find framework/layout problems, but the test harness, Control Group setup, Layer ordering, or lifecycle code can also be the source of the symptom.
+
+## Check the Global Script template variables
+
+If MiliUI cannot create a control correctly, check the template variables on your Global Script before changing framework code.
+
+For each template variable, make sure:
+
+1. its value is the **Index** of the matching Client Control Template;
+2. its name is spelled exactly the same as the name used in `script:GetParam(...)` inside your Global Script.
+
+For example:
+
+```lua
+button = script:GetParam("Button Template ID")
+```
+
+requires a Global Script variable named exactly:
+
+```text
+Button Template ID
+```
+
+and that variable's value should be the Index of your `PresetButton` Client Control Template.
+
+A wrong Index can point MiliUI at the wrong native template, while a misspelled variable name can make `script:GetParam(...)` return no value.
+
+See [Installation + Setup](Installation.md#7-add-the-template-ids-as-global-script-variables) for the full mapping table.
+
