@@ -382,6 +382,25 @@ Check [Installation + Setup](docs/Installation.md) and make sure:
 - its template Script Variables are filled in;
 - `UI.InitTemplates(...)` is called from the Global Script's `OnInit()`.
 
+### Check the Global Script template variables
+
+If MiliUI is failing to create controls correctly, double-check the template Script Variables on your Global Script.
+
+Make sure:
+
+- each variable contains the **Index** of the matching Client Control Template;
+- each variable name is spelled exactly the same as the name used in `script:GetParam(...)` inside your Global Script.
+
+For example:
+
+```lua
+button = script:GetParam("Button Template ID")
+```
+
+requires a Global Script variable named exactly `Button Template ID`, with its value set to the Index of your `PresetButton` Client Control Template.
+
+See [Installation + Setup](docs/Installation.md#7-add-the-template-ids-as-global-script-variables) for the full mapping table.
+
 ### `require("MiliUI/init")` cannot be resolved
 
 Make sure the installed `external_lua_file/MiliUI` folder is mapped under **Client Script Resource Explorer → Client Script Mapping → MiliUI**.
