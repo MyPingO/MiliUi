@@ -77,7 +77,7 @@ The UI Index is Miliastra's numeric identity for this UI entry. MiliUI stores th
 For example, if the editor shows:
 
 ```text
-Index: 1073741870
+Index: 1234567890
 ```
 
 start with:
@@ -85,7 +85,7 @@ start with:
 ```lua
 local UI = require("MiliUI/init")
 
-local UI_INDEX = 1073741870
+local UI_INDEX = 1234567890
 local HOST_ID = "Hello MiliUI"
 ```
 
@@ -259,7 +259,7 @@ Your full `Hello MiliUI Controller.lua` should now look like this:
 ```lua
 local UI = require("MiliUI/init")
 
-local UI_INDEX = 1073741870
+local UI_INDEX = 1234567890
 local HOST_ID = "Hello MiliUI"
 
 function OnStart()
@@ -307,7 +307,7 @@ function OnDestroy()
 end
 ```
 
-Remember to replace `1073741870` with your actual UI Index.
+Remember to replace `1234567890` with your actual UI Index.
 
 ## 6. Activate the UI from server logic
 
