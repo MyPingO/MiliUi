@@ -244,11 +244,22 @@ end
 
 Miliastra calls `OnDestroy()` when the Client Control this script is mounted on is being removed.
 
-`UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's native root is gone, so MiliUI can release the live controls, listeners, tweens, and other runtime work associated with that Host.
+`UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's native root is gone, so MiliUI can clean up the live controls, listeners, tweens, and other runtime work that belonged to it.
 
-`Detach` is different from `UI.Pages.Close(...)`. Detaching means the native Host root disappeared, while remembered Page state and the Host's UI Index can be kept for later restoration. Closing a Page means the user or game is logically done with that Page and removes it from the open-page state.
+`Detach` is different from `UI.Pages.Close(...)`. For example, imagine a `"Menu"` Host with a few Pages open:
 
-This first example does not use Pages yet, but the distinction becomes important in larger interfaces. Use `Detach` for normal cleanup of one Host. `UI.DestroyAll()` is broader and affects every currently attached Host.
+```text
+Menu
+├─ Home
+├─ Inventory
+└─ Settings
+```
+
+Closing `Settings` only means that Page is finished. The `Menu` Host can stay attached and keep showing the other Pages.
+
+Detaching `Menu` means the whole native Menu UI disappeared. Its live controls are cleaned up, but MiliUI can remember which Pages were open so they can be restored if that Host is attached again later.
+
+This Quick Start does not use Pages yet, so its `OnDestroy()` only needs to detach this Host.
 
 ## 5. Complete controller script
 
