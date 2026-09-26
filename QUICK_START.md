@@ -44,7 +44,7 @@ Open the **UI Control Group Library** and switch to **Server Control Templates**
 
 Create a **Client Control Container** Server Template, give it a clear name such as `Hello MiliUI`, then open it for editing.
 
-In the Client Control Container's **Script** tab, add:
+Open the Client Control Container for editing, select its root `ContainerControl`, then open that control's **Script** tab and add:
 
 ```text
 Hello MiliUI Controller
@@ -52,9 +52,9 @@ Hello MiliUI Controller
 
 [![Create a Client Control Container Server Template and attach the controller script](docs/images/getting-started/attach-ui-controller-script.png)](docs/images/getting-started/attach-ui-controller-script.png)
 
-The **Client Control Container** is the Server Template that creates this interface. Inside it is a root-level `ContainerControl`, and that is the actual Client UI root.
+The **Client Control Container Server Template** is what the server activates. Inside it is a root-level `ContainerControl`, and that `ContainerControl` is the actual Client UI root.
 
-The controller script is attached to that `ContainerControl`. When Miliastra creates the Server Template for a player, the root `ContainerControl` is created and the attached Client Script starts. In that script, `script.object` refers to the `ContainerControl` the script is mounted on.
+The controller script is attached to that root `ContainerControl`. When Miliastra creates the Server Template for a player, the `ContainerControl` is created and the attached Client Script starts. In that script, `script.object` refers to the `ContainerControl` the script is mounted on.
 
 ## 3. Open the controller script
 
@@ -100,7 +100,7 @@ UI_INDEX -> how Miliastra identifies this UI entry
 HOST_ID  -> how MiliUI identifies this interface
 ```
 
-### 4.2 Attach the Client Control Container as a Host
+### 4.2 Attach the root ContainerControl as a Host
 
 Add:
 
