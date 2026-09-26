@@ -20,7 +20,7 @@ Public beta runtime downloads are published under **GitHub Releases**.
 
 The recommended installation path is **MiliUI Manager**, which installs the production runtime into one selected Miliastra project and creates a backup before replacing an existing installation.
 
-For a new project, the release also includes `MiliUI Template Save File.gil`, a ready-to-use starter save with the one-time MiliUI setup and Quick Start example already configured. See [Installation + Setup](docs/Installation.md#starter-template) before entering Test Play.
+For a new project, the release also includes `MiliUI-Template-Save-File.gil`, a ready-to-use starter save with the one-time MiliUI setup and Quick Start example already configured. See [Installation + Setup](docs/Installation.md#starter-template) before entering Test Play.
 
 For VS Code editor support, install [MiliUI IntelliSense from the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense). The GitHub Release keeps a VSIX as a manual/offline fallback.
 
