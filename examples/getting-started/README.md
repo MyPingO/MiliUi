@@ -15,4 +15,4 @@ The examples prefer MiliUI's layout helpers instead of manually calculating the 
 - Rows and Columns use automatic sizing and `gap` instead of manually positioning every child;
 - fixed width/height values are still useful when the design actually calls for them, such as a settings form or data area.
 
-Read the [Quick Start](../../QUICK_START.md) first for the editor setup, complete Client UI template list, and a block-by-block explanation of the starter code.
+Complete [Installation + Setup](../../docs/Installation.md) first, then read the [Quick Start](../../QUICK_START.md) for the block-by-block first-interface walkthrough.

@@ -29,7 +29,7 @@ Think of the flow like this:
 Persistent shared setup
     -> configures MiliUI once
 
-Server activates a UI Control Group
+Server activates a Client Control Container Server Template
     -> its Client Control Container is created
         -> attached UI Controller starts
             -> attaches a MiliUI Host
@@ -58,15 +58,15 @@ Suppose a game has two independent interfaces:
 - an Updates screen;
 - a Settings screen.
 
-Each is its own Miliastra UI Control Group and can be activated or removed independently.
+Each uses its own Miliastra Client Control Container Server Template and can be activated or removed independently.
 
 A clean game-side layout could be:
 
 ```text
 Global/
-└── MiliUI Global.lua
+└── Global Script.lua
 
-Client UI Logic/
+UI Controllers/
 ├── Updates UI Controller.lua
 └── Settings UI Controller.lua
 
@@ -79,20 +79,20 @@ Game UI/
 In the UI Control Group Library, the editor-side structure might be:
 
 ```text
-Updates UI Control Group
+Updates Server Control Template
 UI Index: 1201
 Layer: project-defined
 └── Client Control Container
     └── Updates UI Controller.lua
 
-Settings UI Control Group
+Settings Server Control Template
 UI Index: 1202
 Layer: project-defined
 └── Client Control Container
     └── Settings UI Controller.lua
 ```
 
-Only the controller scripts are attached to the Client Control Containers.
+Only the controller scripts are attached to the top-level `ContainerControl` inside each Client Control Container.
 
 `Updates Page.lua`, `Updates Data.lua`, and `Settings Page.lua` are normal modules loaded with `require(...)`.
 
@@ -112,24 +112,26 @@ local UI = require("MiliUI/init")
 local function InitTemplates()
     UI.InitTemplates({
         container = script:GetParam("Container Template ID"),
-        image = script:GetParam("Image Template ID"),
         text = script:GetParam("Text Template ID"),
-        button = script:GetParam("Button Template ID"),
-        cursorArea = script:GetParam("Cursor Area Template ID"),
+        textWindow = script:GetParam("Text Window Template ID"),
+        image = script:GetParam("Image Template ID"),
         animation = script:GetParam("UI Animation Template ID"),
         fullscreenAnimation = script:GetParam("Screen Animation Template ID"),
-        gridScroller = script:GetParam("Grid Scroller Template ID"),
+        button = script:GetParam("Button Template ID"),
         keyHint = script:GetParam("Key Hint Template ID"),
-        textWindow = script:GetParam("Text Window Template ID"),
+        cursorArea = script:GetParam("Cursor Area Template ID"),
+        gridScroller = script:GetParam("Grid Scroller Template ID"),
     })
 end
 
-function OnStart()
+function OnInit()
     InitTemplates()
 end
 ```
 
 The exact parameter names are game-defined. MiliUI does not require the names above; they are simply clear editor-facing names.
+
+Use the persistent Global Script's `OnInit()` for this shared setup. At stage startup, Global Script `OnInit()` runs before Client Control scripts reach `OnStart()`, so templates are ready even when a Client Control Container is already active.
 
 For public projects, **register the complete supported template set up front** rather than trying to predict which templates the first screen needs. One copy of each supported editor control is inexpensive, keeps every current MiliUI feature available, and means later components can reuse the shared mapping without changing each UI Controller.
 
@@ -137,14 +139,14 @@ The current shared template kinds are:
 
 ```text
 ContainerControl
-ImageControl
 TextBoxControl / normal text template
-PresetButton
-CursorEventArea
+TextWindowControl
+ImageControl
 UIAnimationControl
 Fullscreen UI Animation
+PresetButton
 KeyHintControl
-TextWindowControl
+CursorEventArea
 GridScrollerControl
 ```
 
@@ -162,19 +164,19 @@ local UI = require("MiliUI/init")
 local function InitTemplates()
     UI.InitTemplates({
         container = script:GetParam("Container Template ID"),
-        image = script:GetParam("Image Template ID"),
         text = script:GetParam("Text Template ID"),
-        button = script:GetParam("Button Template ID"),
-        cursorArea = script:GetParam("Cursor Area Template ID"),
+        textWindow = script:GetParam("Text Window Template ID"),
+        image = script:GetParam("Image Template ID"),
         animation = script:GetParam("UI Animation Template ID"),
         fullscreenAnimation = script:GetParam("Screen Animation Template ID"),
-        gridScroller = script:GetParam("Grid Scroller Template ID"),
+        button = script:GetParam("Button Template ID"),
         keyHint = script:GetParam("Key Hint Template ID"),
-        textWindow = script:GetParam("Text Window Template ID"),
+        cursorArea = script:GetParam("Cursor Area Template ID"),
+        gridScroller = script:GetParam("Grid Scroller Template ID"),
     })
 end
 
-function OnStart()
+function OnInit()
     InitTemplates()
 
     UI.Player.RegisterFromSignal(
@@ -222,7 +224,7 @@ All repeated mappings must agree. Do not configure `button` as one template ID i
 
 ## 4. A UI Controller handles one Control Group and Host
 
-The UI Controller is the script attached to the Client Control Container inside the Control Group.
+The UI Controller is normally attached to the top-level `ContainerControl` inside that Client Control Container. Client Controls can each have their own attached scripts; attaching the controller to the root makes `script.object` the native root MiliUI should use for that Host.
 
 Its job is to handle the logic related to that Control Group being created or removed: attach its MiliUI Host, register/open/restore the correct Page, and detach the Host when the Control Group goes away.
 
@@ -497,7 +499,7 @@ This separation makes later edits much easier:
 Change patch notes       -> Updates Data.lua
 Change visual layout     -> Updates Page.lua
 Change native lifecycle  -> Updates UI Controller.lua
-Change shared primitives -> MiliUI Global.lua
+Change shared primitives -> Global Script.lua
 ```
 
 ---
