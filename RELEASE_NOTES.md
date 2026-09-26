@@ -14,7 +14,7 @@ MiliUI's first public beta packages the framework for real Miliastra creator tes
 - motion, managed audio, and selected native-control wrappers;
 - MiliUI Manager for installation, backup, and verified runtime updates;
 - MiliUI IntelliSense for VS Code/LuaLS, now available through the Visual Studio Marketplace;
-- ready-to-use `MiliUI Template Save File.gil` for new projects and setup reference;
+- ready-to-use `MiliUI-Template-Save-File.gil` for new projects and setup reference;
 - public Quick Start, controller guide, component docs, and beginner examples.
 
 ## Release-candidate hardening
@@ -40,7 +40,7 @@ The recommended runtime installation path is **MiliUI Manager**.
 2. Select the Miliastra project you want to use.
 3. Install MiliUI.
 
-For a new project, you can instead begin from `MiliUI Template Save File.gil`, which contains the one-time native setup and Quick Start example. After importing it, confirm the included UI Index and Client Control Template indexes as described in [Installation + Setup](https://github.com/MyPingO/MiliUI/blob/main/docs/Installation.md#starter-template).
+For a new project, you can instead begin from `MiliUI-Template-Save-File.gil`, which contains the one-time native setup and Quick Start example. After importing it, confirm the included UI Index and Client Control Template indexes as described in [Installation + Setup](https://github.com/MyPingO/MiliUI/blob/main/docs/Installation.md#starter-template).
 
 For VS Code autocomplete and hover documentation, install [MiliUI IntelliSense from the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense). The `MiliUI-IntelliSense.vsix` release asset remains available as a manual/offline fallback.
 
