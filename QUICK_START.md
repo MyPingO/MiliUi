@@ -36,7 +36,7 @@ Hello MiliUI Controller.lua
 
 [![Create the Hello MiliUI controller Client Script](docs/images/getting-started/create-test-controller-script.png)](docs/images/getting-started/create-test-controller-script.png)
 
-The `UI Controllers` folder name is only a recommendation. What matters is that the script is available in the Client Script Resource Explorer so it can be attached to a Client Control Container.
+The `UI Controllers` folder name is only a recommendation. What matters is that the script is available in the Client Script Resource Explorer so it can be attached to the root `ContainerControl` inside a Client Control Container.
 
 ## 2. Create a Client Control Container Server Template
 
@@ -44,7 +44,7 @@ Open the **UI Control Group Library** and switch to **Server Control Templates**
 
 Create a **Client Control Container** Server Template, give it a clear name such as `Hello MiliUI`, then open it for editing.
 
-Open the Client Control Container for editing, go to its **Script** tab, and add:
+Open the Client Control Container for editing. Select the top-level `ContainerControl` in the hierarchy, open that control's **Script** tab, and add:
 
 ```text
 Hello MiliUI Controller
@@ -52,9 +52,11 @@ Hello MiliUI Controller
 
 [![Create a Client Control Container Server Template and attach the controller script](docs/images/getting-started/attach-ui-controller-script.png)](docs/images/getting-started/attach-ui-controller-script.png)
 
-The **Client Control Container Server Template** is what the server activates. When it is created for a player, its Client UI hierarchy is instantiated and the controller script starts.
+The **Client Control Container Server Template** is what the server activates. Inside it, each Client Control can have its own attached Client Scripts.
 
-Inside a Client Script, `script.object` is the live Client Control instance that Miliastra mounted that script on. MiliUI uses that object as this controller's native Host root.
+For this controller, we attach the script to the top-level `ContainerControl`. When the Server Template is created for a player, that control is instantiated and the controller script starts.
+
+Inside the script, `script.object` refers to the live `ContainerControl` that this script is attached to. MiliUI uses that object as this controller's native Host root.
 
 ## 3. Open the controller script
 
@@ -118,7 +120,7 @@ It does **not** decide where every control is physically placed. The parent you 
 
 The Host tells MiliUI which interface owns the controls and related runtime work created under this root, such as listeners, tweens, layout state, and Pages. That lets MiliUI manage or clean up one interface without affecting another Host such as a HUD or overlay.
 
-`script.object` comes from Miliastra and refers to the Client Control instance this script is mounted on.
+Here, `script.object` comes from Miliastra and refers to the top-level `ContainerControl` where you attached this controller script in Step 2.
 
 ### 4.3 Create the Screen
 
