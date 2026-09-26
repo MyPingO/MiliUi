@@ -8,6 +8,8 @@ You do **not** need previous Lua experience to follow the code below. This guide
 
 Before continuing, complete [Installation + Setup](docs/Installation.md). It installs MiliUI, maps `MiliUI/init` in the Sandbox, creates the Global Script, creates the Client Control Templates, and initializes them.
 
+> If you imported the **MiliUI Template Save File**, this setup and the example interface built in this guide are already included. You can still follow the steps below to understand how the example works, or begin modifying the included interface. See the [Starter Template](docs/Installation.md#starter-template) section for the import checks.
+
 By the end of this Quick Start, you will have:
 
 - one Client Control Container Server Template;
