@@ -52,50 +52,42 @@ Hello MiliUI Controller
 
 [![Create a Client Control Container Server Template and attach the controller script](docs/images/getting-started/attach-ui-controller-script.png)](docs/images/getting-started/attach-ui-controller-script.png)
 
-The Client Control Container is the native Miliastra UI root that will contain this interface.
+The **Client Control Container** is the Server Template that creates this interface. Inside it is a root-level `ContainerControl`, and that is the actual Client UI root.
 
-When Miliastra creates this Server Template for a player, the attached Client Script starts and `script.object` refers to that live Client Control Container.
+The controller script is attached to that `ContainerControl`. When Miliastra creates the Server Template for a player, the root `ContainerControl` is created and the attached Client Script starts. In that script, `script.object` refers to the `ContainerControl` the script is mounted on.
 
-## 3. Find the UI Index
-
-Select the Server Control Template you just created and find its **Index** in the details panel.
-
-[![Find the UI Index for the Server Control Template](docs/images/getting-started/ui-control-group-index.png)](docs/images/getting-started/ui-control-group-index.png)
-
-You will use that number in the controller code.
-
-For example, if the editor shows:
-
-```text
-Index: 12345
-```
-
-then your script will use:
-
-```lua
-local UI_INDEX = 12345
-```
-
-The UI Index is Miliastra's numeric identity for this UI entry. MiliUI stores the same Index with the Host so your game can refer back to that native UI entry when needed.
-
-## 4. Build the interface
+## 3. Open the controller script
 
 Open `Hello MiliUI Controller.lua`.
 
 We will add the code in small pieces and explain each one immediately.
 
-### 4.1 Load MiliUI and name this interface
+## 4. Build the interface
 
-Start with:
+### 4.1 Load MiliUI and set the UI Index
+
+Select the Server Control Template you created earlier and find its **Index** in the details panel.
+
+[![Find the UI Index for the Server Control Template](docs/images/getting-started/ui-control-group-index.png)](docs/images/getting-started/ui-control-group-index.png)
+
+The UI Index is Miliastra's numeric identity for this UI entry. MiliUI stores that same Index with the Host so your game can refer back to the native UI entry when needed.
+
+For example, if the editor shows:
+
+```text
+Index: 1073741870
+```
+
+start with:
 
 ```lua
 local UI = require("MiliUI/init")
 
-local UI_INDEX = 12345
+local UI_INDEX = 1073741870
 local HOST_ID = "Hello MiliUI"
 ```
 
-Replace `12345` with the real Index from the previous step.
+Use the 10-digit Index shown for your own Server Control Template.
 
 `require("MiliUI/init")` loads the MiliUI runtime that was mapped during [Installation + Setup](docs/Installation.md).
 
@@ -120,13 +112,13 @@ end
 
 A **Host** is MiliUI's name for one active UI root.
 
-This line registers the current Client Control Container as the live root for the `"Hello MiliUI"` Host.
+This line registers the current root `ContainerControl` as the live root for the `"Hello MiliUI"` Host.
 
 It does **not** decide where every control is physically placed. The parent you pass to `UI.Screen`, `UI.Button`, and other MiliUI controls does that.
 
 The Host tells MiliUI which interface owns the controls and related runtime work created under this root, such as listeners, tweens, layout state, and Pages. That lets MiliUI manage or clean up one interface without affecting another Host such as a HUD or overlay.
 
-Because this script is attached to the Client Control Container, `script.object` refers to that container.
+Because this script is attached to the root `ContainerControl`, `script.object` refers to that control.
 
 ### 4.3 Create the Screen
 
@@ -150,7 +142,7 @@ UI.SomeControl(parent, {
 
 The **first argument** is the parent: where the new control should be placed.
 
-Here the parent is `script.object`, so the Screen is created inside the Client Control Container.
+Here the parent is `script.object`, so the Screen is created inside the root `ContainerControl`.
 
 The settings mean:
 
@@ -158,7 +150,7 @@ The settings mean:
 - `background = "page"` uses the MiliUI theme color named `page`;
 - `showCursor = true` asks Miliastra to show the cursor while this Screen is active.
 
-`"page"` is a built-in MiliUI theme color name, not an arbitrary Miliastra name.
+`"page"` is one of MiliUI's built-in theme color names. The default theme stores colors under names such as `page`, `surface`, `text`, and `accent`. So `background = "page"` means "use the current theme's page background color." If you later change the theme, controls using `"page"` automatically follow the new value.
 
 ### 4.4 Add a Column
 
@@ -250,11 +242,13 @@ function OnDestroy()
 end
 ```
 
-Miliastra calls `OnDestroy()` when this Client Control Container is being removed.
+Miliastra calls `OnDestroy()` when the root `ContainerControl` this script is attached to is being removed.
 
 `UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's native root is gone, so MiliUI can release the live controls, listeners, tweens, and other runtime work associated with that Host.
 
-Use `Detach` for normal cleanup of one Host. `UI.DestroyAll()` is broader and affects every currently attached Host.
+`Detach` is different from `UI.Pages.Close(...)`. Detaching means the native Host root disappeared, while remembered Page state and the Host's UI Index can be kept for later restoration. Closing a Page means the user or game is logically done with that Page and removes it from the open-page state.
+
+This first example does not use Pages yet, but the distinction becomes important in larger interfaces. Use `Detach` for normal cleanup of one Host. `UI.DestroyAll()` is broader and affects every currently attached Host.
 
 ## 5. Complete controller script
 
@@ -263,7 +257,7 @@ Your full `Hello MiliUI Controller.lua` should now look like this:
 ```lua
 local UI = require("MiliUI/init")
 
-local UI_INDEX = 12345
+local UI_INDEX = 1073741870
 local HOST_ID = "Hello MiliUI"
 
 function OnStart()
@@ -311,7 +305,7 @@ function OnDestroy()
 end
 ```
 
-Remember to replace `12345` with your actual UI Index.
+Remember to replace `1073741870` with your actual UI Index.
 
 ## 6. Activate the UI from server logic
 
@@ -334,7 +328,9 @@ The important part is that the server activates the Server Control Template that
 
 ## 7. Test it
 
-Enter Test Play and activate the UI using the server logic from the previous step.
+Before starting Test Play, open the Miliastra Sandbox **Log** and start monitoring **Client Scripts**.
+
+Then enter Test Play and activate the UI using the server logic from the previous step.
 
 You should see:
 
@@ -342,9 +338,7 @@ You should see:
 - **Hello, MiliUI!** in the center;
 - a **CLICK ME** Button underneath it.
 
-Click the Button.
-
-Then open the Miliastra Sandbox **Log** and monitor **Client Scripts**. You should see:
+Click the Button. In the Client Script Log, you should see:
 
 ```text
 MiliUI button clicked!
@@ -358,7 +352,8 @@ If both the interface and Log message appear, the main path is working:
 MiliUI runtime loaded
 → shared templates were initialized
 → server activated the UI
-→ Client Control Container started
+→ root ContainerControl created
+→ controller script started
 → Host attached
 → MiliUI created the controls
 → Button received input
@@ -374,7 +369,7 @@ Check [Installation + Setup](docs/Installation.md) and make sure:
 
 - the correct Global Script is assigned in Stage Settings;
 - its template Script Variables are filled in;
-- `UI.InitTemplates(...)` is called from the Global Script's `OnInit()`, not its `OnStart()`.
+- `UI.InitTemplates(...)` is called from the Global Script's `OnInit()`.
 
 ### `require("MiliUI/init")` cannot be resolved
 
