@@ -163,7 +163,7 @@ Each Client Control Template has an integer **Index**. The Global Script needs t
 
 Add these **Integer** Script Variables to `Global Script.lua` and set each one to the Index of the matching Client Control Template:
 
-| Editor template | Global Script variable |
+| Editor template | Global Script variable name |
 | --- | --- |
 | `ContainerControl` | `Container Template ID` |
 | `TextBoxControl` | `Text Template ID` |
