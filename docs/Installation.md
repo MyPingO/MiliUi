@@ -24,7 +24,6 @@ The release also contains the production runtime for manual installation.
 1. Open `MiliUI-Manager.exe`.
 2. Select the Miliastra project you want to use.
 3. Click **Install MiliUI**.
-4. Restart Test Play after installing or updating MiliUI.
 
 The Manager installs:
 
@@ -164,18 +163,18 @@ Each Client Control Template has an integer **Index**. The Global Script needs t
 
 Add these **Integer** Script Variables to `Global Script.lua` and set each one to the Index of the matching Client Control Template:
 
-| Editor template | Global Script variable | MiliUI key |
-| --- | --- | --- |
-| `ContainerControl` | `Container Template ID` | `container` |
-| `TextBoxControl` | `Text Template ID` | `text` |
-| `TextWindowControl` | `Text Window Template ID` | `textWindow` |
-| `ImageControl` | `Image Template ID` | `image` |
-| `UIAnimationControl` | `UI Animation Template ID` | `animation` |
-| `Fullscreen UI Animation` | `Screen Animation Template ID` | `fullscreenAnimation` |
-| `PresetButton` | `Button Template ID` | `button` |
-| `KeyHintControl` | `Key Hint Template ID` | `keyHint` |
-| `CursorEventArea` | `Cursor Area Template ID` | `cursorArea` |
-| `GridScrollerControl` | `Grid Scroller Template ID` | `gridScroller` |
+| Editor template | Global Script variable |
+| --- | --- |
+| `ContainerControl` | `Container Template ID` |
+| `TextBoxControl` | `Text Template ID` |
+| `TextWindowControl` | `Text Window Template ID` |
+| `ImageControl` | `Image Template ID` |
+| `UIAnimationControl` | `UI Animation Template ID` |
+| `Fullscreen UI Animation` | `Screen Animation Template ID` |
+| `PresetButton` | `Button Template ID` |
+| `KeyHintControl` | `Key Hint Template ID` |
+| `CursorEventArea` | `Cursor Area Template ID` |
+| `GridScrollerControl` | `Grid Scroller Template ID` |
 
 [![Add the MiliUI template IDs as Global Script Variables](images/getting-started/global-script-variables.png)](images/getting-started/global-script-variables.png)
 
@@ -210,9 +209,11 @@ end
 
 `UI.InitTemplates({...})` tells MiliUI which editor template belongs to each native control type.
 
-The shared setup belongs in **`OnInit()`**, not Global Script `OnStart()`. At stage startup, the Global Script's `OnInit()` runs before Client Control scripts reach their `OnStart()` functions. That makes the template mapping available before a Client Control Container tries to create MiliUI controls.
+The names on the left side of each `=` — such as `container`, `text`, `button`, and `cursorArea` — are MiliUI's template names. The value on the right reads the matching Script Variable you created in Step 7.
 
-This matters when a Client Control Container is already active when the stage starts. Using Global Script `OnStart()` can be too late and can produce:
+We use **`OnInit()`** here because it runs earlier than the more commonly used `OnStart()`. At stage startup, the Global Script's `OnInit()` runs before Client Control scripts reach their `OnStart()` functions, so the template mapping is ready before any already-active UI tries to create MiliUI controls.
+
+This matters when a Client Control Container is already active when the stage starts. Initializing the templates later can produce:
 
 ```text
 MiliUI.InitTemplates(...) must be called before creating controls
