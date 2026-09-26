@@ -286,7 +286,7 @@ For a new project, or as a working reference if manual setup is giving you troub
 The starter is distributed as:
 
 ```text
-MiliUI Template Save File.gil
+MiliUI-Template-Save-File.gil
 ```
 
 Download it from the [MiliUI v0.9.0-beta.1 GitHub Release](https://github.com/MyPingO/MiliUI/releases/tag/v0.9.0-beta.1), then import/open it as a new Miliastra save.
