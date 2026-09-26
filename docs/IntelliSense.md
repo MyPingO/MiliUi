@@ -17,18 +17,32 @@ The declaration files live in VS Code's extension storage and describe MiliUI's 
 
 ## VS Code extension
 
-Public users can install MiliUI IntelliSense from the `MiliUI-IntelliSense.vsix` file attached to the matching MiliUI GitHub Release.
+The recommended installation method is the **Visual Studio Marketplace**.
 
 In VS Code:
 
-1. Download `MiliUI-IntelliSense.vsix`.
+1. Open the **Extensions** view.
+2. Search for **MiliUI IntelliSense**.
+3. Confirm that the extension is published by **MyPing0**.
+4. Click **Install**.
+5. Open a Lua file in the project if one is not already open.
+
+You can also open [MiliUI IntelliSense on the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense).
+
+Extensions installed from the Marketplace can receive later MiliUI IntelliSense versions through VS Code's normal extension update system.
+
+### Manual / offline VSIX installation
+
+The matching MiliUI GitHub Release also includes `MiliUI-IntelliSense.vsix` as a fallback or offline installer.
+
+1. Download `MiliUI-IntelliSense.vsix` from the [MiliUI GitHub Releases](https://github.com/MyPingO/MiliUI/releases).
 2. Open the **Extensions** view.
 3. Open the Extensions `...` menu.
 4. Choose **Install from VSIX...**.
 5. Select the downloaded file.
-6. Reload VS Code if prompted.
+6. Open a Lua file in the project if one is not already open.
 
-The extension depends on Lua Language Server (LuaLS). It only adds editor help such as autocomplete, hover information, and type hints; it does **not** install or change the MiliUI runtime inside your Miliastra project.
+The extension depends on Lua Language Server (LuaLS). When MiliUI first adds or changes its declaration-library path, it automatically restarts LuaLS so autocomplete and hover information can refresh. It does **not** install or change the MiliUI runtime inside your Miliastra project.
 
 The editor declarations are packaged into the separate **MiliUI IntelliSense** VS Code extension. They are not installed into `external_lua_file` and never become part of the Miliastra runtime payload.
 
@@ -176,14 +190,16 @@ This matters because a simultaneous multi-host runtime cannot safely guess a glo
 
 ## Reload after declaration changes
 
-If VS Code was already open when MiliUI declarations changed:
+MiliUI IntelliSense normally restarts Lua Language Server automatically when it first adds or changes its declaration-library path.
+
+If hints still look stale after installing or updating the extension:
 
 ```text
 Ctrl+Shift+P
 → Lua: Restart Language Server
 ```
 
-or reload the VS Code window.
+Reloading the VS Code window is another fallback.
 
 ## Troubleshooting
 
