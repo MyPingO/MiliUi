@@ -56,7 +56,7 @@ The **Client Control Container Server Template** is what the server activates. I
 
 For this controller, we attach the script to the top-level `ContainerControl`. When the Server Template is created for a player, that control is instantiated and the controller script starts.
 
-Inside the script, `script.object` refers to the live `ContainerControl` that this script is attached to. MiliUI uses that object as this controller's native Host root.
+Inside the script, `script.object` refers to the live `ContainerControl` that this script is attached to — **not** the outer Client Control Container Server Template. MiliUI uses that live Client UI control as this controller's native Host root.
 
 ## 3. Open the controller script
 
