@@ -2,13 +2,11 @@
 
 This guide builds one small MiliUI interface from scratch and explains the important code as you go.
 
-You do **not** need previous Lua experience to follow the code below. This guide does assume that the one-time MiliUI project setup is already complete.
+You do **not** need previous Lua experience to follow the code below. This guide assumes that the one-time MiliUI project setup is already complete.
 
 ## Before you start
 
 Before continuing, complete [Installation + Setup](docs/Installation.md). It installs MiliUI, maps `MiliUI/init` in the Sandbox, creates the Global Script, creates the Client Control Templates, and initializes them.
-
-The [Recommended Game Project Structure](docs/ProjectStructure.md) is optional background if you want to see how larger MiliUI projects are usually organized.
 
 By the end of this Quick Start, you will have:
 
