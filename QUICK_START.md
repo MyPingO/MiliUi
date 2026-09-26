@@ -1,242 +1,117 @@
 # MiliUI Quick Start
 
-This guide will get your first MiliUI interface on screen and explain the important pieces as you go.
+This guide builds one small MiliUI interface from scratch and explains the important code as you go.
 
-You do not need to understand every MiliUI system before starting. The goal here is to build one small working interface first, then show where to learn more.
+You do **not** need previous Lua experience to follow the code below. This guide does assume that the one-time MiliUI project setup is already complete.
 
-> MiliUI is preparing for its first public beta. Download links will appear in GitHub Releases when the beta opens.
+## Before you start
 
-## 1. Install MiliUI
+Complete these first:
 
-### Recommended: MiliUI Manager
+1. [Installation + Setup](docs/Installation.md) — installs MiliUI, maps `MiliUI/init` in the Sandbox, creates the Global Script, creates the Client Control Templates, and initializes them.
+2. [Recommended Game Project Structure](docs/ProjectStructure.md) — optional background on how larger MiliUI projects are usually organized.
 
-1. Download **MiliUI Manager** from the latest GitHub Release.
-2. Open it.
-3. Select the Miliastra project you want to use.
-4. Click **Install MiliUI**.
-5. Restart Test Play after installing or updating MiliUI.
+By the end of this Quick Start, you will have:
 
-The Manager installs:
+- one Client Control Container Server Template;
+- one UI controller Client Script;
+- a MiliUI Screen with a Heading and Button;
+- a Button click that prints to the Client Script Log.
 
-```text
-external_lua_file/
-└─ MiliUI/
-   └─ init.lua
-```
+## 1. Create the UI controller Client Script
 
-That `init.lua` file is the MiliUI runtime your own Lua scripts will load with `require("MiliUI/init")`.
-
-You do not need MiliUI's development source files in your project. If MiliUI is already installed, the Manager creates a backup before replacing it.
-
-### Manual installation
-
-If you prefer to install it manually, download the production `MiliUI-init.lua` release file and place it at:
+Open:
 
 ```text
-external_lua_file/MiliUI/init.lua
+Window
+→ Client Script Resource Explorer
+→ Client Script Mapping
+→ UI Controllers
 ```
 
-## 2. Create the MiliUI Client UI templates
-
-Miliastra creates Client UI controls from templates made in the editor. MiliUI uses those same templates when it creates controls from Lua.
-
-For a new project, the easiest setup is to create **one template for every Client UI type MiliUI currently supports**, even if your first screen only uses a few of them.
-
-Create one of each:
-
-| MiliUI template key | Editor control |
-| --- | --- |
-| `container` | ContainerControl |
-| `image` | ImageControl |
-| `text` | TextBoxControl / normal text control |
-| `button` | PresetButton |
-| `cursorArea` | CursorEventArea |
-| `animation` | UIAnimationControl |
-| `fullscreenAnimation` | Fullscreen UI Animation |
-| `keyHint` | KeyHintControl |
-| `textWindow` | TextWindowControl |
-| `gridScroller` | GridScrollerControl |
-
-You do **not** need a `ReferenceControl` template for the normal MiliUI setup.
-
-Creating the full set now means you will not need to come back and add another template every time you start using a different MiliUI component.
-
-If a future MiliUI version starts using a completely new type of native Client UI control, that version may require one additional template.
-
-### Make the template IDs available to Lua
-
-Each editor template has an ID. Your Lua setup script needs those IDs so it knows which editor template should be used for each MiliUI control type.
-
-Create Integer Script Parameters for them. You can choose your own parameter names, but the examples in these docs use:
+Create a **New Client Script** and save it as:
 
 ```text
-Container Template ID
-Image Template ID
-Text Template ID
-Button Template ID
-Cursor Area Template ID
-UI Animation Template ID
-Screen Animation Template ID
-Key Hint Template ID
-Text Window Template ID
-Grid Scroller Template ID
+Hello MiliUI Controller.lua
 ```
 
-## 3. Add one shared MiliUI setup script
+[![Create the Hello MiliUI controller Client Script](docs/images/getting-started/create-test-controller-script.png)](docs/images/getting-started/create-test-controller-script.png)
 
-If your project has more than one interface, it is useful to have one persistent client Global Script that performs setup shared by all of them.
+The `UI Controllers` folder name is only a recommendation. What matters is that the script is available in the Client Script Resource Explorer so it can be attached to a Client Control Container.
 
-For example:
+## 2. Create a Client Control Container Server Template
 
-```lua
-local UI = require("MiliUI/init")
+Open the **UI Control Group Library** and switch to **Server Control Templates**.
 
-local function InitTemplates()
-    UI.InitTemplates({
-        container = script:GetParam("Container Template ID"),
-        image = script:GetParam("Image Template ID"),
-        text = script:GetParam("Text Template ID"),
-        button = script:GetParam("Button Template ID"),
-        cursorArea = script:GetParam("Cursor Area Template ID"),
-        animation = script:GetParam("UI Animation Template ID"),
-        fullscreenAnimation = script:GetParam("Screen Animation Template ID"),
-        keyHint = script:GetParam("Key Hint Template ID"),
-        textWindow = script:GetParam("Text Window Template ID"),
-        gridScroller = script:GetParam("Grid Scroller Template ID"),
-    })
-end
+Create a **Client Control Container** Server Template, give it a clear name such as `Hello MiliUI`, then open it for editing.
 
-function OnStart()
-    InitTemplates()
-end
-```
-
-### What this code is doing
-
-`require("MiliUI/init")` loads MiliUI and stores its API in the local variable `UI`.
-
-`UI.InitTemplates({...})` tells MiliUI which editor template belongs to each control type. For example, the value stored in `"Button Template ID"` becomes the template MiliUI uses when it needs to create a native button.
-
-This setup is shared by every MiliUI interface running in the same client, so you normally only need to configure it once.
-
-`OnStart()` runs when this Global Script starts, which makes it a convenient place to initialize MiliUI before your individual UI Control Groups create their interfaces.
-
-For a very small project with only one interface, putting the same `UI.InitTemplates(...)` call directly in that interface's script is also valid. The shared setup is simply easier to manage once your project has several interfaces.
-
-## 4. Optional: register the local Player Entity
-
-Some projects need a reference to the local Player Entity in their Client Scripts, often because a Client Script sends a signal to the server and that signal requires a Player Entity parameter.
-
-MiliUI can store that Player Entity so different UI scripts can access the same reference when they need it:
-
-```lua
-function OnStart()
-    InitTemplates()
-
-    UI.Player.RegisterFromSignal(
-        script,
-        "Register Player"
-    )
-end
-```
-
-This listens for a server-to-client signal named `"Register Player"`. That signal should send the local Player Entity as its first parameter.
-
-This part is optional. If your UI never uses `UI.Player`, you can leave it out.
-
-### What happens after reconnecting?
-
-The stored Player Entity belongs to the current client session. If reconnecting causes the client Lua environment to start again, the new client needs to receive the Player Entity again too.
-
-A simple setup looks like:
+In the Client Control Container's **Script** tab, add:
 
 ```text
-client starts or reconnects
-    -> Global Script starts listening for "Register Player"
-    -> server sends the local Player Entity
-    -> UI.Player can be used again
+Hello MiliUI Controller
 ```
 
-MiliUI does not decide how your game's server detects a reconnect. It only provides a place to store the Player Entity after your game sends it.
+[![Create a Client Control Container Server Template and attach the controller script](docs/images/getting-started/attach-ui-controller-script.png)](docs/images/getting-started/attach-ui-controller-script.png)
 
-See [Player Context](docs/Player.md) for the full API.
+The Client Control Container is the native Miliastra UI root that will contain this interface.
 
-## 5. Create one UI Control Group
+When Miliastra creates this Server Template for a player, the attached Client Script starts and `script.object` refers to that live Client Control Container.
 
-In the Miliastra **UI Control Group Library**:
+## 3. Find the UI Index
 
-1. Create a UI Control Group.
-2. Put a **Client Control Container** inside it.
-3. Attach a Lua UI Controller script to that Client Control Container.
-4. Note the Control Group's **UI Index**.
+Select the Server Control Template you just created and find its **Index** in the details panel.
 
-The UI Index is the number Miliastra uses to identify that Control Group.
+[![Find the UI Index for the Server Control Template](docs/images/getting-started/ui-control-group-index.png)](docs/images/getting-started/ui-control-group-index.png)
 
-MiliUI will also give the interface a readable Host name such as `"Main Menu"` or `"Settings"`. A **Host** is simply MiliUI's name for one active UI root.
+You will use that number in the controller code.
 
-For the example below, replace `1001` with your real UI Index.
+For example, if the editor shows:
 
-## 6. Build the smallest useful MiliUI screen
+```text
+Index: 12345
+```
 
-Attach a Lua UI Controller script to the Client Control Container.
-
-We will build the script a few lines at a time. At the end, the whole script is shown together for easy copying.
-
-### One syntax rule before we start
-
-Most MiliUI controls are created like this:
+then your script will use:
 
 ```lua
-UI.SomeControl(parent, {
-    -- settings
-})
+local UI_INDEX = 12345
 ```
 
-The **first argument** tells MiliUI where the new control should be placed.
+The UI Index is Miliastra's numeric identity for this UI entry. MiliUI stores the same Index with the Host so your game can refer back to that native UI entry when needed.
 
-The table after it contains that control's settings.
+## 4. Build the interface
 
-For example:
+Open `Hello MiliUI Controller.lua`.
 
-```lua
-UI.Column(screen, {
-    gap = 16,
-})
-```
+We will add the code in small pieces and explain each one immediately.
 
-means:
-
-> Create a Column **inside `screen`**, with a gap of 16 between its children.
-
-You will see this parent-first pattern throughout MiliUI. A control created inside another control will move and be cleaned up with that parent.
-
-### 6.1 Load MiliUI and name this interface
+### 4.1 Load MiliUI and name this interface
 
 Start with:
 
 ```lua
 local UI = require("MiliUI/init")
 
-local UI_INDEX = 1001
-local HOST_ID = "Quick Start"
+local UI_INDEX = 12345
+local HOST_ID = "Hello MiliUI"
 ```
 
-`require("MiliUI/init")` loads MiliUI so this script can use functions such as `UI.Screen`, `UI.Column`, and `UI.Button`.
+Replace `12345` with the real Index from the previous step.
 
-`UI_INDEX` is the Control Group's numeric ID from Miliastra. Replace `1001` with your own UI Index.
+`require("MiliUI/init")` loads the MiliUI runtime that was mapped during [Installation + Setup](docs/Installation.md).
 
-`HOST_ID` is a name you choose for this interface inside MiliUI. It does not need to match the Control Group's editor name, but using a clear name makes your code easier to understand.
+`HOST_ID` is a readable name that **you choose** for this interface inside MiliUI.
 
-For now, you can think of these two values as:
+For now, think of the two values as:
 
 ```text
-UI_INDEX -> how Miliastra identifies this UI
-HOST_ID  -> how MiliUI identifies this UI
+UI_INDEX -> how Miliastra identifies this UI entry
+HOST_ID  -> how MiliUI identifies this interface
 ```
 
-### 6.2 Tell MiliUI that this UI is now on screen
+### 4.2 Attach the Client Control Container as a Host
 
-Start the controller with:
+Add:
 
 ```lua
 function OnStart()
@@ -244,17 +119,19 @@ function OnStart()
 end
 ```
 
-`script.object` is the Client Control Container that this Lua script is attached to.
+A **Host** is MiliUI's name for one active UI root.
 
-`UI.Hosts.Attach(...)` connects that container to MiliUI and gives it the Host name from `HOST_ID`.
+This line registers the current Client Control Container as the live root for the `"Hello MiliUI"` Host.
 
-After this line runs, MiliUI knows where controls for this interface should be created and which Host they belong to.
+It does **not** decide where every control is physically placed. The parent you pass to `UI.Screen`, `UI.Button`, and other MiliUI controls does that.
 
-You should call `Attach` from the script attached to this Client Control Container. Your shared Global setup script does not have this UI container, so it should not attach the Host for you.
+The Host tells MiliUI which interface owns the controls and related runtime work created under this root, such as listeners, tweens, layout state, and Pages. That lets MiliUI manage or clean up one interface without affecting another Host such as a HUD or overlay.
 
-### 6.3 Create the Screen
+Because this script is attached to the Client Control Container, `script.object` refers to that container.
 
-Add this inside `OnStart()`, after `Attach`:
+### 4.3 Create the Screen
+
+Inside `OnStart()`, after `Attach`, add:
 
 ```lua
 local screen = UI.Screen(script.object, {
@@ -264,56 +141,33 @@ local screen = UI.Screen(script.object, {
 })
 ```
 
-`UI.Screen` creates a screen-sized MiliUI container using the current Miliastra UI canvas size. It also creates a content area inside itself where normal page UI can be placed.
+Most MiliUI controls follow this pattern:
 
-Here, the first argument is `script.object`, so the Screen is created inside the Client Control Container.
+```lua
+UI.SomeControl(parent, {
+    -- settings
+})
+```
+
+The **first argument** is the parent: where the new control should be placed.
+
+Here the parent is `script.object`, so the Screen is created inside the Client Control Container.
 
 The settings mean:
 
-- `padding = 40` leaves 40 UI units of space between normal content and the edges of the Screen;
-- `background = "page"` gives the Screen the theme color named `page`;
+- `padding = 40` leaves space between normal content and the Screen edges;
+- `background = "page"` uses the MiliUI theme color named `page`;
 - `showCursor = true` asks Miliastra to show the cursor while this Screen is active.
 
-#### What does `"page"` mean?
+`"page"` is a built-in MiliUI theme color name, not an arbitrary Miliastra name.
 
-`"page"` is **not** an arbitrary Miliastra name. It is one of MiliUI's built-in theme color names.
+### 4.4 Add a Column
 
-The default MiliUI theme includes names such as:
-
-```text
-page
-surface
-surface2
-text
-muted
-accent
-success
-warning
-danger
-transparent
-```
-
-Using a name such as:
-
-```lua
-background = "page"
-```
-
-means "use whatever color the current MiliUI theme has stored under `page`."
-
-That is useful because you can later change the theme in one place instead of changing every individual control.
-
-You can also use another theme color name, or provide a `Color` value directly when you want a specific color.
-
-See [Theming](docs/Theming.md) for the complete theme system.
-
-### 6.4 Add a Column for the content
-
-Now add:
+Add:
 
 ```lua
 local content = UI.Column(screen, {
-    name = "QuickStartContent",
+    name = "HelloContent",
     fitContent = true,
     gap = 16,
     align = "center",
@@ -322,26 +176,20 @@ local content = UI.Column(screen, {
 UI.Center(content)
 ```
 
-A `Column` places its children from top to bottom.
+The first argument is now `screen`, so the Column is created inside the Screen.
 
-The first argument is `screen`, so this new Column is placed inside the Screen's normal content area. That means the Screen's `padding = 40` also applies to where the Column is allowed to go.
+A Column lays out its children from top to bottom.
 
-The settings here mean:
+The settings mean:
 
-- `name = "QuickStartContent"` gives the control a useful name for debugging;
-- `fitContent = true` makes the Column grow just large enough to contain its children;
-- `gap = 16` puts 16 UI units of space between each child;
-- `align = "center"` centers the children across the width of the Column.
+- `name` gives the control a useful debugging name;
+- `fitContent = true` lets the Column size itself around its children;
+- `gap = 16` leaves 16 UI units between children;
+- `align = "center"` centers children across the Column.
 
-Finally:
+`UI.Center(content)` places the finished Column in the center of its parent area.
 
-```lua
-UI.Center(content)
-```
-
-moves the finished Column to the center of its parent area.
-
-### 6.5 Add a Heading
+### 4.5 Add a Heading
 
 Create a Heading inside the Column:
 
@@ -354,24 +202,20 @@ UI.Heading(content, {
 })
 ```
 
-Again, the first argument is `content`, so the Heading becomes a child of the Column.
-
-That is important: because the Heading is inside the Column, the Column can automatically position it and include it when calculating its own size.
+Because the parent is `content`, the Heading becomes one of the Column's children.
 
 The settings mean:
 
 - `text` is the text to display;
-- `needsTranslation = false` says this example is using the text exactly as written instead of looking it up through Miliastra localization;
-- `fitWidth = true` lets MiliUI make the text box wide enough for the text;
-- `fitWidthPadding = 16` adds a little extra width so the text is less likely to be clipped at the edge.
+- `needsTranslation = false` uses the text exactly as written;
+- `fitWidth = true` lets MiliUI size the text box from the text;
+- `fitWidthPadding = 16` gives the width estimate a little extra room.
 
-Why is the extra padding useful? Miliastra does not currently give Lua the exact final width of rendered text, so MiliUI has to estimate it. The extra 16 gives that estimate some safe room.
+Miliastra does not currently expose the exact final rendered text width to Lua, so MiliUI estimates it. A small `fitWidthPadding` is useful for short text that should size itself.
 
-You do not need to memorize that detail. For short text that should size itself, `fitWidth = true` with a little `fitWidthPadding` is a safe starting point.
+### 4.6 Add a Button
 
-### 6.6 Add a Button
-
-Now create a Button in the same Column:
+Add a Button to the same Column:
 
 ```lua
 local button = UI.Button(content, {
@@ -387,25 +231,17 @@ button:OnClick(function()
 end)
 ```
 
-Because the first argument is also `content`, the Button appears in the same Column underneath the Heading.
+Because the parent is also `content`, the Button appears below the Heading in the same Column.
 
-`fitContent = true` tells the Button to size itself from its label and normal Button padding.
+`fitContent = true` lets the Button size itself from its label and normal Button padding.
 
-This part:
+`button:OnClick(...)` registers the function that runs when the Button is activated.
 
-```lua
-button:OnClick(function()
-    print("MiliUI button clicked!")
-end)
-```
+The `print(...)` message appears in the Miliastra Sandbox **Log**, not on the game screen.
 
-tells MiliUI what to do when the Button is activated. In this example it only runs `print(...)`.
+### 4.7 Detach the Host when the Client Control Container disappears
 
-A normal MiliUI Button can be activated by mouse input, and it also supports Miliastra's controller focus/Confirm path.
-
-### 6.7 Clean up when the Control Group disappears
-
-Add:
+Outside `OnStart()`, add:
 
 ```lua
 function OnDestroy()
@@ -417,32 +253,19 @@ end
 
 Miliastra calls `OnDestroy()` when this Client Control Container is being removed.
 
-`UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's Client Control Container is gone. MiliUI can then stop using the old controls and listeners that belonged to that on-screen UI.
+`UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's native root is gone, so MiliUI can release the live controls, listeners, tweens, and other runtime work associated with that Host.
 
-The `IsAttached` check simply makes sure the Host is currently attached before trying to detach it.
+Use `Detach` for normal cleanup of one Host. `UI.DestroyAll()` is broader and affects every currently attached Host.
 
-For normal Control Group cleanup, detach this one Host instead of calling `UI.DestroyAll()`. `UI.DestroyAll()` is much broader: it affects all currently attached MiliUI Hosts, including other interfaces that may still be open.
+## 5. Complete controller script
 
-#### Detach is different from Close
-
-You may also see `UI.Pages.Close(...)` in other MiliUI examples. It has a different job.
-
-- **Detach** is used when the Client Control Container for a Host disappears. It tells MiliUI that the native UI root is gone.
-- **Close** is used when you are working with `UI.Pages` and the user or game is finished with one logical Page.
-
-For example, closing a Settings Page does not automatically mean the whole Menu Control Group disappeared. The Menu Host may still be attached and showing other Pages.
-
-This Quick Start does not use `UI.Pages` yet, so its `OnDestroy()` only needs to detach the Host.
-
-### 6.8 Complete copy/paste example
-
-All of the pieces above combine into this small controller:
+Your full `Hello MiliUI Controller.lua` should now look like this:
 
 ```lua
 local UI = require("MiliUI/init")
 
-local UI_INDEX = 1001
-local HOST_ID = "Quick Start"
+local UI_INDEX = 12345
+local HOST_ID = "Hello MiliUI"
 
 function OnStart()
     UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
@@ -454,7 +277,7 @@ function OnStart()
     })
 
     local content = UI.Column(screen, {
-        name = "QuickStartContent",
+        name = "HelloContent",
         fitContent = true,
         gap = 16,
         align = "center",
@@ -489,194 +312,97 @@ function OnDestroy()
 end
 ```
 
-The shared setup from sections 2-4 handles things that are common to the whole project, such as the MiliUI template IDs and optional Player registration.
+Remember to replace `12345` with your actual UI Index.
 
-This controller has a smaller job: it builds **this particular interface** when its Control Group appears, and tells MiliUI when that interface disappears.
+## 6. Activate the UI from server logic
+
+Creating a Server Control Template does not by itself decide **when** your game should show it.
+
+Your server Node Graph should activate the UI for the appropriate player when your game wants this interface to appear.
+
+The image below shows one example that activates the UI from an interaction:
+
+[![Example server logic that activates the UI Control Group](docs/images/getting-started/activate-server-control-template-logic.png)](docs/images/getting-started/activate-server-control-template-logic.png)
+
+You do **not** need to copy that exact trigger. Your game might activate the UI when:
+
+- the stage starts;
+- a player interacts with something;
+- a menu button is selected;
+- a server-side game event occurs.
+
+The important part is that the server activates the Server Control Template that contains your Client Control Container.
 
 ## 7. Test it
 
-Instantiate the UI Control Group and enter Test Play.
+Enter Test Play and activate the UI using the server logic from the previous step.
 
-You should see a Heading and Button in the center of the screen.
+You should see:
 
-Click the Button. The message:
+- a dark MiliUI Screen;
+- **Hello, MiliUI!** in the center;
+- a **CLICK ME** Button underneath it.
+
+Click the Button.
+
+Then open the Miliastra Sandbox **Log** and monitor **Client Scripts**. You should see:
 
 ```text
 MiliUI button clicked!
 ```
 
-is printed to the **Log**, not onto the game screen.
+[![Expected Quick Start interface and Client Script log output](docs/images/getting-started/quick-start-result.png)](docs/images/getting-started/quick-start-result.png)
 
-In the Miliastra Sandbox window, open the **Log** and monitor **Client Scripts** to see `print()` output from this client UI script.
-
-If you see the UI and the Log message appears after clicking the Button, the important parts of the setup are working:
+If both the interface and Log message appear, the main path is working:
 
 ```text
-MiliUI loaded
-template IDs were configured
-the Control Group was attached to MiliUI
-MiliUI created the controls
-the Button received input
-the Host has an OnDestroy cleanup path
+MiliUI runtime loaded
+→ shared templates were initialized
+→ server activated the UI
+→ Client Control Container started
+→ Host attached
+→ MiliUI created the controls
+→ Button received input
 ```
 
-## 8. Add a few production-friendly features
+## Troubleshooting
 
-The small example above is enough to prove MiliUI is working.
+### `MiliUI.InitTemplates(...) must be called before creating controls`
 
-From here, you can add features such as localization, shared Button sounds, better debug names, and menu-style input settings without changing the basic structure.
+The shared template setup did not finish before this controller tried to create a MiliUI control.
 
-### Add a project-wide Button sound
+Check [Installation + Setup](docs/Installation.md) and make sure:
 
-If most Buttons in your project should use the same click sound, add a positive Audio Resource ID as a Script Parameter on the **Global Script (or whatever shared MiliUI setup script you are using)**. In this example the parameter is named `Button Click Audio ID`.
+- the correct Global Script is assigned in Stage Settings;
+- its template Script Variables are filled in;
+- `UI.InitTemplates(...)` is called from the Global Script's `OnInit()`, not its `OnStart()`.
 
-The Audio Resource ID is the actual ID of the SFX/audio resource you want to play. You can find that ID on the sound/SFX resource in Miliastra and use that number here.
+### `require("MiliUI/init")` cannot be resolved
 
-Then add:
+Make sure the installed `external_lua_file/MiliUI` folder is mapped under **Client Script Resource Explorer → Client Script Mapping → MiliUI**.
 
-```lua
-local clickAudioId = script:GetParam("Button Click Audio ID")
+### Nothing appears on screen
 
-if type(clickAudioId) == "number" and clickAudioId > 0 then
-    UI.Theme.Apply({
-        sounds = {
-            buttonClick = clickAudioId,
-        },
-    })
-end
-```
+Check that:
 
-This stores the sound as the theme's normal Button click sound, so Buttons can use it automatically.
+- the Server Control Template is actually being activated for the player;
+- the attached controller script is `Hello MiliUI Controller`;
+- `UI_INDEX` matches the Index shown for that UI entry.
 
-A specific Button can still use a different sound by setting its own `clickAudioId`.
+### The Button works but I do not see the printed message
 
-### Add localization and useful names
-
-Here is the same kind of screen with a few settings you are more likely to use in a real menu:
-
-```lua
-local UI = require("MiliUI/init")
-
-local UI_INDEX = 1001
-local HOST_ID = "Quick Start Polished"
-
-function OnStart()
-    UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
-
-    local screen = UI.Screen(script.object, {
-        padding = 40,
-        background = "page",
-        showCursor = true,
-        disableKeyEventPassthrough = true,
-    })
-
-    local content = UI.Column(screen, {
-        name = "WelcomeContent",
-        fitContent = true,
-        gap = 14,
-        align = "center",
-    })
-
-    UI.Center(content)
-
-    UI.Heading(content, {
-        name = "WelcomeTitle",
-        text = "WELCOME",
-        textId = "QuickStart.Welcome",
-        fitWidth = true,
-        fitWidthPadding = 16,
-    })
-
-    UI.Label(content, {
-        name = "WelcomeMessage",
-        text = "Your MiliUI setup is working.",
-        textId = "QuickStart.Message",
-        fitWidth = true,
-        fitWidthPadding = 16,
-    })
-
-    local continueButton = UI.Button(content, {
-        name = "ContinueButton",
-        variant = "primary",
-        fitContent = true,
-        label = {
-            text = "CONTINUE",
-            textId = "QuickStart.Continue",
-        },
-    })
-
-    continueButton:OnClick(function()
-        print("Continue selected")
-    end)
-end
-
-function OnDestroy()
-    if UI.Hosts.IsAttached(HOST_ID) then
-        UI.Hosts.Detach(HOST_ID)
-    end
-end
-```
-
-The new settings are:
-
-- `textId` is the Miliastra text-mapping ID MiliUI will try to use for localization. The normal `text` value remains available as the English fallback;
-- `name` gives controls clearer names, which makes debugging and layout diagnostics easier to read;
-- `variant = "primary"` asks the MiliUI theme for its primary Button style;
-- `disableKeyEventPassthrough = true` prevents normal key input from passing through this Screen while it is open, which is often useful for a menu.
-
-The `fitWidth` and `fitContent` settings also help translated text use the space it needs instead of assuming every language will be the same width as English.
-
-See [Localization](docs/Localization.md), [Intrinsic Sizing](docs/IntrinsicSizing.md), [Theming](docs/Theming.md), and [Control Groups and Hosts](docs/ControlGroups.md) when you want more detail on those systems.
-
-## 9. Recommended project structure
-
-Once the project has more than one UI, a useful structure is:
-
-```text
-external_lua_file/
-├── MiliUI/
-│   └── init.lua
-├── Global/
-│   └── MiliUI Global.lua
-├── Client UI Logic/
-│   ├── Menu UI Controller.lua
-│   └── HUD UI Controller.lua
-└── Game UI/
-    ├── Main Menu Page.lua
-    ├── Settings Page.lua
-    └── UI Data.lua
-```
-
-Only `MiliUI/init.lua` above belongs to the installed MiliUI package. The other folders are example names for scripts you create in your own game.
-
-A simple way to think about the split is:
-
-```text
-MiliUI Global.lua      -> setup shared by all interfaces
-Menu UI Controller.lua -> attached to the Control Group and handles its related logic when the Control Group is created or removed
-Main Menu Page.lua     -> used by the controller to build the actual menu controls
-UI Data.lua            -> used by the Page while building the menu; stores editable game/menu data
-```
-
-You do not need to split a tiny interface into several files immediately. Do it when the project becomes large enough that keeping everything in one file is harder to manage.
-
-This is called **separation of concerns**: each file has one main job instead of one script trying to handle setup, Control Group lifecycle, UI layout, and editable data all at once. Good separation keeps code cleaner, easier to read, easier to maintain, and usually much easier to debug when something goes wrong.
-
-Read [Recommended Game Project Structure](docs/ProjectStructure.md) when you are ready for that step.
+`print(...)` goes to the Sandbox **Log → Client Scripts**, not onto the game screen.
 
 ## What to learn next
 
-- [Control Groups and MiliUI Hosts](docs/ControlGroups.md)
+- [Installation + Setup](docs/Installation.md)
 - [Recommended Game Project Structure](docs/ProjectStructure.md)
+- [Control Groups and MiliUI Hosts](docs/ControlGroups.md)
 - [Components](docs/Components.md)
-- [Intrinsic and Localization-Safe Sizing](docs/IntrinsicSizing.md)
-- [Text Geometry](docs/TextGeometry.md)
 - [Responsive Layout](docs/ResponsiveLayout.md)
 - [Pages](docs/Pages.md)
 - [Controller Support](docs/ControllerSupport.md)
-- [Player Context](docs/Player.md)
 - [Localization](docs/Localization.md)
 - [Theming](docs/Theming.md)
-- [Support and bug reports](SUPPORT.md)
 
-For copyable starter scripts, see [examples/getting-started](examples/getting-started/README.md).
+For additional copyable examples, see [examples/getting-started](examples/getting-started/README.md).
