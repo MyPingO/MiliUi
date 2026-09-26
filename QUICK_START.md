@@ -419,7 +419,6 @@ Check that:
 
 ## What to learn next
 
-- [Installation + Setup](docs/Installation.md)
 - [Recommended Game Project Structure](docs/ProjectStructure.md)
 - [Control Groups and MiliUI Hosts](docs/ControlGroups.md)
 - [Components](docs/Components.md)
