@@ -70,8 +70,6 @@ We will add the code in small pieces and explain each one immediately.
 
 Select the Server Control Template you created earlier and find its **Index** in the details panel.
 
-[![Find the UI Index for the Server Control Template](docs/images/getting-started/ui-control-group-index.png)](docs/images/getting-started/ui-control-group-index.png)
-
 The UI Index is Miliastra's numeric identity for this UI entry. MiliUI stores that same Index with the Host so your game can refer back to the native UI entry when needed.
 
 For example, if the editor shows:
@@ -90,6 +88,8 @@ local HOST_ID = "Hello MiliUI"
 ```
 
 Use the 10-digit Index shown for your own Server Control Template.
+
+[![Find the UI Index for the Server Control Template](docs/images/getting-started/ui-control-group-index.png)](docs/images/getting-started/ui-control-group-index.png)
 
 `require("MiliUI/init")` loads the MiliUI runtime that was mapped during [Installation + Setup](docs/Installation.md).
 
