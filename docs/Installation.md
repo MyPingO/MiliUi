@@ -8,7 +8,7 @@ You do not need previous Lua experience. The steps below explain the Miliastra-s
 
 ## 1. Download MiliUI
 
-Open the [latest MiliUI GitHub Release](https://github.com/MyPingO/MiliUI/releases/latest).
+Open the [MiliUI GitHub Releases](https://github.com/MyPingO/MiliUI/releases).
 
 For a normal Windows setup, download:
 
