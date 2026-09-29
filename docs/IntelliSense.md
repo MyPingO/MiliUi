@@ -44,8 +44,6 @@ The matching MiliUI GitHub Release also includes `MiliUI-IntelliSense.vsix` as a
 
 The extension depends on Lua Language Server (LuaLS). When MiliUI first adds or changes its declaration-library path, it automatically restarts LuaLS so autocomplete and hover information can refresh. It does **not** install or change the MiliUI runtime inside your Miliastra project.
 
-The editor declarations are packaged into the separate **MiliUI IntelliSense** VS Code extension. They are not installed into `external_lua_file` and never become part of the Miliastra runtime payload.
-
 The production `init.lua` keeps one editor-only return-type bridge:
 
 ```lua
@@ -70,8 +68,6 @@ If `.luarc.json` or `.luarc.jsonc` already exists at the workspace root, the
 extension also adds MiliUI to that config's `workspace.library` array while
 preserving existing entries. This matters because LuaLS gives its workspace
 config file precedence over normal VS Code Lua settings.
-
-The extension does not modify the MiliUI runtime.
 
 The extension also exposes:
 

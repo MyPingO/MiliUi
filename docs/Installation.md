@@ -298,7 +298,7 @@ The starter save already includes:
 - `Hello MiliUI Controller.lua`;
 - the Client Control Container used by the Quick Start;
 - the Quick Start example interface;
-- example server logic for Player registration and UI activation.
+- example server logic for activating the Quick Start UI.
 
 The published starter save was tested by importing it as a fresh save and entering Test Play successfully. The template references and UI Index survived that import correctly.
 

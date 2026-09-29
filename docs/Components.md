@@ -801,7 +801,7 @@ Calling `Play()` while the native animation is already playing restarts it. Mili
 
 `UI.FullscreenAnimation` wraps Miliastra's Fullscreen Animation control and requires `templates.fullscreenAnimation`.
 
-**Native layering limitation:** Miliastra renders Fullscreen UI Animations at the very bottom of all UI layers, and that layer cannot be changed. "Fullscreen" describes the animation's screen coverage, not foreground draw order. A Fullscreen Animation therefore appears behind normal MiliUI Pages and controls even if its native control is the last sibling, is parented to `screen.root`, or is placed in a higher-layer Host. Use it for full-screen atmospheric/background effects. If an effect must render over normal UI, use regular `UI.Animation` with `Enum.UIAnimationLayer.AboveAllControls` or build the foreground effect from normal UI controls.
+**Native layering limitation:** Miliastra renders Fullscreen UI Animations at the very bottom of all UI layers, and that layer cannot be changed. "Fullscreen" describes the animation's screen coverage, not foreground draw order. A Fullscreen Animation therefore appears behind normal MiliUI Pages and controls even if its native control is the last sibling, is parented to `screen.root`, or its Host belongs to a higher-layer Control Group. Use it for full-screen atmospheric/background effects. If an effect must render over normal UI, use regular `UI.Animation` with `Enum.UIAnimationLayer.AboveAllControls` or build the foreground effect from normal UI controls.
 
 ```lua
 local fullscreenEffect = UI.FullscreenAnimation(parent, {
