@@ -13,9 +13,9 @@
     "sha256": "3b0158230fa9147d7309e78ead7089d6351c78798ef8beb2807bbf367d937221"
   },
   "intellisense": {
-    "version": "0.1.4",
+    "version": "0.1.5",
     "url": "https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.1/MiliUI-IntelliSense.vsix",
-    "sha256": "3a316bf9c85c4214b76081203b32b57e1a13f7f13d6d3dfde734eb68797d52ba"
+    "sha256": "5c2d9a9ebf5a82f7bb7e1ca48ab88aa473cb999eefeb942b33ce3f5ce7db5019"
   },
   "releaseNotesUrl": "https://github.com/MyPingO/MiliUI/releases/tag/v0.9.0-beta.1"
 }
