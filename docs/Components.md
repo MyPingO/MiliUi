@@ -801,6 +801,8 @@ Calling `Play()` while the native animation is already playing restarts it. Mili
 
 `UI.FullscreenAnimation` wraps Miliastra's Fullscreen Animation control and requires `templates.fullscreenAnimation`.
 
+**Native layering limitation:** Miliastra renders Fullscreen UI Animations at the very bottom of all UI layers, and that layer cannot be changed. "Fullscreen" describes the animation's screen coverage, not foreground draw order. A Fullscreen Animation therefore appears behind normal MiliUI Pages and controls even if its native control is the last sibling, is parented to `screen.root`, or is placed in a higher-layer Host. Use it for full-screen atmospheric/background effects. If an effect must render over normal UI, use regular `UI.Animation` with `Enum.UIAnimationLayer.AboveAllControls` or build the foreground effect from normal UI controls.
+
 ```lua
 local fullscreenEffect = UI.FullscreenAnimation(parent, {
     animationId = 234569,
@@ -814,7 +816,7 @@ fullscreenEffect:Play()                 -- restarts from the beginning
 fullscreenEffect:Stop()
 ```
 
-Fullscreen controls do not expose regular UI Animation's native `PlayAnimation()` / `StopAnimation()` methods. Runtime testing confirms that deactivation stops playback and activation starts the configured fullscreen animation from the beginning, so MiliUI uses inactive configuration plus activation as the normalized playback lifecycle. Setter changes made while active are deferred to avoid native property writes replaying authored sound by themselves.
+Fullscreen controls do not expose regular UI Animation's native `PlayAnimation()` / `StopAnimation()` methods. Runtime testing confirms that deactivation stops playback and activation starts the configured fullscreen animation from the beginning, so MiliUI uses inactive configuration plus activation as the normalized playback lifecycle. Setter changes made while active are deferred to avoid native property writes replaying authored sound by themselves. This wrapper does not and cannot change the native bottom-layer rendering behavior.
 
 ## Native escape hatch
 
