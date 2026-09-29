@@ -4,18 +4,18 @@
   "runtime": {
     "version": "0.9.0-beta.1",
     "url": "https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.1/MiliUI-init.lua",
-    "sha256": "e4118ed47149907c4f18d976cc3e544c0cd717f0ad286c799a14ea096e32dc07"
+    "sha256": "1b2032e4b49d837f0237c217ce51346a86abd98a242a513ee8d0713d75b9bf05"
   },
   "manager": {
     "version": "0.2.0",
     "minimumVersion": "0.2.0",
     "url": "https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.1/MiliUI-Manager.exe",
-    "sha256": "ad6f2218ce6022413dc675d6c4f7a0a7cd68a76e807d801bb453edcd93ce00eb"
+    "sha256": "3b0158230fa9147d7309e78ead7089d6351c78798ef8beb2807bbf367d937221"
   },
   "intellisense": {
     "version": "0.1.4",
     "url": "https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.1/MiliUI-IntelliSense.vsix",
-    "sha256": "96a992efad777a3ca6d1f042eebb34208bc634d0b7c9de5d1f03fe110c63d7a7"
+    "sha256": "3a316bf9c85c4214b76081203b32b57e1a13f7f13d6d3dfde734eb68797d52ba"
   },
   "releaseNotesUrl": "https://github.com/MyPingO/MiliUI/releases/tag/v0.9.0-beta.1"
 }
