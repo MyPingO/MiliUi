@@ -2,7 +2,7 @@
 
 These examples are deliberately small and are intended to be read in order.
 
-1. **MiliUIGlobal.lua** — shared MiliUI setup used by all interfaces, plus optional project-wide Button audio and Player registration.
+1. **MiliUIGlobal.lua** — shared MiliUI setup used by all interfaces, plus optional project-wide Button audio and Player Entity lookup configuration.
 2. **HelloMiliUI.lua** — the smallest first interface: Host, Screen, Column, Heading, and Button.
 3. **PolishedHelloMiliUI.lua** — the same idea with localization, shared sound, controller-ready input, clearer control names, and theme-based Button styling.
 4. **SimpleMenu.lua** — a small localized vertical menu using fit-content Buttons with a useful minimum width.
