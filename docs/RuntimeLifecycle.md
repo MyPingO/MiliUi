@@ -211,7 +211,7 @@ The logical Menu open-page order remains in Session and the Menu -> UI Index map
 
 Other hosts are unaffected.
 
-This host recreation is different from a **full client reconnect/refresh**. Host/Page/Session state can survive a native UI root recreation inside the same Lua runtime, but a newly-created client Lua runtime starts with fresh process-local state. If the game uses `UI.Player`, its Player Entity must be supplied again after such a reconnect. See [Player.md](Player.md).
+This host recreation is different from a **full client reconnect/refresh**. Host/Page/Session state can survive a native UI root recreation inside the same Lua runtime, but a newly-created client Lua runtime starts with fresh process-local state. If the game uses `UI.Player`, shared setup should run `UI.Player.Configure(...)` again in the new runtime; the Player Entity itself is resolved directly from the configured `PlayerSelf` Custom Variable rather than being re-sent by a registration signal. See [Player.md](Player.md).
 
 ## Recreated host
 
