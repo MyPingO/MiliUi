@@ -900,7 +900,7 @@ For a game with several interfaces, this is the pattern to remember:
 ```text
 Persistent Global Script
 ├── UI.InitTemplates(...) once
-└── optional UI.Player registration once
+└── optional UI.Player configuration once
 
 Updates UI Controller
 ├── Updates UI Index
