@@ -220,34 +220,32 @@ This matters when a Client Control Container is already active when the stage st
 MiliUI.InitTemplates(...) must be called before creating controls
 ```
 
-## 9. Optional: register the local Player Entity
+## 9. Optional: configure local Player Entity lookup
 
 You only need this section if your UI uses `UI.Player`.
 
-MiliUI can store the local Player Entity after your game sends it from the server. The Global Script is a good place to install that listener once.
+Create an **Entity-valued Custom Variable** on the Player Entity and set its value to that same Player Entity. The variable name is project-defined; `PlayerSelf` is only a recommended example.
 
-For example:
+Then tell MiliUI which Custom Variable name to read:
 
 ```lua
 function OnInit()
     InitTemplates()
-
-    UI.Player.RegisterFromSignal(
-        script,
-        "Register Player"
-    )
+    UI.Player.Configure("PlayerSelf")
 end
 ```
 
-The server-side signal named `"Register Player"` should send the local Player Entity as its first parameter.
+`UI.Player.Configure(...)` only stores the Custom Variable name. It does **not** read or cache the Player Entity during `OnInit()`, so it is safe if the server sets the Custom Variable later.
 
-The image below shows one example of server Node Graph logic. Your own server initialization can be structured differently; the important part is that the signal is sent to the client after the listener is available.
+When your code later calls `UI.Player.GetEntity()` or `UI.Player.RequireEntity()`, MiliUI reads the current value from `Enum.CustomVariableEntityType.PlayerSelf`.
 
-[![Example server signal for registering the local Player Entity](images/getting-started/register-player-signal.png)](images/getting-started/register-player-signal.png)
+If your project uses another naming convention, pass that variable name instead.
+
+No Player registration signal or reconnect resend is required.
 
 If your project never uses `UI.Player`, skip this section.
 
-See [Player Context](Player.md) for the full API and reconnect behavior.
+See [Player Context](Player.md) for the full API and lifecycle behavior.
 
 ## 10. Optional: install MiliUI IntelliSense
 
