@@ -551,7 +551,7 @@ For the project:
 1. Install the production `MiliUI/init.lua`.
 2. Create the full supported Client UI template set once and expose those template IDs to a persistent client setup script.
 3. Call `UI.InitTemplates(...)` from that shared setup.
-4. If the project uses `UI.Player`, register the local Player Entity from a game-defined initialization signal and make sure that signal is sent again after a full client reconnect/refresh.
+4. If the project uses `UI.Player`, create a Player Custom Variable that references its owning Player Entity and configure its project-defined name with `UI.Player.Configure(...)`.
 
 For each Control Group:
 

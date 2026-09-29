@@ -31,12 +31,9 @@ function OnInit()
     -- })
 
     -- Optional Player context:
-    -- Uncomment this when the game has a server -> client signal that sends
-    -- the local Player Entity as parameter #1. The server should send it again
-    -- after a full client reconnect/refresh.
+    -- Create an Entity-valued Player Custom Variable that references its
+    -- owning Player Entity, then configure that project-defined name here.
+    -- Configure only stores the name; the Entity is resolved when requested.
     --
-    -- UI.Player.RegisterFromSignal(
-    --     script,
-    --     "Register Player"
-    -- )
+    -- UI.Player.Configure("PlayerSelf")
 end

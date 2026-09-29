@@ -2,6 +2,14 @@
 
 All notable public MiliUI releases will be recorded here.
 
+## Unreleased
+
+### Changed
+
+- `UI.Player` now resolves the current Player Entity from a project-defined Player Custom Variable through `Enum.CustomVariableEntityType.PlayerSelf` instead of using a server-to-client registration signal.
+- Added `UI.Player.Configure(customVariableName)`, `UI.Player.IsConfigured()`, and `UI.Player.GetCustomVariableName()` while keeping `GetEntity()` and `RequireEntity()` as the normal lookup API.
+- Removed the old Player registry APIs: `SetEntity`, `IsRegistered`, and `RegisterFromSignal`.
+
 ## [0.9.0-beta.1] - 2026-09-25
 
 Initial public beta.
