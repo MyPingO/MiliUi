@@ -99,6 +99,8 @@ HUD
 
 if that is the behavior you want. MiliUI does not inspect or modify those Layer values.
 
+Fullscreen UI Animation is a native exception: Miliastra renders it at the bottom of all UI layers, and its layer cannot be changed. A higher Control Group Layer, Host, Page sibling order, or `SetAsLastSibling()` call cannot promote `UI.FullscreenAnimation` above normal UI controls.
+
 ## Simple example: HUD with no Pages
 
 A HUD does not need `UI.Pages` if it is just one UI tree that should exist whenever the HUD Control Group exists.

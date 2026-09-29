@@ -326,6 +326,30 @@ or disable animation on the test control when motion is not part of the test.
 
 Do not change production geometry solely to fix a warning that exists only mid-animation.
 
+## Do not expect Fullscreen Animation to render above normal UI
+
+Miliastra fixes Fullscreen UI Animations at the very bottom of all UI layers. This ordering cannot be changed.
+
+These attempts do **not** promote a Fullscreen Animation over a Page:
+
+```lua
+fullscreenEffect.root:SetAsLastSibling()
+```
+
+Parenting it to `screen.root`, moving its native sibling index, or placing its MiliUI Host on a higher Control Group Layer also cannot override the native Fullscreen Animation render layer.
+
+Use `UI.FullscreenAnimation` for screen-wide atmospheric/background effects. For a transition or effect that must appear above normal UI, prefer:
+
+```lua
+UI.Animation(parent, {
+    animationId = foregroundAnimationId,
+    layer = Enum.UIAnimationLayer.AboveAllControls,
+    autoPlay = true,
+})
+```
+
+or compose the effect from ordinary MiliUI controls.
+
 ## Do not drive native animation playback through `.root`
 
 `UI.Animation` and `UI.FullscreenAnimation` expose `.root` for normal wrapper interoperability, but their playback state is intentionally managed by MiliUI.
