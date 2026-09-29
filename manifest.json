@@ -4,7 +4,8 @@
   "runtime": {
     "version": "0.9.0-beta.1",
     "url": "https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.1/MiliUI-init.lua",
-    "sha256": "1b2032e4b49d837f0237c217ce51346a86abd98a242a513ee8d0713d75b9bf05"
+    "sha256": "1b2032e4b49d837f0237c217ce51346a86abd98a242a513ee8d0713d75b9bf05",
+    "browserUrl": "https://raw.githubusercontent.com/MyPingO/MiliUI/main/runtime/v0.9.0-beta.1/MiliUI-init.lua"
   },
   "manager": {
     "version": "0.2.0",
