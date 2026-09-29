@@ -1,91 +1,84 @@
 # Player Context
 
-MiliUI can optionally keep a reference to the local Player Entity so your Client Scripts and UI modules can use the same reference.
+MiliUI can expose the current client's Player Entity to Client Scripts without a registration signal.
 
-Some projects need this because a Client Script sends a signal to the server and that signal requires a Player Entity parameter.
+Miliastra already lets client Lua read Custom Variables owned by the current client through:
 
-MiliUI does not try to guess which Player Entity is the local player. Your game still provides that reference; MiliUI simply stores it in one shared place after it is received.
+```lua
+Enum.CustomVariableEntityType.PlayerSelf
+```
+
+MiliUI uses that scope to read one project-defined Player Custom Variable whose value references the Player Entity itself.
 
 ## Recommended setup
 
-Use a persistent client Global Script so the Player registration is available even when a particular UI Control Group is not currently on screen.
+Create an **Entity-valued Custom Variable** on the Player Entity and set its value to that same Player Entity.
 
-The registration signal must send the local Player Entity as its first parameter.
+The Custom Variable name is completely project-defined. For example:
 
-Register that signal directly from the persistent script:
+```text
+Player Custom Variable
+Name: PlayerSelf
+Value: [that Player Entity]
+```
+
+`PlayerSelf` is only a recommended example. If your project uses another naming convention, use any name you prefer.
+
+Then configure MiliUI once from shared client setup:
 
 ```lua
 local UI = require("MiliUI/init")
 
-function OnStart()
-    UI.Player.RegisterFromSignal(
-        script,
-        "Register Player"
-    )
+function OnInit()
+    UI.Player.Configure("PlayerSelf")
 end
 ```
 
-`"Register Player"` above is the actual server-to-client signal name in the game. It is not the name of a Script Parameter.
+Projects that prefer editor configuration can supply the name through a Script Parameter instead:
 
-No extra signal-name Script Parameter is required.
-
-The `script` argument tells MiliUI which Script should listen for the signal. Pass the Global Script's `script` value here. Required Lua modules have their own `script` context, so MiliUI should not guess which Script you meant.
-
-When the signal arrives, MiliUI stores its first parameter as the local Player Entity reference. Sending the registration signal again replaces the stored Entity, so games may refresh the reference if their player lifecycle requires it.
-
-### Disconnects and reconnects
-
-Player registration belongs to the current client Lua runtime. If leaving/reconnecting causes the client to be refreshed, do not assume the previously stored Entity or signal handler still exists.
-
-On the refreshed client:
-
-```text
-persistent client script starts again
-    -> RegisterFromSignal(...) installs the handler again
-    -> game/server initialization sends the local Player Entity again
-    -> UI.Player is ready for the new client runtime
+```lua
+UI.Player.Configure(
+    script:GetParam("Player Entity Variable Name")
+)
 ```
 
-How the server notices that the client is ready is game-defined. A straightforward option is a server-to-client initialization signal that is sent on the initial connection and again after reconnect. MiliUI intentionally does not dictate that server lifecycle.
+After that, `UI.Player.GetEntity()` and `UI.Player.RequireEntity()` read the Entity directly from the configured Custom Variable on `Enum.CustomVariableEntityType.PlayerSelf`.
+
+There is no MiliUI Player registration signal, registration handler, or cached Player Entity.
 
 ## Reading the player
 
-Use `GetEntity()` when an unregistered result is acceptable:
+Use `GetEntity()` when a missing result is acceptable:
 
 ```lua
 local playerEntity = UI.Player.GetEntity()
+
 if playerEntity ~= nil then
     -- Use the Entity reference.
 end
 ```
 
-Use `RequireEntity()` when the operation cannot proceed without the player:
+Use `RequireEntity()` when the operation cannot proceed without the Player Entity:
 
 ```lua
 local playerEntity = UI.Player.RequireEntity()
 ```
 
-`RequireEntity()` raises a clear error if registration has not happened yet.
+`RequireEntity()` raises a clear error if `UI.Player` has not been configured or if the configured Custom Variable does not currently resolve to an Entity reference.
+
+You can inspect the setup directly:
 
 ```lua
-if UI.Player.IsRegistered() then
-    print(UI.Player.GetEntity())
+if UI.Player.IsConfigured() then
+    print(UI.Player.GetCustomVariableName())
 end
 ```
 
-## Existing initialization signals
+## Server signals
 
-The convenience listener is optional. If the game already has its own server-signal handler that receives the Player Entity, store it directly instead:
+MiliUI does not wrap `game.ServerSignal(...)` or choose parameter order for outgoing signals.
 
-```lua
-UI.Player.SetEntity(playerEntity)
-```
-
-This avoids forcing a project to create a second signal or change an existing signal-handler structure.
-
-## Server signals remain game-defined
-
-MiliUI does not wrap `game.ServerSignal(...)` or choose parameter order for outgoing signals. Use the stored Entity wherever your own server contract expects it:
+Use the resolved Player Entity wherever your own server contract expects it:
 
 ```lua
 local signal = game.ServerSignal("My Game Signal")
@@ -96,3 +89,30 @@ signal:SendSignal()
 ```
 
 The order above is only an example. Match the server signal schema defined by the game.
+
+## Why this replaces Player registration
+
+The older MiliUI Player flow required the server to send the local Player Entity to the client, then cached that value in Lua:
+
+```text
+server sends Player Entity
+    -> client registration signal
+        -> MiliUI stores Player Entity
+            -> later signals reuse it
+```
+
+That indirection is unnecessary when the Player Entity already owns a globally accessible Custom Variable containing its own Entity reference.
+
+The current flow is:
+
+```text
+Player Entity
+    -> project-defined self-reference Custom Variable
+
+client
+    -> PlayerSelf scope
+        -> reads self-reference Custom Variable
+            -> gets Player Entity
+```
+
+A full client reconnect creates a new Lua runtime, so shared setup runs `UI.Player.Configure(...)` again. No server-to-client registration handshake needs to be repeated.
