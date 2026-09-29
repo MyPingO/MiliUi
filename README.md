@@ -52,4 +52,4 @@ In short: you may use official MiliUI releases in your Miliastra projects, but y
 
 ## Status
 
-The current public beta is **v0.9.0-beta.1**. APIs are intended to be usable in real projects, but changes may still occur before 1.0 as creator feedback reveals problems.
+The current public beta is **v0.9.0-beta.1**. APIs are intended to be usable in real projects, but changes may still occur before 1.0 as creator feedback reveals problems. See [Known Issues](KNOWN_ISSUES.md) for current framework and Miliastra-platform limitations that may affect projects.
