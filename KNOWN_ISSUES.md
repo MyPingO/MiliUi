@@ -10,6 +10,14 @@ Miliastra may apply native safe-area padding to Client UI when using a controlle
 
 This behavior appears to come from the host UI itself rather than MiliUI. More testing across controller users and display configurations is needed before MiliUI attempts automatic compensation.
 
+### Fullscreen UI Animation layering
+
+Miliastra renders native Fullscreen UI Animations at the bottom of all UI layers, and that layer cannot be changed.
+
+This means `UI.FullscreenAnimation` can cover the whole screen while still appearing behind normal MiliUI controls. Sibling order, Page order, parenting, and Control Group Layer do not promote it above ordinary UI.
+
+Use it for screen-wide atmospheric/background effects. For foreground animation, use regular `UI.Animation` with `Enum.UIAnimationLayer.AboveAllControls` or normal MiliUI controls.
+
 ### Inverted native masks
 
 The current Miliastra host has a known issue with `reverseMaskArea = true`: inverted masking does not reliably detect opaque pixels.
