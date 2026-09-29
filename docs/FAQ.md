@@ -46,6 +46,12 @@ No. The Manager checks the official release manifest and can download newer veri
 
 A new Manager is only required when Manager behavior itself changes or a runtime release explicitly raises the minimum supported Manager version.
 
+## Why does Fullscreen Animation appear behind my UI?
+
+Miliastra renders Fullscreen UI Animations at the bottom of all UI layers, and that layer cannot be changed. MiliUI cannot move `UI.FullscreenAnimation` above normal controls with sibling order, Page order, parenting, or a higher Host/Control Group Layer.
+
+Use Fullscreen Animation for screen-wide atmospheric or background effects. If an authored animation must appear in front of the UI, use regular `UI.Animation` with `Enum.UIAnimationLayer.AboveAllControls`, or build the effect from normal MiliUI controls.
+
 ## Where should I ask questions?
 
 General questions, setup help, feedback, and early feature ideas should go to the Miliastra creator Discord.
