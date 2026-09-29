@@ -87,7 +87,7 @@ local UI_INDEX = 1234567890
 local HOST_ID = "Hello MiliUI"
 ```
 
-Use the 10-digit Index shown for your own Server Control Template.
+Use the Index shown for your own Server Control Template.
 
 [![Find the UI Index for the Server Control Template](docs/images/getting-started/ui-control-group-index.png)](docs/images/getting-started/ui-control-group-index.png)
 
