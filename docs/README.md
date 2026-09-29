@@ -6,7 +6,7 @@ Start with:
 
 1. [Installation + Setup](Installation.md)
 2. [Quick Start](../QUICK_START.md)
-3. [MiliUI Manager](Manager.md)
+3. [Getting Started Examples](../examples/getting-started/README.md)
 4. [Recommended Game Project Structure](ProjectStructure.md)
 5. [Control Groups and MiliUI Hosts](ControlGroups.md)
 6. [Components](Components.md)
@@ -48,4 +48,5 @@ Start with:
 ## Help
 
 - [FAQ](FAQ.md)
+- [Known Issues](../KNOWN_ISSUES.md)
 - [Support and Bug Reports](../SUPPORT.md)
