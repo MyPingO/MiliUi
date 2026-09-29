@@ -18,7 +18,7 @@ A clean MiliUI game usually has four different kinds of Lua files.
 
 | File type | Responsibility | Attached to a UI object? |
 | --- | --- | --- |
-| **Global/shared setup script** | Sets up MiliUI once for the whole project, such as template IDs and optional Player registration | No Client Control Container required |
+| **Global/shared setup script** | Sets up MiliUI once for the whole project, such as template IDs and optional Player lookup configuration | No Client Control Container required |
 | **UI Controller** | Attached to a Control Group; handles the related logic when that Control Group is created or removed | **Yes** |
 | **Page module** | Used by the controller to build the actual UI controls for a Page | No |
 | **Data module** | Used by the Page while building the UI; stores editable content or configuration | No |
@@ -154,9 +154,13 @@ GridScrollerControl
 
 This complete setup automatically covers future MiliUI components that reuse these existing template kinds. If MiliUI eventually adds support for a genuinely new native Client UI type, that release may add a new template requirement.
 
-### Optional player registration
+### Optional Player Entity lookup
 
-If the game uses `UI.Player` so client UI code can retrieve the current Player Entity, the same persistent script is also a good place to register it once:
+If the game uses `UI.Player` so client UI code can retrieve the current Player Entity, configure the project-defined Player Custom Variable name from the same shared setup.
+
+First, create an Entity-valued Custom Variable on each Player Entity whose value references that same Player Entity. The variable name is up to the project; `PlayerSelf` is only a recommended example.
+
+Then configure MiliUI once:
 
 ```lua
 local UI = require("MiliUI/init")
@@ -178,25 +182,23 @@ end
 
 function OnInit()
     InitTemplates()
-
-    UI.Player.RegisterFromSignal(
-        script,
-        "Register Player"
-    )
+    UI.Player.Configure("PlayerSelf")
 end
 ```
 
-`"Register Player"` is the actual server -> client signal name in this example. The signal must send the local Player Entity as parameter #1.
+If the project prefers a different naming convention, pass that name instead:
 
-No additional Script Parameter is required for the signal name.
+```lua
+UI.Player.Configure(
+    script:GetParam("Player Entity Variable Name")
+)
+```
 
-The `script` argument is intentionally explicit. Required Lua modules in Miliastra have their own Script context, so MiliUI cannot safely assume that its internal `script` value is the persistent Global Script that should own the signal handler.
+After configuration, `UI.Player.GetEntity()` and `UI.Player.RequireEntity()` resolve the current client's Player Entity directly through `Enum.CustomVariableEntityType.PlayerSelf`.
 
-The registration is client-runtime state. If a disconnect/reconnect causes the client Lua environment to be refreshed, the new client must register the handler again and the game must provide the local Player Entity again. A simple pattern is for the server to send the same registration signal whenever that client's initialization/reconnection flow completes.
+No Player registration signal is required, and MiliUI does not cache the Entity reference. A fresh client runtime only needs to run the shared `UI.Player.Configure(...)` setup again.
 
-MiliUI does not prescribe how the server detects that lifecycle; it only provides the client-side registration helper.
-
-If the game does not use `UI.Player`, simply omit the registration code.
+If the game does not use `UI.Player`, simply omit this configuration.
 
 ### Is calling `UI.InitTemplates(...)` in every controller wrong?
 
