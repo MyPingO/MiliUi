@@ -4,7 +4,7 @@ MiliUI is developed around the Miliastra creator community.
 
 ## Questions, feedback, and setup help
 
-The primary community discussion location is the official Miliastra Discord. MiliUI discussion will use a dedicated thread/forum location there once the public beta opens.
+The primary community discussion location is the official Miliastra Discord. Use the MiliUI discussion area there for setup help, questions, feedback, and early feature ideas.
 
 Use Discord first for:
 
