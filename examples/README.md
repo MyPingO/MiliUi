@@ -33,6 +33,23 @@ When that Control Group is removed, its script calls `UI.Hosts.Detach(...)` in `
 
 You normally do not need a second "Show Lua UI" signal just to tell the newly-instantiated UI to appear.
 
+## Player Entity signals
+
+If a client-to-server signal needs the current Player Entity, configure `UI.Player` with the name of a Player Custom Variable that references its owning Player Entity:
+
+```lua
+UI.Player.Configure("PlayerSelf")
+
+local signal = game.ServerSignal("Set Menu State")
+signal:AddEntity(UI.Player.RequireEntity())
+signal:AddBool(true)
+signal:SendSignal()
+```
+
+`PlayerSelf` is only an example variable name. Projects can use any naming convention.
+
+See [`PlayerEntitySignal.lua`](PlayerEntitySignal.lua) for the complete small example and [`../docs/Player.md`](../docs/Player.md) for setup details.
+
 ## Pattern A: standalone Control Group scripts
 
 These examples include their own `OnStart` / `OnDestroy` Host lifecycle and can be adapted into scripts attached to a Client Control Container:
