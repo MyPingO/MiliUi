@@ -1,0 +1,124 @@
+# MiliUI API at a glance
+
+Looking for a component or function? This is a **quick lookup for the `72` public top-level `UI.*` functions** in MiliUI beta.2, checked against the published IntelliSense declarations. Use **Ctrl+F** to find a name here, then open the linked guide for examples.
+
+This is **not** a replacement for IntelliSense's full property and method descriptions. For every `props` setting, callback signature, and returned object's methods, use [MiliUI IntelliSense](IntelliSense.md) in VS Code or the relevant detailed guide.
+
+## A tiny example
+
+```lua
+local UI = require("MiliUI/init")
+
+-- The Host and shared templates must be set up first.
+local column = UI.Column(parent, { width = 300, gap = 12 })
+local button = UI.Button(column, {
+    label = { text = "Play" },
+    fillWidth = true,
+})
+button:OnClick(function()
+    print("Play clicked")
+end)
+```
+
+Here `parent` means a **container your project already created**, such as a Screen inside an attached Host. `{ ... }` is a Lua table of settings called *props*. A colon, as in `button:OnClick(...)`, calls a method on that specific object. See the [Quick Start](../QUICK_START.md) for the complete setup.
+
+## Which guide should I open?
+
+| I want to... | Start here |
+| --- | --- |
+| Make a simple screen, text, or button | [Components](Components.md) |
+| Put controls side by side or stack them | [Responsive Layout](ResponsiveLayout.md) |
+| Scroll a list of buttons | [ScrollArea / ScrollColumn](ScrollArea.md) |
+| Make a dropdown | [Select](Select.md) |
+| Make a collapsible section | [Accordion](Accordion.md) |
+| Show a dialog or message | [Components: feedback controls](Components.md#alert--shell) |
+| Change Pages and support Back | [Navigation](Navigation.md) |
+| Watch game signals or variables | [Signals and Custom Variables](Subscriptions.md) |
+| Support controller focus | [Controller Support](ControllerSupport.md) |
+| Handle different screen sizes | [Responsive Components](ResponsiveComponents.md) |
+| Reuse visual styles | [Theming](Theming.md) |
+| Make things animate | [Motion](Motion.md) |
+| Upgrade from beta.1 | [beta.2 upgrade guide](UpgradeBeta2.md) |
+
+## Top-level `UI.*` function index
+
+### Setup, cleanup, and text helpers
+
+Shared templates, cleanup, and translated text. [Related guide](Components.md).
+
+`UI.InitTemplates` · `UI.Init` *(deprecated — use InitTemplates and Hosts.Attach)* · `UI.DestroyAll` · `UI.Destroy` · `UI.ResolveText` · `UI.SetText` · `UI.RefreshLocalization`
+
+### Screen and basic display
+
+The visible surface, text, images, and simple visual elements. [Related guide](Components.md).
+
+`UI.Screen` · `UI.Box` · `UI.Image` · `UI.Text` · `UI.Heading` · `UI.Label` · `UI.Caption` · `UI.Icon` · `UI.SurfaceControl` · `UI.Panel` · `UI.Divider` · `UI.Spacer`
+
+### Buttons and basic interactions
+
+Clickable controls and event helpers. [Related guide](Components.md).
+
+`UI.Button` · `UI.IconButton` · `UI.Hitbox` · `UI.Hover` · `UI.Bind` · `UI.BindKeys`
+
+### Layout and positioning
+
+Arrange children or position existing elements. [Related guide](ResponsiveLayout.md).
+
+`UI.Row` · `UI.Column` · `UI.HStack` · `UI.VStack` · `UI.Fan` · `UI.Grid` · `UI.Center`
+
+### Scrolling, dropdowns, and overlays
+
+Scrollable content, dropdowns, tooltips, and popovers. [Related guide](ScrollArea.md).
+
+`UI.ScrollArea` · `UI.ScrollColumn` · `UI.Scrollbar` · `UI.Select` · `UI.Popover` · `UI.Tooltip`
+
+### Lists and repeated data
+
+Render items from changing lists. [Related guide](DataViews.md).
+
+`UI.Repeater` · `UI.ListView`
+
+### Responsive sizes and diagnostics
+
+Adapt the layout to space and inspect sizing problems. [Related guide](ResponsiveFoundation.md).
+
+`UI.Responsive` · `UI.CheckLayout` · `UI.SafeTextHeight` · `UI.SafeTextWindowHeight` · `UI.CheckTextGeometry`
+
+### Timing and animation
+
+Create simple animated changes and delayed callbacks. [Related guide](Motion.md).
+
+`UI.Tween` · `UI.After`
+
+### Ready-made components
+
+Cards, state controls, forms, and feedback overlays. [Related guide](Components.md).
+
+`UI.Card` · `UI.PlayingCard` · `UI.Badge` · `UI.Chip` · `UI.Stat` · `UI.ProgressBar` · `UI.Accordion` · `UI.Slider` · `UI.SegmentedControl` · `UI.MultipleChoiceWindow` · `UI.Toggle` · `UI.Checkbox` · `UI.Stepper` · `UI.Tabs` · `UI.Shell` · `UI.Alert` · `UI.ToastManager` · `UI.Modal`
+
+### Miliastra native controls
+
+Direct wrappers for engine-provided controls. [Related guide](Components.md).
+
+`UI.Native` · `UI.Animation` · `UI.FullscreenAnimation` · `UI.KeyHint` · `UI.TextWindow` · `UI.ScrollText` · `UI.GridScroller`
+
+## Other API groups
+
+These aren't called as `UI.Function(...)`; they are namespaces with their own functions. For example, use `UI.Navigation.Push("Settings")`.
+
+| API group | Purpose | Guide |
+| --- | --- | --- |
+| `UI.Hosts` | Attach and detach independently owned interfaces | [Hosts](Hosts.md) |
+| `UI.Pages` | Register and open logical screens inside a Host | [Pages](Pages.md) |
+| `UI.Navigation` | Forward/Back page history | [Navigation](Navigation.md) |
+| `UI.Session` | Keep state during the current Lua session | [Session](Session.md) |
+| `UI.Signals`, `UI.Variables` | Listen for incoming signals and variable changes | [Subscriptions](Subscriptions.md) |
+| `UI.Player` | Get the local Player Entity from a configured Custom Variable | [Player](Player.md) |
+| `UI.Theme`, `UI.Style`, `UI.Surface` | Appearance, shared tokens, and styling | [Theming](Theming.md) |
+| `UI.Motion` | Reusable animation effects | [Motion](Motion.md) |
+| `UI.Layout`, `UI.ResponsiveLayout` | Positioning and responsive rules | [Responsive Foundation](ResponsiveFoundation.md) |
+| `UI.Localization` | Translated text support | [Localization](Localization.md) |
+| `UI.Audio`, `UI.Interaction` | UI sound and cursor interaction | [Components](Components.md) |
+| `UI.Diagnostics`, `UI.TextMetrics` | Inspect overflow and measure text | [Text Geometry](TextGeometry.md) |
+
+**For newcomers:** You do not need to learn all these at once. Start with `UI.Screen`, `UI.Column`, `UI.Text`, and `UI.Button`. Add Pages or Navigation only when your interface needs multiple screens.
