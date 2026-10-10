@@ -1,6 +1,6 @@
 # Navigation
 
-`UI.Navigation` is an optional sequential navigation layer built on top of `UI.Pages`.
+`UI.Navigation` remembers which Page the player came from, so a Back button can return to it. It works with `UI.Pages`, which creates, opens, and closes the actual screens inside a Host.
 
 Use it when one Host contains a flow such as:
 
@@ -14,7 +14,7 @@ A simple HUD or a pair of manually toggled panels does not need Navigation.
 
 ## Pages versus Navigation
 
-The two systems intentionally answer different questions:
+Here's the difference:
 
 ```text
 UI.Pages
