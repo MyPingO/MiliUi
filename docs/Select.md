@@ -1,6 +1,6 @@
 # Select / Dropdown
 
-`UI.Select` is a single-selection dropdown with stable 1-based indices, arbitrary item metadata, automatic above/below placement, disabled options, long-list scrolling, theming, and optional typed ServerSignal submission.
+`UI.Select` lets players choose one item from a dropdown menu. It can scroll long lists, show disabled options, and open above or below the field depending on the available space. Items use Lua's **1-based indexes**, so `selected = 1` chooses the first item.
 
 ## Basic usage
 
@@ -16,7 +16,7 @@ local elementSelect = UI.Select(parent, {
 })
 ```
 
-The canonical selected value is the 1-based item index:
+`GetSelected()` gives you the position of the chosen item in the Lua list, starting at `1`:
 
 ```lua
 print(elementSelect:GetSelected())
