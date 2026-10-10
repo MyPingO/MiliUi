@@ -1,8 +1,6 @@
 # Responsive Layout
 
-MiliUI's responsive layout layer builds on `UI.Screen`, percentage dimensions, persistent `UI.Row` / `UI.Column` containers, size constraints, and aspect-aware composition.
-
-The goal is to remove most manual coordinate math without recreating a full browser-style flexbox engine.
+MiliUI can arrange controls for you instead of making you calculate every position by hand. Use `UI.Row` for controls next to each other and `UI.Column` for controls stacked vertically. Percentages, minimum/maximum sizes, and `grow` help them fit the available space.
 
 ## Screen root
 
@@ -13,7 +11,7 @@ local screen = UI.Screen(script.object, {
 })
 ```
 
-`screen.root` covers the full canvas. Passing `screen` itself as a parent routes normal content into the padded `screen.content` area.
+`screen.root` covers the full screen area. Put ordinary controls inside `screen` to respect its padding. Use `screen.root` when something needs to extend all the way to the edges, such as a full-screen overlay.
 
 The canvas size is read when the screen is created. `screen:Refresh()` remains an explicit escape hatch for projects that can change canvas size during runtime, but responsive layout does not depend on continuous polling.
 
