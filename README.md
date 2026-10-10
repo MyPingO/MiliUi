@@ -2,7 +2,7 @@
 
 MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable components, responsive layouts, theming, localization helpers, controller support, scrolling, navigation, Pages, Session state, motion, audio, and other UI infrastructure for Miliastra creators.
 
-> **Public Beta — v0.9.0-beta.2**
+> **Public Beta: v0.9.0-beta.2**
 >
 > MiliUI is available for real Miliastra creator testing. This repository is the public home for releases, documentation, examples, and issue tracking. The framework's development source remains private.
 
