@@ -2,13 +2,32 @@
 
 MiliUI does not force one project layout. For one small interface, keeping everything in one script can be perfectly reasonable.
 
-As a project grows, code becomes easier to read, maintain, and debug when different jobs are kept in different files. This is called **separation of concerns**: instead of one large script handling setup, Control Group behavior, UI layout, and editable content, each file has one main responsibility.
+As a project grows, it becomes easier to read and fix your code when each file has one main job. For example, keep shared setup, Control Group behavior, interface layout, and editable content separate instead of putting everything into one large script.
 
 This guide shows one beginner-friendly structure that can grow from a single screen into several interfaces such as an Updates screen, Settings screen, HUD, inventory, or overlay.
 
 > **Rule of thumb:** one shared setup, one controller per Host, one module per Page.
 
 This is a recommendation, not a MiliUI requirement. Split files when doing so makes the project easier to understand, not simply because more files look more organized.
+
+**For a first project:** Start with [the small-project version](#13-small-project-version). You can move to the larger structure when you have multiple screens or a lot of content.
+
+## On this page
+
+- [1. The four responsibilities](#1-the-four-responsibilities)
+- [2. Example project structure](#2-example-project-structure)
+- [3. Shared setup belongs in one persistent script](#3-shared-setup-belongs-in-one-persistent-script)
+- [4. A UI Controller handles one Control Group and Host](#4-a-ui-controller-handles-one-control-group-and-host)
+- [5. A Page module builds the interface](#5-a-page-module-builds-the-interface)
+- [6. A Data module contains content, not lifecycle](#6-a-data-module-contains-content-not-lifecycle)
+- [7. Adding a second interface should be simple](#7-adding-a-second-interface-should-be-simple)
+- [8. Dedicated Host or multiple Pages in one Host?](#8-dedicated-host-or-multiple-pages-in-one-host)
+- [9. Opening, closing, detaching, and disabling are different](#9-opening-closing-detaching-and-disabling-are-different)
+- [10. Restore or start fresh?](#10-restore-or-start-fresh)
+- [11. Client requests to activate or disable a UI](#11-client-requests-to-activate-or-disable-a-ui)
+- [12. Common structure mistakes](#12-common-structure-mistakes)
+- [13. Small-project version](#13-small-project-version)
+- [14. Recommended scalable pattern](#14-recommended-scalable-pattern)
 
 ---
 
