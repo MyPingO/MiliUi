@@ -1,10 +1,8 @@
 # Responsive Foundation
 
-MiliUI's responsive foundation is designed around one principle:
+A responsive layout adjusts when the available screen space changes. Instead of calculating every control's position yourself, you can tell MiliUI how controls should be arranged and when that arrangement should change.
 
-> Express layout intent so developers do not have to maintain fragile coordinate arithmetic.
-
-The lower-level `UI.Row`, `UI.Column`, percentage sizing, `grow`, min/max constraints, and `UI.Screen` safe-area APIs remain the normal tools for flow layout. `UI.Responsive` is the higher-level tool for layouts whose information density must change when the available safe area changes materially.
+Start with `UI.Row` or `UI.Column` to arrange controls. Use percentages or `grow` to share space, and min/max sizes to keep controls usable. For larger changes, such as switching from three columns to one on a narrow screen, use `UI.Responsive`. See [Responsive Layout](ResponsiveLayout.md) for the basic sizing options.
 
 ## Runtime status
 
