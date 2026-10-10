@@ -4,11 +4,32 @@ All notable public MiliUI releases will be recorded here.
 
 ## Unreleased
 
+## [0.9.0-beta.2] - 2026-10-10
+
+### Added
+
+- Per-Host sequential `UI.Navigation` history, Page-context shortcuts, and optional directional slide transitions.
+- Collapsible `UI.Accordion` with automatic content sizing and remembered state.
+- Reusable `UI.Motion` effects for entrance and interaction feedback.
+- Host-scoped Server Signal and Custom Variable subscriptions.
+- Native controller Row/Column navigation, focused-item auto-scroll, and configurable inside/outside focus chevrons.
+
 ### Changed
 
-- `UI.Player` now resolves the current Player Entity from a project-defined Player Custom Variable through `Enum.CustomVariableEntityType.PlayerSelf` instead of using a server-to-client registration signal.
-- Added `UI.Player.Configure(customVariableName)`, `UI.Player.IsConfigured()`, and `UI.Player.GetCustomVariableName()` while keeping `GetEntity()` and `RequireEntity()` as the normal lookup API.
-- Removed the old Player registry APIs: `SetEntity`, `IsRegistered`, and `RegisterFromSignal`.
+- `UI.Select` dropdown menus now use a same-Host overlay portal to escape clipped/scrolling parent containers.
+- Controller Confirm press-state cleanup is centralized, and scroll focus chevrons render above Buttons with horizontal overhang and vertical viewport clipping.
+- The Windows Manager no longer replaces a newer bundled beta runtime with an older runtime from the public manifest.
+- IntelliSense 0.1.7 now explains commonly confusing properties in plain language, fills missing hover descriptions, and includes beginner-friendly examples and a layout quick start.
+- Release packages include the pinned, unchanged starter `.gil` from beta.1.
+
+### Breaking changes
+
+- Replaced signal-based `UI.Player` registration with `UI.Player.Configure(customVariableName)` and a `PlayerSelf` Custom Variable. Removed `SetEntity`, `IsRegistered`, and `RegisterFromSignal` (see release notes for migration).
+
+### Known limitations
+
+- Native PC controller safe-area padding and controller focus initialization during a running Test Play level remain engine limitations. Native fullscreen animation layering, inverted native masks, and estimated wrapped-text heights also remain limitations.
+- Navigation does not yet restore controller focus or scroll position.
 
 ## [0.9.0-beta.1] - 2026-09-25
 

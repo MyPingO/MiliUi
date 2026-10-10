@@ -21,6 +21,8 @@ Menu Host
 
 You do not need Pages for a simple HUD that just builds one UI tree whenever its Control Group exists.
 
+When those Pages form a sequential flow with Back history, use the optional [Navigation](Navigation.md) layer on top of Pages. Pages remains the lower-level open/close/order system.
+
 ## Register
 
 Register each page once and assign it to exactly one host:
@@ -45,6 +47,11 @@ id
 host
 Close()
 BringToFront()
+Push(pageId, options?)
+Replace(pageId, options?)
+Back(options?)
+Reset(pageId, options?)
+CanGoBack()
 ```
 
 The returned page root must be directly parented to the supplied host root. `UI.Screen(parent, ...)` naturally satisfies this requirement.

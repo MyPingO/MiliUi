@@ -374,6 +374,34 @@ parent-boundary clamping.
 See [AnchoredOverlays.md](AnchoredOverlays.md) for placement and lifecycle
 details.
 
+## Accordion
+
+`UI.Accordion` creates a collapsible section whose body follows the natural height of its children.
+
+```lua
+local advanced = UI.Accordion(parent, {
+    id = "Advanced Settings",
+    remember = true,
+    title = {
+        text = "Advanced Settings",
+        textId = "Settings.Advanced",
+    },
+})
+
+UI.Toggle(advanced.content, {
+    label = {
+        text = "Controller Hints",
+        textId = "Settings.ControllerHints",
+    },
+    value = true,
+    fillWidth = true,
+})
+```
+
+The header is controller-focusable by default. Opening and closing animate the body's clipped layout height plus a small content slide, so neighboring Stack content moves continuously instead of snapping; set `animate = false` to disable component motion. `remember = true` persists the open/closed state through the normal Session adapter.
+
+Use `SetOpen`, `IsOpen`, `Toggle`, `SetEnabled`, `SetTitle`, and `OnChange`. See [Accordion.md](Accordion.md) for body theming, indicator options, and persistence behavior.
+
 ## Toggle
 
 ```lua
@@ -928,6 +956,8 @@ UI.Fan(cards, { spacing = 145, curve = 12, rotation = 5 })
 Native controls and component wrappers can be mixed in these helpers.
 
 ## Interaction / Motion
+
+For the managed tween/effect API, including reusable presets such as `SlideIn`, `BounceIn`, `Nudge`, `Wobble`, `Punch`, `Squash`, and `SpinIn`, see [Motion](Motion.md).
 
 `UI.Hitbox` requires `templates.cursorArea` and creates a native Cursor Event Area. It is intentionally silent and should be used for drag regions, invisible click targets, and other interaction geometry that is not visually a button.
 

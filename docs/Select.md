@@ -86,13 +86,17 @@ select:SetEnabled(false)
 
 ## Opening and placement
 
-By default, Select chooses whether to open above or below based on available parent space:
+Select fields participate in normal layout, but the temporary dropdown menu and outside-click backdrop are rendered through a same-Host overlay parent. This lets a Select inside `ScrollArea`, `Accordion`, or another masked container open beyond that container without being clipped.
+
+The portal stays inside the same top-level MiliUI page/root, so normal page destruction and Host teardown still own its lifecycle. Developers do not need to provide a separate overlay parent.
+
+By default, Select chooses whether to open above or below based on available overlay space:
 
 ```lua
 openDirection = "auto"
 ```
 
-You can force a direction with `"up"` or `"down"`.
+You can force a direction with `"up"` or `"down"`. `menuMargin` controls the minimum distance from the overlay edge when the menu must clamp into view.
 
 Useful methods:
 

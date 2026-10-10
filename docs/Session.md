@@ -100,6 +100,7 @@ The current adapters remember:
 
 - `Slider` value
 - `Toggle` value
+- `Accordion` open/closed state
 - `Checkbox` value
 - `Stepper` value
 - `SegmentedControl` selected index

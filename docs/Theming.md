@@ -132,6 +132,7 @@ stat
 progressBar
 slider
 toggle
+accordion
 checkbox
 stepper
 segmentedControl
@@ -166,6 +167,12 @@ UI.Theme.Apply({
         tabs = {
             tabBarImage = 107055,
             tabImage = 107056,
+        },
+
+        accordion = {
+            headerVariant = "secondary",
+            indicatorOpenColor = "gold",
+            bodyBackground = "surface2",
         },
 
         alert = {
