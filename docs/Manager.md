@@ -1,6 +1,6 @@
 # MiliUI Manager
 
-MiliUI Manager is the recommended Windows installer/updater for MiliUI.
+MiliUI Manager installs or updates the MiliUI runtime in a Miliastra project on Windows. It also backs up your existing MiliUI files before replacing them.
 
 ## What it does
 
