@@ -1,18 +1,15 @@
 # Anchored overlays
 
-MiliUI provides one shared anchored-placement foundation for lightweight UI that
-must appear next to another control without being clipped by that control's
-immediate parent.
+Popovers and tooltips can appear next to a Button or another control without being cut off by a scrolling container. MiliUI positions them relative to the control they belong to.
 
-The first public components using it are:
+There are two options:
 
 - `UI.Popover` for interactive anchored content.
 - `UI.Tooltip` for passive hover information.
 
 ## Popover
 
-Create the popover under an overlay-capable ancestor such as a Screen root and
-point `anchor` at the nested control it should follow:
+Create the popover under a Screen root (for example, `screen.root`) so it has room to appear outside smaller containers. Set `anchor` to the control the popover should follow:
 
 ```lua
 local popover = UI.Popover(screen.root, {
