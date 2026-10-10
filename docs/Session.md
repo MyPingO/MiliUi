@@ -1,8 +1,8 @@
 # Session persistence
 
-`UI.Session` stores logical UI state separately from Miliastra Client Controls. It can therefore survive temporary host/root recreation inside the same Lua session, including the Control Group/teleport lifecycle observed during MiliUI testing.
+`UI.Session` remembers UI values while the current Lua session is running. If Miliastra removes and recreates a Control Group, MiliUI can use that state to rebuild the interface without losing things like a selected option or an open Page.
 
-Session is the reason a replacement native UI root can rebuild the same logical page state instead of behaving like a completely unrelated menu.
+This state is kept in Lua, not in the old Client UI controls, which no longer exist after the Control Group is removed.
 
 For the recommended Control Group setup, see [ControlGroups.md](ControlGroups.md).
 
