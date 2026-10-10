@@ -1,10 +1,10 @@
 # MiliUI IntelliSense
 
-MiliUI uses Lua Language Server (LuaLS / LuaCATS) annotations to provide completion, signature help, props-table suggestions, and hover documentation.
+MiliUI IntelliSense helps you write Lua in VS Code. It can suggest function names and settings as you type, show which values a function accepts, and explain an API when you hover over it. These features use Lua Language Server (LuaLS).
 
 ## How it works
 
-The MiliUI IntelliSense extension ships editor-only LuaLS declarations separately from the runtime installed in your Miliastra project.
+IntelliSense includes files that describe MiliUI's functions and settings to VS Code. These files are separate from the runtime you install into your Miliastra project.
 
 Your game project still contains only:
 
@@ -13,7 +13,7 @@ MiliUI/
 └── init.lua
 ```
 
-The declaration files live in VS Code's extension storage and describe MiliUI's public APIs, props, return objects, native control methods, lifecycle helpers, and theme fields. They are not copied into `external_lua_file` and do not run in Miliastra.
+The extension keeps these description files inside VS Code. They cover public functions, component settings, return values, and object methods. They are not copied into `external_lua_file`, and Miliastra never runs them.
 
 ## VS Code extension
 
@@ -44,7 +44,7 @@ The matching MiliUI GitHub Release also includes `MiliUI-IntelliSense.vsix` as a
 
 The extension depends on Lua Language Server (LuaLS). When MiliUI first adds or changes its declaration-library path, it automatically restarts LuaLS so autocomplete and hover information can refresh. It does **not** install or change the MiliUI runtime inside your Miliastra project.
 
-The production `init.lua` keeps one editor-only return-type bridge:
+The installed runtime includes a small type hint that lets VS Code recognize the value returned by `require("MiliUI/init")`:
 
 ```lua
 ---@type MiliUI
