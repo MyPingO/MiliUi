@@ -1,10 +1,10 @@
 # MiliUI Components
 
-Practical reference for the current public API. VS Code hover documentation contains the complete props/method signatures; this guide focuses on normal usage patterns.
+This guide shows how to use MiliUI components in Lua, with practical examples. **Props** are the settings inside `{ ... }` when you create a control. To see every supported prop, callback, and object method, use [MiliUI IntelliSense](IntelliSense.md) in VS Code.
 
 ## Initialization
 
-For a project with several interfaces, initialize the complete supported template set once in a persistent client setup script, then let each Control Group script attach only the Host it owns:
+For a project with several interfaces, initialize the complete supported template set once in a shared client setup script that runs once, then let each Control Group script attach the Host (the UI root) it manages:
 
 ```lua
 local UI = require("MiliUI/init")
@@ -23,7 +23,7 @@ UI.InitTemplates({
 })
 ```
 
-The mapping covers every native Client UI type currently used by MiliUI. A `ReferenceControl` mapping is not required; arbitrary editor templates can be instantiated directly with `UI.Native(...)`.
+The mapping tells MiliUI which editor template to use for each type of Client UI control. You do not need a `ReferenceControl` mapping. If you want to use a different editor-created template directly, see `UI.Native(...)` below.
 
 A Host-owning UI Controller then follows the native lifecycle:
 
