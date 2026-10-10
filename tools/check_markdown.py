@@ -10,10 +10,10 @@ from urllib.parse import unquote, urlsplit
 REPOSITORY_ROOT = Path(__file__).resolve().parents[1]
 FENCE_PATTERN = re.compile(r"^ {0,3}(`{3,}|~{3,})")
 HEADING_PATTERN = re.compile(r"^ {0,3}#{1,6}[ \t]+(.+?)[ \t]*$")
-INLINE_LINK_PATTERN = re.compile(r"!?\\[[^\\]\\n]*\\]\\((<[^>]+>|(?:\\\\.|[^)\\n])+)\\)")
-REFERENCE_DEFINITION_PATTERN = re.compile(r"^ {0,3}\\[([^]]+)\\]:[ \t]*<?([^\\s>]+)>?")
-REFERENCE_USE_PATTERN = re.compile(r"(?<!!)\\[([^]\\n]+)\\]\\[([^]\\n]*)\\]")
-EXPLICIT_ANCHOR_PATTERN = re.compile(r'<(?:a|h[1-6])\\s+[^>]*(?:id|name)=["\\']([^"\\']+)["\\']', re.I)
+INLINE_LINK_PATTERN = re.compile(r"!?\[[^\]\n]*\]\((<[^>]+>|(?:\\.|[^)\n])+)\)")
+REFERENCE_DEFINITION_PATTERN = re.compile(r"^ {0,3}\[([^]]+)\]:[ \t]*<?([^\s>]+)>?")
+REFERENCE_USE_PATTERN = re.compile(r"(?<!!)\[([^]\n]+)\]\[([^]\n]*)\]")
+EXPLICIT_ANCHOR_PATTERN = re.compile(r'<(?:a|h[1-6])\s+[^>]*(?:id|name)=["\']([^"\']+)["\']', re.I)
 
 
 def markdown_lines(source: str) -> tuple[list[tuple[int, str]], bool]:
@@ -35,12 +35,12 @@ def markdown_lines(source: str) -> tuple[list[tuple[int, str]], bool]:
 
 
 def github_heading_anchor(heading: str) -> str:
-    heading = re.sub(r"!?\\[([^]]+)\\]\\([^)]+\\)", r"\\1", heading)
+    heading = re.sub(r"!?\[([^]]+)\]\([^)]+\)", r"\1", heading)
     heading = re.sub(r"<[^>]*>", "", heading)
-    heading = re.sub(r"[\\`*_~]", "", heading)
+    heading = re.sub(r"[\`*_~]", "", heading)
     heading = heading.strip().lower()
-    heading = re.sub(r"[^\\w\\s-]", "", heading, flags=re.UNICODE)
-    return re.sub(r"\\s", "-", heading)
+    heading = re.sub(r"[^\w\s-]", "", heading, flags=re.UNICODE)
+    return re.sub(r"\s", "-", heading)
 
 
 def available_anchors(visible_lines: list[tuple[int, str]]) -> set[str]:
@@ -70,10 +70,10 @@ def targets_in_line(line: str, definitions: dict[str, str]) -> list[str]:
         if destination.startswith("<") and destination.endswith(">"):
             destination = destination[1:-1]
         else:
-            titled_destination = re.match(r"^(\\S+)\\s+[\"'][^\"']+[\"']$", destination)
+            titled_destination = re.match(r"^(\S+)\s+[\"'][^\"']+[\"']$", destination)
             if titled_destination:
                 destination = titled_destination.group(1)
-        targets.append(destination.replace(r"\\(", "(").replace(r"\\)", ")"))
+        targets.append(destination.replace(r"\(", "(").replace(r"\)", ")"))
 
     reference_definition = REFERENCE_DEFINITION_PATTERN.match(line)
     if reference_definition:
@@ -145,7 +145,7 @@ def main() -> int:
                         problems.append(f"{relative_path}:{line_number}: missing GitHub heading anchor: {destination}")
 
     if problems:
-        print("\\n".join(problems))
+        print("\n".join(problems))
         print(f"Found {len(problems)} documentation problem(s).")
         return 1
 
