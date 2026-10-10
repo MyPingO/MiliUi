@@ -19,3 +19,9 @@ jobs:
 
       - name: Validate Markdown links, anchors, and formatting
         run: python tools/check_markdown.py
+
+      - name: Check public Lua example syntax
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.3
+          find examples -type f -name '*.lua' -print0 | xargs -0 -r -n 1 luac5.3 -p
