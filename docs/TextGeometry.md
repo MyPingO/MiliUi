@@ -1,10 +1,10 @@
 # Text Geometry
 
-Miliastra's native text controls require more vertical rectangle space than their nominal `fontSize`. This is an engine/rendering constraint that MiliUI now treats as layout geometry rather than leaving each component to guess.
+In Miliastra, setting a font size does not guarantee the text box is tall enough to show every letter. A text control often needs more height than its `fontSize` value. MiliUI includes helpers that estimate a safe height so letters do not disappear or get cut off.
 
 ## Runtime-confirmed behavior
 
-Dedicated runtime calibration showed two distinct behaviors:
+Testing in Miliastra found two differences between the text controls:
 
 - `UI.Text` has a hard vertical cutoff. Below its native threshold, the text may render nothing at all.
 - `UI.TextWindow` is more viewport-like. It can still render in a short rectangle, but descenders such as `g`, `y`, `j`, `p`, and `q` are clipped before the rest of the glyph.
