@@ -1,14 +1,14 @@
 # Motion
 
-`UI.Motion` provides Host-owned managed tweens and reusable transform effects.
+`UI.Motion` animates controls in your interface. You can move, resize, rotate, or briefly bounce a Button or other control. A *tween* is an animation that gradually changes a value over a set amount of time.
 
-Use Motion when the visual behavior belongs to an existing control or component. Effects that create temporary decorative controls, such as confetti/image bursts, are intentionally not part of this first motion preset batch.
+Use Motion to animate controls that already exist. Effects that create new decorative objects, such as confetti, are not included.
 
 ## Managed motion
 
 All Motion targets may be native Client UI controls or MiliUI wrapper objects with `.root`.
 
-Managed motion tracks semantic transform channels:
+MiliUI tracks animation changes separately for each property, called a *channel*:
 
 - position
 - size
@@ -17,7 +17,7 @@ Managed motion tracks semantic transform channels:
 - scale
 - rotation
 
-Starting new managed motion on a channel replaces conflicting MiliUI-managed motion on that channel. Reusable effects remember the target's intended baseline and restore it after completion or cancellation.
+Starting another MiliUI animation on the same property replaces the previous one. Preset effects also remember the control's original size, position, or rotation and restore it when the effect finishes or is canceled.
 
 This means repeated interaction effects should not permanently accumulate offsets, scale, or rotation.
 
