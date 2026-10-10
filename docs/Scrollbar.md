@@ -1,6 +1,6 @@
 # Scrollbar
 
-`UI.Scrollbar` is MiliUI's reusable vertical scrollbar primitive. It owns the arrow buttons, draggable thumb, numeric range, step snapping, shared scrollbar theme, and value-change events without requiring Miliastra's native GridScroller.
+`UI.Scrollbar` creates a vertical scrollbar with arrow Buttons and a draggable handle (the *thumb*). You can use it to control which items are visible in a list or to choose a value within a range. It reports changes through an `OnChange` callback.
 
 ## Basic usage
 
