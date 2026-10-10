@@ -1,8 +1,8 @@
 # Responsive Components
 
-MiliUI's responsive component layer extends the layout foundation into composed controls. Component roots accept the same `MiliUI.LayoutProps` used by primitives, and components with MiliUI-owned internal geometry reflow those internals when their root size changes.
+Components such as Sliders and ProgressBars can resize when the space available to them changes. They support the same layout settings as Rows, Columns, and other controls. MiliUI also adjusts the parts *inside* those components as they resize.
 
-This means composed controls can safely participate in `UI.Row`, `UI.Column`, and `UI.Responsive` layouts without leaving MiliUI-owned visuals at their original construction size.
+For example, when a Slider becomes narrower, its track and other MiliUI-managed parts adjust with it. You can place these components inside `UI.Row`, `UI.Column`, or `UI.Responsive`.
 
 For the higher-level responsive strategy, focus fallback, layout diagnostics, and the TextWindow breakpoint finding, see [`ResponsiveFoundation.md`](ResponsiveFoundation.md).
 
