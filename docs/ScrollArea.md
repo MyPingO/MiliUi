@@ -1,6 +1,6 @@
 # ScrollArea
 
-`UI.ScrollArea` is MiliUI's reusable vertical scrolling container. It combines a native image mask with the shared `UI.Scrollbar`, so arbitrary MiliUI controls can scroll inside a clipped viewport without requiring Miliastra's native GridScroller.
+`UI.ScrollArea` creates an area that scrolls vertically. You can place Buttons, Cards, and other controls inside it. Anything outside the visible area is hidden, and a scrollbar lets players move through the content.
 
 ## Basic usage
 
@@ -18,7 +18,7 @@ UI.Card(area.content, {
 })
 ```
 
-Parent scrollable controls to `area.content`, not directly to `area.root`.
+Create the controls you want to scroll inside `area.content`, not `area.root`. The `content` container is the part that moves when the player scrolls.
 
 `contentHeight` is explicit in v1. MiliUI uses it to compute the scroll range and scrollbar thumb length:
 
