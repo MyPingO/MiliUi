@@ -17,42 +17,11 @@ jobs:
         with:
           python-version: "3.x"
 
-      - name: Check local Markdown links
-        shell: python
+      - name: Validate Markdown links, anchors, and formatting
+        run: python tools/check_markdown.py
+
+      - name: Check public Lua example syntax
         run: |
-          from pathlib import Path
-          import re
-          import sys
-
-          root = Path(".").resolve()
-          failures = []
-
-          for markdown in root.rglob("*.md"):
-              text = markdown.read_text(encoding="utf-8")
-              for match in re.finditer(r"\[[^\]]+\]\(([^)]+)\)", text):
-                  target = match.group(1).strip()
-                  if (
-                      not target
-                      or target.startswith(("http://", "https://", "mailto:", "#"))
-                  ):
-                      continue
-
-                  target = target.split("#", 1)[0]
-                  if not target:
-                      continue
-
-                  resolved = (markdown.parent / target).resolve()
-                  try:
-                      resolved.relative_to(root)
-                  except ValueError:
-                      failures.append(f"{markdown}: link escapes repository: {target}")
-                      continue
-
-                  if not resolved.exists():
-                      failures.append(f"{markdown}: missing local target: {target}")
-
-          if failures:
-              print("\n".join(failures))
-              sys.exit(1)
-
-          print("Public Markdown links are valid.")
+          sudo apt-get update -qq
+          sudo apt-get install -y lua5.3
+          find examples -type f -name '*.lua' -print0 | xargs -0 -r -n 1 luac5.3 -p

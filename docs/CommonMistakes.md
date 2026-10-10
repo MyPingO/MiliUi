@@ -2,7 +2,22 @@
 
 This page covers common setup, layout, and interaction problems. It also explains what to clean up when Miliastra removes a UI Control Group, and what MiliUI keeps for the next time that interface opens.
 
-If Hosts, Control Groups, Pages, or Layers are new to you, read [ControlGroups.md](ControlGroups.md) first.
+If Hosts, Control Groups, Pages, or Layers are new to you, start with [Control Groups and Hosts](ControlGroups.md). This page covers specific problems, so you can jump straight to the section you need.
+
+## Find a problem quickly
+
+- [Prevent one UI from destroying another](#do-not-use-uidestroyall-in-every-control-group-script)
+- [Set up multiple Hosts properly](#do-not-use-the-removed-single-root-uiinit-lifecycle)
+- [Preserve Pages when an interface is recreated](#do-not-confuse-close-with-detach)
+- [Restore a Page after attaching its Host](#do-not-assume-attach-restores-anything-automatically)
+- [Check the right layout root](#run-diagnostics-from-the-miliui-screen-not-the-editor-script-root)
+- [Fix clipped text](#do-not-force-text-into-a-rectangle-shorter-than-its-safe-height)
+- [Choose between screen and screen.root](#understand-screen-versus-screenroot)
+- [Check Server Signals](#serversignal-field-order-must-match-the-server-node-graph)
+- [Check client and server trust](#do-not-trust-client-submitted-metadata-as-authoritative-server-state)
+- [Fix template setup](#check-the-global-script-template-variables)
+
+For other problems, use your browser's search (Ctrl+F) to find an error message or component name.
 
 ## Do not use `UI.DestroyAll()` in every Control Group script
 

@@ -2,6 +2,18 @@
 
 This guide shows how to use MiliUI components in Lua, with practical examples. **Props** are the settings inside `{ ... }` when you create a control. To see every supported prop, callback, and object method, use [MiliUI IntelliSense](IntelliSense.md) in VS Code.
 
+## Find what you need
+
+You do not need to learn every component at once. Start with the [Screen](#screen), [Text primitives](#text-primitives), and [Button / IconButton](#button--iconbutton) sections.
+
+- **Building a layout:** [Screen](#screen), [Layout](#layout), [Text primitives](#text-primitives)
+- **Making controls interactive:** [Button / IconButton](#button--iconbutton), [Toggle](#toggle), [Slider](#slider), [Select](#select)
+- **Displaying changing data:** [Repeater / ListView](#repeater--listview), [ProgressBar](#progressbar), [Stat](#stat)
+- **Showing messages:** [Alert / Shell](#alert--shell), [ToastManager](#toastmanager), [Modal](#modal)
+- **Using editor-provided controls:** [Native UI Animation](#native-ui-animation), [Native TextWindow](#native-textwindow), [Native GridScroller](#native-gridscroller)
+
+For complete setup steps, follow the [Quick Start](../QUICK_START.md). Each example below assumes the required templates are configured and the Host is attached.
+
 ## Initialization
 
 For a project with several interfaces, initialize the complete supported template set once in a shared client setup script that runs once, then let each Control Group script attach the Host (the UI root) it manages:
@@ -9,19 +21,23 @@ For a project with several interfaces, initialize the complete supported templat
 ```lua
 local UI = require("MiliUI/init")
 
-UI.InitTemplates({
-    container = script:GetParam("ContainerTemplateId"),
-    image = script:GetParam("ImageTemplateId"),
-    text = script:GetParam("TextTemplateId"),
-    button = script:GetParam("ButtonTemplateId"),
-    cursorArea = script:GetParam("CursorAreaTemplateId"),
-    animation = script:GetParam("UIAnimationTemplateId"),
-    fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
-    keyHint = script:GetParam("KeyHintTemplateId"),
-    textWindow = script:GetParam("TextWindowTemplateId"),
-    gridScroller = script:GetParam("GridScrollerTemplateId"),
-})
+function OnInit()
+    UI.InitTemplates({
+        container = script:GetParam("ContainerTemplateId"),
+        image = script:GetParam("ImageTemplateId"),
+        text = script:GetParam("TextTemplateId"),
+        button = script:GetParam("ButtonTemplateId"),
+        cursorArea = script:GetParam("CursorAreaTemplateId"),
+        animation = script:GetParam("UIAnimationTemplateId"),
+        fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+        keyHint = script:GetParam("KeyHintTemplateId"),
+        textWindow = script:GetParam("TextWindowTemplateId"),
+        gridScroller = script:GetParam("GridScrollerTemplateId"),
+    })
+end
 ```
+
+Place this in the persistent client Global Script. Miliastra calls `OnInit()` during script initialization, so the templates are ready before your UI Controllers create controls.
 
 The mapping tells MiliUI which editor template to use for each type of Client UI control. You do not need a `ReferenceControl` mapping. If you want to use a different editor-created template directly, see `UI.Native(...)` below.
 
@@ -61,7 +77,7 @@ UI.Text(parent, {
     text = "PLAY",
     textId = "MainMenu.Play",
     fitWidth = true,
-fitWidthPadding = 16,
+    fitWidthPadding = 16,
 })
 ```
 
@@ -150,21 +166,21 @@ UI.Heading(parent, {
     text = "SETTINGS",
     textId = "Settings.Title",
     fitWidth = true,
-fitWidthPadding = 16,
+    fitWidthPadding = 16,
 })
 
 UI.Label(parent, {
     text = "Music",
     textId = "Settings.Music",
     fitWidth = true,
-fitWidthPadding = 16,
+    fitWidthPadding = 16,
 })
 
 UI.Caption(parent, {
     text = "v1.0",
     needsTranslation = false,
     fitWidth = true,
-fitWidthPadding = 16,
+    fitWidthPadding = 16,
 })
 ```
 
@@ -645,7 +661,7 @@ UI.Text(tabs:GetContent(1), {
     text = "Overview page",
     textId = "Tabs.Overview.Page",
     fitWidth = true,
-fitWidthPadding = 16,
+    fitWidthPadding = 16,
 })
 ```
 
@@ -771,7 +787,7 @@ UI.Text(modal.content, {
     text = "Build any MiliUI content here.",
     textId = "Modal.Example.Body",
     fitWidth = true,
-fitWidthPadding = 16,
+    fitWidthPadding = 16,
 })
 
 modal:Open()

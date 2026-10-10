@@ -15,7 +15,18 @@ Server Node Graph
 
 When the Control Group is removed, its attached script is destroyed and calls `UI.Hosts.Detach(...)`.
 
-This means you normally **do not need a separate "Show Lua UI" signal** just to tell Lua that a UI should appear. Instantiating the Control Group is already the show operation.
+This means you normally **do not need a separate "Show Lua UI" signal** just to tell Lua that a UI should appear. Creating the Control Group in server logic already makes its attached Client UI run.
+
+## On this page
+
+- [What is a Control Group, Host, or Page?](#the-mental-model)
+- [How to set up the editor](#recommended-editor-structure)
+- [Example: a HUD without Pages](#simple-example-hud-with-no-pages)
+- [Example: a menu with Pages](#simple-example-menu-with-pages)
+- [How to show and hide an interface](#showing-and-hiding-from-server-node-graphs)
+- [What happens when an interface reopens](#re-showing-a-control-group-resume-or-start-fresh)
+- [How to put one interface above another](#layering-the-most-important-boundary)
+- [Checklist for a new project](#beginner-checklist)
 
 ## The mental model
 
@@ -23,7 +34,7 @@ These four terms describe different parts of the setup:
 
 | Concept | Think of it as | Who owns it? |
 | --- | --- | --- |
-| **UI Control Group** | A prefab / packaged UI instance with a Layer and UI Index | Miliastra |
+| **UI Control Group** | A reusable UI entry with a Layer and UI Index, created from a template in the editor | Miliastra |
 | **Client Control Container** | The native root MiliUI is allowed to build under | Miliastra |
 | **MiliUI Host** | MiliUI's name for one active Client UI root, such as `"Menu"` | MiliUI |
 | **MiliUI Page** | One logical screen inside a Host, such as Settings or Inventory | MiliUI |
