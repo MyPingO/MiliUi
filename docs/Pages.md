@@ -1,10 +1,10 @@
 # Pages
 
-`UI.Pages` manages logical pages that belong to named MiliUI Hosts. A host can contain several open pages at once; their order is tracked from bottom/back to front/top.
+`UI.Pages` manages screens within a MiliUI Host. For example, a Menu Host can have a Main Menu Page, a Settings Page, and a Help Page. More than one Page can be open at once, and MiliUI tracks which one appears in front.
 
 A Page is **not** a Miliastra UI Control Group. Pages live *inside* one attached host/root. Cross-Control-Group ordering still belongs to Miliastra's Layer system.
 
-Page IDs are globally unique. Host IDs and page IDs are separate namespaces.
+Each Page ID must be unique across the running MiliUI app, even if the Pages belong to different Hosts. Page IDs and Host IDs are separate names, so a Page and a Host may share the same text.
 
 For the recommended Control Group setup, see [ControlGroups.md](ControlGroups.md).
 
