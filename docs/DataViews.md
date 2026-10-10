@@ -1,15 +1,12 @@
 # Repeater and ListView
 
-`UI.Repeater` and `UI.ListView` remove manual create/destroy/reorder
-boilerplate from data-driven UI.
+`UI.Repeater` and `UI.ListView` help you display a list of items. When your list changes, MiliUI can create, remove, or rearrange the controls instead of making you manage every row yourself.
 
-They deliberately do **not** own selection semantics. Rows remain normal MiliUI
-controls and can use Button, Checkbox, custom interaction, or game-specific
-state without forcing every list into one selection model.
+They don't decide which item is selected. You can put Buttons, Checkboxes, or other controls in each row and handle selection however your game needs.
 
 ## Direction and logical order
 
-The canonical flow values are:
+Choose how the items should be laid out:
 
 ```text
 top-down     -- default
@@ -18,8 +15,7 @@ left-right
 right-left
 ```
 
-`SetItems(items)` always treats the array as the logical sequence. MiliUI maps
-that sequence onto the configured visual direction. For example, with
+`SetItems(items)` takes a Lua list in its original order (item 1, item 2, and so on). The `direction` setting decides where those items appear on screen. For example, with
 `bottom-up`, logical item 1 appears at the bottom and later items extend
 upward.
 
