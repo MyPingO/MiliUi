@@ -1,6 +1,6 @@
 # Common mistakes and troubleshooting
 
-This page collects mistakes that are easy to make when building or testing MiliUI screens. Some are layout/component mistakes; others come from confusing Miliastra's Control Group lifecycle with MiliUI's Host/Page lifecycle.
+This page covers common setup, layout, and interaction problems. It also explains what to clean up when Miliastra removes a UI Control Group, and what MiliUI keeps for the next time that interface opens.
 
 If Hosts, Control Groups, Pages, or Layers are new to you, read [ControlGroups.md](ControlGroups.md) first.
 
@@ -219,7 +219,7 @@ from external/bootstrap code. The timer is then cancelled automatically if that 
 
 ## A simple HUD does not require Pages
 
-Pages are for logical screens and page ordering. A HUD that should simply exist whenever its Control Group exists can attach its Host and build directly under `script.object`.
+Pages are for logical screens and page ordering. A HUD that should be visible whenever its Control Group exists can attach its Host and build directly under `script.object`.
 
 Do not add `UI.Pages` solely because every MiliUI root is called a Host.
 
