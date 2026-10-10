@@ -1,12 +1,12 @@
 # Intrinsic and Localization-Safe Sizing
 
-MiliUI supports content-driven sizing for controls that should adapt to their actual localized content instead of relying on fixed English-sized rectangles.
+MiliUI can size controls to fit their content, including translated text that might be longer or shorter than the English version. This is called *intrinsic sizing*. It helps avoid Buttons and text boxes that are too small in other languages.
 
 The core rule is:
 
-> Explicit geometry wins. Intrinsic sizing only fills dimensions the developer intentionally leaves open.
+> If you set a width or height yourself, MiliUI uses it. Automatic sizing fills in dimensions you leave unspecified.
 
-This keeps existing layouts deterministic while making dynamic/localized UI much easier to author.
+This lets you mix fixed sizes with automatic sizes in the same layout.
 
 ## Fit-Content Buttons
 
