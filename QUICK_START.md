@@ -42,9 +42,7 @@ The `UI Controllers` folder name is only a recommendation. What matters is that 
 
 Open the **UI Control Group Library** and switch to **Server Control Templates**.
 
-Create a **Client Control Container** Server Template, give it a clear name such as `Hello MiliUI`, then open it for editing.
-
-Open the Client Control Container for editing. Select the top-level `ContainerControl` in the hierarchy, open that control's **Script** tab, and add:
+Create a **Client Control Container** Server Template and name it `Hello MiliUI` (or another name you prefer). Open it, select the top-level `ContainerControl`, then go to its **Script** tab and add:
 
 ```text
 Hello MiliUI Controller
