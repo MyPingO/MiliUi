@@ -1,8 +1,8 @@
 # MiliUI API at a glance
 
-Looking for a component or function? This is a **quick lookup for the `72` public top-level `UI.*` functions** in MiliUI beta.2, checked against the published IntelliSense declarations. Use **Ctrl+F** to find a name here, then open the linked guide for examples.
+Looking for a component or function? This page lists all **72 top-level `UI.*` functions** in MiliUI beta.2, based on the IntelliSense declarations. Press **Ctrl+F** to search for a name, then open the linked guide to see how it works.
 
-This is **not** a replacement for IntelliSense's full property and method descriptions. For every `props` setting, callback signature, and returned object's methods, use [MiliUI IntelliSense](IntelliSense.md) in VS Code or the relevant detailed guide.
+For individual settings (called *props*), callback parameters, and object methods, use [MiliUI IntelliSense](IntelliSense.md) in VS Code. The linked guides also show complete examples.
 
 ## A tiny example
 
@@ -31,7 +31,7 @@ Here `parent` means a **container your project already created**, such as a Scre
 | Scroll a list of buttons | [ScrollArea / ScrollColumn](ScrollArea.md) |
 | Make a dropdown | [Select](Select.md) |
 | Make a collapsible section | [Accordion](Accordion.md) |
-| Show a dialog or message | [Components: feedback controls](Components.md#alert--shell) |
+| Show an Alert or Toast message | [Alert / Shell](Components.md#alert--shell) or [ToastManager](Components.md#toastmanager) |
 | Change Pages and support Back | [Navigation](Navigation.md) |
 | Watch game signals or variables | [Signals and Custom Variables](Subscriptions.md) |
 | Support controller focus | [Controller Support](ControllerSupport.md) |
@@ -46,7 +46,7 @@ Here `parent` means a **container your project already created**, such as a Scre
 
 Shared templates, cleanup, and translated text. [Related guide](Components.md).
 
-`UI.InitTemplates` · `UI.Init` *(deprecated — use InitTemplates and Hosts.Attach)* · `UI.DestroyAll` · `UI.Destroy` · `UI.ResolveText` · `UI.SetText` · `UI.RefreshLocalization`
+`UI.InitTemplates` · `UI.Init` *(deprecated; use `UI.InitTemplates` and `UI.Hosts.Attach` instead)* · `UI.DestroyAll` · `UI.Destroy` · `UI.ResolveText` · `UI.SetText` · `UI.RefreshLocalization`
 
 ### Screen and basic display
 
