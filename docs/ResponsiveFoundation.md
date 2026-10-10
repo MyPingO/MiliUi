@@ -2,27 +2,40 @@
 
 A responsive layout adjusts when the available screen space changes. Instead of calculating every control's position yourself, you can tell MiliUI how controls should be arranged and when that arrangement should change.
 
-Start with `UI.Row` or `UI.Column` to arrange controls. Use percentages or `grow` to share space, and min/max sizes to keep controls usable. For larger changes, such as switching from three columns to one on a narrow screen, use `UI.Responsive`. See [Responsive Layout](ResponsiveLayout.md) for the basic sizing options.
+Start with `UI.Row` or `UI.Column` to arrange controls. Use percentages to size a control relative to its parent, or `grow` to give it a share of the remaining space. Add minimum and maximum sizes to prevent controls from becoming too small or too large. For bigger changes, such as switching from three columns to one, use `UI.Responsive`. The [Responsive Layout guide](ResponsiveLayout.md) covers the basic sizing options.
+
+## On this page
+
+- [Runtime status](#runtime-status)
+- [Mental model](#mental-model)
+- [Recommended page structure](#recommended-page-structure)
+- [UI.Responsive](#uiresponsive)
+- [Useful minimums are decision thresholds](#useful-minimums-are-decision-thresholds)
+- [Dynamic children](#dynamic-children)
+- [Nested responsive layouts](#nested-responsive-layouts)
+- [TextWindow and breakpoint trees](#textwindow-and-breakpoint-trees)
+- [Layout diagnostics](#layout-diagnostics)
+- [Safe-area rules](#safe-area-rules)
+- [What MiliUI should own](#what-miliui-should-own)
+- [Any-screen-size goal](#any-screen-size-goal)
+- [Scrolling](#scrolling)
+- [Development checklist](#development-checklist)
 
 ## Runtime status
 
-The current responsive foundation has been validated in Test Play against aggressive safe-area changes and nested scrolling compositions.
+These layout features have been tested in Miliastra Test Play, including when the usable screen area changes and when scrolling containers are nested.
 
-Runtime-confirmed behavior includes:
+The tested behavior includes:
 
-- `UI.Screen` safe-area insets resizing the available content area;
-- `UI.Column` with a fixed-height header and `grow = 1` responsive body consuming the remaining height without manual offset math;
-- `UI.Responsive` changing from three columns to fewer columns as width becomes constrained;
-- `UI.Responsive` entering `focus` mode when the grid can no longer preserve useful minimum sizes;
-- `Next()`, `Previous()`, and `SetFocus(...)` cycling the same existing control tree in focus mode;
-- one native `TextWindow` remaining clean while the responsive layout changes density and enters focus mode;
-- native Client UI Control stretch anchors resolving against the immediate parent, with parent local scale propagating visually through descendants;
-- `UI.Scrollbar` working inside Row/Column layouts, including percentage/fill sizing;
-- `UI.ScrollArea` clipping arbitrary interactive controls, nesting inside another ScrollArea, and composing with `Select`, Tabs, inputs, Cards, and persistent layouts;
-- `UI.CheckLayout(...)` detecting an intentionally introduced **2.00 UI-unit bottom overflow exactly**;
-- the recent scrollable-component stress harness completing with `layoutIssues=0` and `textIssues=0` after the tested fixes.
+- `UI.Screen` keeps content inside the screen's safe area, which is the space left after the game's screen-edge padding.
+- `UI.Row` and `UI.Column` can combine fixed-size controls with `grow = 1` so the remaining space goes to the flexible part.
+- `UI.Responsive` can show fewer columns when space is tight. It can switch to **focus mode**, which shows one item at a time when a grid would be too cramped.
+- `Next()`, `Previous()`, and `SetFocus(...)` change the visible item in focus mode without recreating all the controls.
+- The built-in `TextWindow` control continues to work while a responsive layout changes.
+- `UI.ScrollArea` and `UI.Scrollbar` work with nested layouts, buttons, dropdowns, and other interactive controls.
+- `UI.CheckLayout(...)` and the text geometry checks can detect controls that extend outside their intended bounds.
 
-The responsive runtime should therefore be treated as a usable foundation, not only an experimental prototype. More complex compositions should still be stress-tested because responsive design cannot infer every project's information hierarchy automatically.
+These are tested behaviors, not a guarantee that every custom layout will fit automatically. Test narrow screens, long translated text, and nested scrolling in your own interface.
 
 ## Mental model
 
