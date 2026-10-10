@@ -1,6 +1,6 @@
 # Controller Support
 
-MiliUI uses Miliastra's native controller-focus system. Focus and selection are separate concepts: a control may be visually selected without holding controller focus, and controller focus can move without changing application selection state.
+MiliUI uses Miliastra's built-in controller focus system. **Focus** is the Button the controller will activate when you press Confirm. **Selection** is a value your game has chosen, such as the selected menu option. A Button can be selected without being focused, and moving focus does not automatically change your game's selection.
 
 ## Focusable controls
 
@@ -261,4 +261,4 @@ Confirm        activate the focused Button
 
 The important part is not the exact direction scheme; it is defining explicit bridges at region boundaries while allowing normal nearest-control or explicit ordering inside each region.
 
-The documentation runtime harness includes this pattern in `COMP-02 — Controller navigation & focus`.
+For working controller examples, see [the Button and menu examples](../examples/getting-started/README.md).
