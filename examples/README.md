@@ -1,83 +1,48 @@
 # MiliUI examples
 
-The examples use two different patterns. This distinction is important.
+These are the examples **actually included in the public repository**. If you're new to MiliUI, start with the small examples and work your way down.
 
 ## Start here
 
-If you are completely new to MiliUI, begin with the deliberately small [getting-started examples](getting-started/README.md):
+1. [Install and set up MiliUI](../docs/Installation.md), or import the starter save.
+2. Follow the [Quick Start](../QUICK_START.md) for a guided first interface.
+3. Read the [Getting Started Examples](getting-started/README.md) for small scripts you can adapt.
 
-1. [`getting-started/HelloMiliUI.lua`](getting-started/HelloMiliUI.lua) — one Screen, Card, heading, and Button.
-2. [`getting-started/SimpleMenu.lua`](getting-started/SimpleMenu.lua) — a small vertical menu.
-3. [`getting-started/SimpleSettings.lua`](getting-started/SimpleSettings.lua) — a Toggle and Slider with callbacks.
-4. [`../QUICK_START.md`](../QUICK_START.md) — installation and editor setup from zero.
+| Example | What it shows |
+| --- | --- |
+| [MiliUIGlobal.lua](getting-started/MiliUIGlobal.lua) | Shared, one-time template setup |
+| [HelloMiliUI.lua](getting-started/HelloMiliUI.lua) | A Screen, Column, Heading, and clickable Button |
+| [PolishedHelloMiliUI.lua](getting-started/PolishedHelloMiliUI.lua) | Styling, translated text, controller-friendly input, and shared sounds |
+| [SimpleMenu.lua](getting-started/SimpleMenu.lua) | A small menu with automatically sized Buttons |
+| [SimpleSettings.lua](getting-started/SimpleSettings.lua) | A Toggle and Slider with callbacks |
 
-After that, the framework-level examples are:
+**Important:** These UI examples assume the shared template setup is already running. Replace example UI Index values with the Index of your own Control Group.
 
-1. [`ControlGroupHud.lua`](ControlGroupHud.lua) — a complete Control Group + Host example.
-2. [`ControlGroupMenu.lua`](ControlGroupMenu.lua) — Control Group + Host + Page + Session.
-3. [`../docs/ControlGroups.md`](../docs/ControlGroups.md) — the full lifecycle explanation.
+## More examples
 
-The recommended game architecture is:
+| Example | What it shows |
+| --- | --- |
+| [ControlGroupHud.lua](ControlGroupHud.lua) | A standalone HUD with its own Host and cleanup |
+| [ControlGroupMenu.lua](ControlGroupMenu.lua) | A menu using Pages and remembered Session state |
+| [NavigationLab.lua](NavigationLab.lua) | Moving between pages with Navigation history |
+| [AccordionLab.lua](AccordionLab.lua) | Expandable sections, resizing, and remembered state |
+| [SubscriptionsLab.lua](SubscriptionsLab.lua) | Host-owned incoming Server Signals and Custom Variable listeners |
+| [PlayerEntitySignal.lua](PlayerEntitySignal.lua) | Reading the current Player Entity to send a client-to-server signal |
 
-```text
-Server Node Graph
-    -> instantiate UI Control Group
-        -> Client Control Container
-            -> attached Lua script OnStart
-                -> UI.InitTemplates(...)
-                -> UI.Hosts.Attach(uiIndex, hostId, root)
-                -> build UI or Open/Restore Pages
-```
+Additional component examples are in the [Components guide](../docs/Components.md). The full [Documentation Index](../docs/README.md) links to the relevant guides.
 
-When that Control Group is removed, its script calls `UI.Hosts.Detach(...)` in `OnDestroy`.
+## Two common kinds of scripts
 
-You normally do not need a second "Show Lua UI" signal just to tell the newly-instantiated UI to appear.
-
-## Player Entity signals
-
-If a client-to-server signal needs the current Player Entity, configure `UI.Player` with the name of a Player Custom Variable that references its owning Player Entity:
-
-```lua
-UI.Player.Configure("PlayerSelf")
-
-local signal = game.ServerSignal("Set Menu State")
-signal:AddEntity(UI.Player.RequireEntity())
-signal:AddBool(true)
-signal:SendSignal()
-```
-
-`PlayerSelf` is only an example variable name. Projects can use any naming convention.
-
-See [`PlayerEntitySignal.lua`](PlayerEntitySignal.lua) for the complete small example and [`../docs/Player.md`](../docs/Player.md) for setup details.
-
-## Pattern A: standalone Control Group scripts
-
-These examples include their own `OnStart` / `OnDestroy` Host lifecycle and can be adapted into scripts attached to a Client Control Container:
-
-```text
-ControlGroupHud.lua
-ControlGroupMenu.lua
-MultipleChoiceWindow.lua
-ResponsiveFoundation.lua
-ResponsiveStress.lua
-ScrollArea.lua
-Scrollbar.lua
-Select.lua
-SessionPersistence.lua
-```
-
-Their basic shape is:
+**A UI controller** belongs to a Client Control Container. It attaches its MiliUI Host when the native Control Group appears, then detaches it when that Control Group goes away.
 
 ```lua
 local UI = require("MiliUI/init")
-local UI_INDEX = 1001 -- Replace with the Miliastra UI Index for this UI entry.
-local HOST_ID = "Example"
+local UI_INDEX = 1001 -- Replace this with your Control Group's Index.
+local HOST_ID = "My Menu"
 
 function OnStart()
-    UI.InitTemplates({ ... })
     UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
-
-    -- Build UI, or Open/Restore registered Pages.
+    -- Create controls here, or open a registered Page.
 end
 
 function OnDestroy()
@@ -87,117 +52,16 @@ function OnDestroy()
 end
 ```
 
-The Index does not need to come from a script parameter. It can be typed directly, kept in a Lua constant, or loaded from game-defined configuration.
+The example assumes `UI.InitTemplates(...)` has already been called from shared setup. See [Installation](../docs/Installation.md) before using this pattern in a new project.
 
-In a real project, give each independent root a meaningful stable Host ID such as `"HUD"`, `"Menu"`, or `"Overlay"`, and give each Host the matching Miliastra UI Index.
+**A reusable builder** is just a Lua function that creates controls under an existing parent. It doesn't attach or detach a Host itself. You can call one from your controller or from a Page factory. See the [Project Structure guide](../docs/ProjectStructure.md) for that pattern.
 
-Do not replace that `Detach` with `UI.DestroyAll()`. `DestroyAll()` is global across attached Hosts and can destroy another Control Group's MiliUI controls.
+## Things to remember
 
-## Pattern B: reusable builders
+- Use a distinct Host ID and UI Index for each separate live Control Group. The fixed IDs in example scripts are placeholders.
+- Do **not** call `UI.DestroyAll()` when one Control Group disappears; use `UI.Hosts.Detach(hostId)` so other interfaces remain intact.
+- MiliUI Pages live **inside** a Host. [Pages](../docs/Pages.md) organize screens; [Navigation](../docs/Navigation.md) remembers where Back should go.
+- Saved UI values with `remember = true` live in the current Lua Session, **not** in permanent game save data.
+- For outgoing Server Signals, use Miliastra's `game.ServerSignal(...)` API. MiliUI's [Signals helpers](../docs/Subscriptions.md) are for listening and lifecycle management.
 
-Some examples are modules that only build UI under a parent supplied by the caller:
-
-```text
-AdvancedGallery.lua
-ComponentGallery.lua
-ResponsiveComponentGallery.lua
-IntelliSenseSmokeTest.lua
-```
-
-They do **not** own the Control Group or Host lifecycle.
-
-Typical use:
-
-```lua
-local UI = require("MiliUI/init")
-local Gallery = require("Game UI/ComponentGallery")
-
-local UI_INDEX = 1005
-local HOST_ID = "Gallery"
-
-function OnStart()
-    UI.InitTemplates({ ... })
-    UI.Hosts.Attach(UI_INDEX, HOST_ID, script.object)
-
-    Gallery.Build(script.object)
-end
-
-function OnDestroy()
-    UI.Hosts.Detach(HOST_ID)
-end
-```
-
-A registered Page factory is another good place to call a reusable builder because the factory already runs inside the owning Host/Page context.
-
-## Multiple Hosts in one script
-
-A single Lua script may own more than one Host when it has multiple roots available:
-
-```lua
-UI.Hosts.Attach(1001, "HUD", hudRoot)
-UI.Hosts.Attach(1002, "Menu", menuRoot)
-```
-
-Host IDs and UI Indexes are both unique identities. MiliUI rejects a Host ID mapped to a different Index and also rejects the same Index being mapped to two different Host IDs.
-
-## Control Group Layer versus MiliUI Page order
-
-If two examples are instantiated as different Miliastra Control Groups, their cross-root visual order comes from the Control Group **Layer** setting.
-
-```text
-HUD Control Group      -> Layer decides its cross-root position
-Menu Control Group     -> Layer decides its cross-root position
-```
-
-Inside one Host, `UI.Pages.BringToFront(...)` changes Page sibling order.
-
-MiliUI intentionally does not provide one fake z-index that crosses separate Control Groups.
-
-## Fixed example Host IDs
-
-Standalone examples use fixed Host IDs such as `"Select Example"`. Do not instantiate two live copies of the same fixed-ID example at once unless you first change the IDs to be unique.
-
-Duplicate attached Host IDs intentionally error; silently merging two native roots would make cleanup and ownership unpredictable.
-
-## Timers
-
-Inside a MiliUI-owned callback, the short timer form is correct:
-
-```lua
-button:OnClick(function()
-    UI.After(0.25, function()
-    end)
-end)
-```
-
-From bootstrap code such as `OnStart`, name the Host explicitly:
-
-```lua
-UI.Hosts.After(HOST_ID, 0.25, function()
-end)
-```
-
-This lets MiliUI cancel delayed work if that Host disappears first.
-
-## Pages and remembered state
-
-Use Pages when one Host has logical screens or should recover its open screens after temporary native root recreation.
-
-```lua
-UI.Pages.Register("Settings", {
-    host = "Menu",
-    create = BuildSettings,
-})
-```
-
-Use `remember = true` plus a stable `id` for component state that should rebuild with the same value:
-
-```lua
-UI.Toggle(parent, {
-    id = "Music Enabled",
-    remember = true,
-    value = true,
-})
-```
-
-Session persistence is in-memory Lua state, not permanent player save data.
+For more details, read [Control Groups and Hosts](../docs/ControlGroups.md) and [Common Mistakes](../docs/CommonMistakes.md).
