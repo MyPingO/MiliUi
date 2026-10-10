@@ -1,6 +1,6 @@
 # Accordion
 
-`UI.Accordion` creates one collapsible section with a controller-focusable header and a content-driven body.
+`UI.Accordion` creates a section that players can expand or collapse. Its header can receive controller focus, and the section's height adjusts to the controls you put inside it.
 
 Use it for settings groups, advanced options, help sections, patch-note groups, debug panels, and other places where long content should be hidden until requested.
 
