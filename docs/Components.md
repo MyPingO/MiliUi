@@ -21,19 +21,23 @@ For a project with several interfaces, initialize the complete supported templat
 ```lua
 local UI = require("MiliUI/init")
 
-UI.InitTemplates({
-    container = script:GetParam("ContainerTemplateId"),
-    image = script:GetParam("ImageTemplateId"),
-    text = script:GetParam("TextTemplateId"),
-    button = script:GetParam("ButtonTemplateId"),
-    cursorArea = script:GetParam("CursorAreaTemplateId"),
-    animation = script:GetParam("UIAnimationTemplateId"),
-    fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
-    keyHint = script:GetParam("KeyHintTemplateId"),
-    textWindow = script:GetParam("TextWindowTemplateId"),
-    gridScroller = script:GetParam("GridScrollerTemplateId"),
-})
+function OnInit()
+    UI.InitTemplates({
+        container = script:GetParam("ContainerTemplateId"),
+        image = script:GetParam("ImageTemplateId"),
+        text = script:GetParam("TextTemplateId"),
+        button = script:GetParam("ButtonTemplateId"),
+        cursorArea = script:GetParam("CursorAreaTemplateId"),
+        animation = script:GetParam("UIAnimationTemplateId"),
+        fullscreenAnimation = script:GetParam("FullscreenAnimationTemplateId"),
+        keyHint = script:GetParam("KeyHintTemplateId"),
+        textWindow = script:GetParam("TextWindowTemplateId"),
+        gridScroller = script:GetParam("GridScrollerTemplateId"),
+    })
+end
 ```
+
+Place this in the persistent client Global Script. Miliastra calls `OnInit()` during script initialization, so the templates are ready before your UI Controllers create controls.
 
 The mapping tells MiliUI which editor template to use for each type of Client UI control. You do not need a `ReferenceControl` mapping. If you want to use a different editor-created template directly, see `UI.Native(...)` below.
 
