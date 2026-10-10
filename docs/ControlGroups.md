@@ -1,6 +1,6 @@
 # Control Groups and MiliUI Hosts
 
-For most games, the easiest setup is to let **Miliastra decide when a UI Control Group exists**, then let **MiliUI build and manage the controls inside that Control Group's Client Control Container**.
+Miliastra creates and removes UI Control Groups. MiliUI handles the controls inside each group's Client Control Container. That means your game decides **when a UI appears**, while MiliUI handles **what appears inside it**.
 
 The recommended setup is:
 
@@ -19,7 +19,7 @@ This means you normally **do not need a separate "Show Lua UI" signal** just to 
 
 ## The mental model
 
-There are four different things involved. Keeping them separate makes the system much easier to understand.
+These four terms describe different parts of the setup:
 
 | Concept | Think of it as | Who owns it? |
 | --- | --- | --- |
