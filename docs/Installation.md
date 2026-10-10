@@ -4,7 +4,7 @@ This guide takes a new Miliastra project from **no MiliUI setup** to a project t
 
 You do not need previous Lua experience. The steps below explain the Miliastra-specific setup that MiliUI needs before an interface can be created.
 
-> **Starting a new project?** You can skip most of this one-time boilerplate by importing the ready-to-use MiliUI starter save. It already includes the Global Script, required Client Control Templates, template variables, example controller, and Quick Start interface. See [Starter Template](#starter-template) at the end of this guide.
+> **Starting a new project?** You can skip most of these setup steps by importing the ready-to-use MiliUI starter save. It already includes the Global Script, required Client Control Templates, template variables, example controller, and Quick Start interface. See [Starter Template](#starter-template) at the end of this guide.
 
 > If MiliUI is already installed, mapped in the Client Script Resource Explorer, and your Global Script already initializes the MiliUI templates in `OnInit()`, you can skip to the [Quick Start](../QUICK_START.md).
 
@@ -210,7 +210,7 @@ end
 
 `UI.InitTemplates({...})` tells MiliUI which editor template belongs to each native control type.
 
-The names on the left side of each `=` — such as `container`, `text`, `button`, and `cursorArea` — are MiliUI's template names. The value on the right reads the matching Script Variable you created in Step 7.
+The names before each `=` (such as `container`, `text`, `button`, and `cursorArea`) tell MiliUI which type of template you're providing. Each value after `=` reads the matching Script Variable you created in Step 7.
 
 We use **`OnInit()`** here because it runs earlier than the more commonly used `OnStart()`. At stage startup, the Global Script's `OnInit()` runs before Client Control scripts reach their `OnStart()` functions, so the template mapping is ready before any already-active UI tries to create MiliUI controls.
 
