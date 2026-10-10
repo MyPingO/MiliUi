@@ -10,9 +10,12 @@ MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable 
 
 1. Follow [Installation + Setup](docs/Installation.md) to install MiliUI and prepare the Miliastra project.
 2. Build your first interface with the [Quick Start](QUICK_START.md).
-3. Follow the [getting-started examples](examples/getting-started/README.md) for additional small UI patterns.
-4. Read the [Project Structure guide](docs/ProjectStructure.md) when your game grows beyond one interface.
-5. Use the [Documentation Index](docs/README.md) for the full API guides.
+3. Try the [getting-started examples](examples/getting-started/README.md) or browse the [public example scripts](examples/README.md).
+4. Use the [API at a glance](docs/APIAtAGlance.md) page to find functions, props, and the right guide.
+5. Read the [Project Structure guide](docs/ProjectStructure.md) when your game grows beyond one interface.
+6. Browse the [Documentation Index](docs/README.md) for the other guides.
+
+**Upgrading from beta.1?** See the [beta.2 upgrade checklist](docs/UpgradeBeta2.md), including the breaking `UI.Player` setup change.
 
 ## Downloads
 
