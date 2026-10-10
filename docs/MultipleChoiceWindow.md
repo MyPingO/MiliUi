@@ -1,8 +1,8 @@
 # Multiple Choice Window
 
-`UI.MultipleChoiceWindow` is a reusable multi-selection component for grids of selectable items. It keeps stable 1-based item identity like Miliastra's native single-choice pattern, but adds multiple selection, custom item data, custom rendering, responsive grid layout, theming, and optional ServerSignal submission.
+`UI.MultipleChoiceWindow` lets players pick several items from a grid. You can limit how many items they select, change how each item looks, and optionally send the selection to a Server Signal. Items use Lua's **1-based indexes**, so the first item is `1`, not `0`.
 
-The component owns selection behavior, hitboxes, hover state, selection limits, controller focus, grid placement, and submit validation. Projects can use the built-in renderer for simple lists or replace only the visual content for card-style selectors.
+MiliUI handles clicks, controller focus, highlighting, selection limits, and item positioning. Use the default item appearance for a basic list, or supply your own item design for something like collectible cards.
 
 ## Basic selection
 
@@ -422,7 +422,7 @@ Use `itemStyle` for ordinary tiles and `renderItem` / `updateItem` only when the
 
 ## Related docs
 
-- [Components.md](Components.md) — practical component overview
-- [Masking.md](Masking.md) — native image masks and `clipToRadius`
-- [Theming.md](Theming.md) — creation-time component theme defaults
-- [CommonMistakes.md](CommonMistakes.md) — layout, selection, and ServerSignal troubleshooting
+- [Components](Components.md): examples of the main MiliUI components
+- [Masking](Masking.md): image masks and rounded corners with `clipToRadius`
+- [Theming](Theming.md): default component styles
+- [Common Mistakes](CommonMistakes.md): help with layout, selection, and Server Signals
