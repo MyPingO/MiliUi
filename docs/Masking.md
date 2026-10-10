@@ -1,8 +1,8 @@
 # Image masking
 
-MiliUI exposes Miliastra's native `ClientUIImageControl` masking fields through `UI.Image(...)`.
+You can use `UI.Image(...)` to hide parts of an image or child control that fall outside a mask. MiliUI passes these masking settings to Miliastra's built-in image control (`ClientUIImageControl`).
 
-Masking is useful when an image's rectangular bounds should clip its descendants to the image's alpha silhouette. A common example is placing a square texture inside a rounded MiliUI surface.
+A mask determines which parts of its children are visible. For example, you can show a square image inside a rounded shape without its square corners sticking out.
 
 ## Basic mask
 
@@ -100,6 +100,6 @@ Set `selectedHoverBackground` explicitly when a distinct selected-hover appearan
 
 ## Related docs
 
-- [MultipleChoiceWindow.md](MultipleChoiceWindow.md) — styled selection grids and custom item renderers
-- [Theming.md](Theming.md) — creation-time component defaults and custom images
-- [CommonMistakes.md](CommonMistakes.md) — common geometry and asset-authoring pitfalls
+- [Multiple Choice Window](MultipleChoiceWindow.md): selection grids with custom item designs
+- [Theming](Theming.md): default component styles and custom images
+- [Common Mistakes](CommonMistakes.md): sizing and image-related issues
