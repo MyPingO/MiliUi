@@ -1,6 +1,6 @@
 # MiliUI Theming
 
-MiliUI themes are creation-time defaults. Apply a theme before creating the controls that should use it. Existing controls are not repainted when the active theme changes.
+Themes let you set shared colors, sounds, and component styles instead of repeating the same settings on every Button or Card. **Apply your theme before creating the controls.** Changing the theme later does not automatically update controls that already exist.
 
 ## Apply and reset
 
