@@ -1,15 +1,12 @@
 # MiliUI Documentation
 
-## New users
+## Where to start
 
-Start with:
-
-1. [Installation + Setup](Installation.md)
-2. [Quick Start](../QUICK_START.md)
-3. [Getting Started Examples](../examples/getting-started/README.md)
-4. [Recommended Game Project Structure](ProjectStructure.md)
-5. [Control Groups and MiliUI Hosts](ControlGroups.md)
-6. [Components](Components.md)
+- **New to MiliUI?** Follow [Installation + Setup](Installation.md), then the illustrated [Quick Start](../QUICK_START.md). No previous Lua experience is assumed.
+- **Using the starter save?** Open the [Getting Started Examples](../examples/getting-started/README.md) to understand and modify the example UI.
+- **Already using beta.1?** Follow the [beta.2 upgrade checklist](UpgradeBeta2.md), especially if you used the old `UI.Player` registration functions.
+- **Looking for a component or function?** Use [API at a glance](APIAtAGlance.md) or the practical [Components reference](Components.md).
+- **Want code to copy and adapt?** Browse [all available public examples](../examples/README.md).
 
 ## Building interfaces
 
