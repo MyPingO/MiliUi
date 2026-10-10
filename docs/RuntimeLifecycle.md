@@ -1,6 +1,6 @@
 # Runtime lifecycle
 
-MiliUI separates several concepts that Miliastra may recreate at different times:
+When a Miliastra UI Control Group is removed and created again, its native controls are new objects. MiliUI keeps some setup and state separately so your UI can be rebuilt. Here are the main parts:
 
 ```text
 Templates  -> shared primitive Client Control template IDs
