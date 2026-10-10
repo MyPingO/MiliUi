@@ -19,7 +19,7 @@ If you're using [MiliUI IntelliSense](IntelliSense.md) in VS Code, the extension
 - `UI.Player.IsRegistered()`
 - `UI.Player.RegisterFromSignal(...)`
 
-Instead, create an **Entity-valued Custom Variable on the Player Entity**, with its value set to that Player Entity. Give it a name such as `PlayerSelf` (you can use another name).
+Instead, create a Custom Variable **on the Player Entity** with its type set to **Entity** and its value set to that same Player Entity. Give the variable a name such as `PlayerSelf` (you can use another name).
 
 In your **shared client initialization script**, configure the variable name once:
 
