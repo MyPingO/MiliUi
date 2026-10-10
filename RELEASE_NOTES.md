@@ -25,7 +25,7 @@ This beta updates the public MiliUI runtime, reference documentation, and editor
 - `UI.Player` now resolves the current Player Entity from a configured `PlayerSelf` Custom Variable. Signal-driven Player registration is no longer needed.
 - Controller-focus indicators now support inset and outside placement, with a dedicated focus overlay that stays above scroll-list Buttons and permits horizontal overhang while clipping vertically.
 - MiliUI Manager preserves a newer bundled beta runtime when the published online manifest still points to an older beta; newer public releases continue to update normally.
-- MiliUI IntelliSense 0.1.7 provides plain-language property and function hover descriptions, examples for Row/Column sizing, responsive layouts, controller focus, and common components, plus a beginner-oriented VS Code extension guide.
+- MiliUI IntelliSense 0.1.8 provides plain-language property and function hover descriptions, examples for Row/Column sizing, responsive layouts, controller focus, and common components, plus a beginner-oriented VS Code extension guide.
 
 ## Breaking change: Player setup
 

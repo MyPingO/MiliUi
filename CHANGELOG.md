@@ -19,7 +19,7 @@ All notable public MiliUI releases will be recorded here.
 - `UI.Select` dropdown menus now use a same-Host overlay portal to escape clipped/scrolling parent containers.
 - Controller Confirm press-state cleanup is centralized, and scroll focus chevrons render above Buttons with horizontal overhang and vertical viewport clipping.
 - The Windows Manager no longer replaces a newer bundled beta runtime with an older runtime from the public manifest.
-- IntelliSense 0.1.7 now explains commonly confusing properties in plain language, fills missing hover descriptions, and includes beginner-friendly examples and a layout quick start.
+- IntelliSense 0.1.8 now explains commonly confusing properties in plain language, fills missing hover descriptions, and includes beginner-friendly examples and a layout quick start.
 - Release packages include the pinned, unchanged starter `.gil` from beta.1.
 
 ### Breaking changes
