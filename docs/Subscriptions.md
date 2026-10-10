@@ -1,14 +1,8 @@
 # Server Signals and Custom Variables
 
-MiliUI provides Host-owned wrappers for Miliastra's client-side Server Signal and global Custom Variable listener APIs.
+Use `UI.Signals.Listen` to react when your client receives a Server Signal. Use `UI.Variables.Watch` to react when a global Custom Variable changes.
 
-The goal is lifecycle ownership rather than replacing Miliastra's data model:
-
-- subscriptions belong to an attached MiliUI Host,
-- callbacks re-enter that Host's context,
-- several MiliUI callbacks can share one native listener,
-- manual disconnect is available,
-- Host detach automatically disconnects remaining subscriptions.
+Each listener belongs to a MiliUI Host (one active UI root). MiliUI handles cleanup when that Host is detached, so a closed menu does not keep receiving events. Multiple callbacks can listen to the same event, and you can disconnect one manually if needed.
 
 ## Server Signals
 
