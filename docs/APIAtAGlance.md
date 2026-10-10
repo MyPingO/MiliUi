@@ -6,10 +6,10 @@ For individual settings (called *props*), callback parameters, and object method
 
 ## A tiny example
 
+This is part of a Page builder, not a complete script on its own. It assumes that MiliUI is already set up, a Host has been attached, and `parent` is an existing MiliUI container to put controls inside.
+
 ```lua
 local UI = require("MiliUI/init")
-
--- The Host and shared templates must be set up first.
 local column = UI.Column(parent, { width = 300, gap = 12 })
 local button = UI.Button(column, {
     label = { text = "Play" },
@@ -20,7 +20,7 @@ button:OnClick(function()
 end)
 ```
 
-Here `parent` means a **container your project already created**, such as a Screen inside an attached Host. `{ ... }` is a Lua table of settings called *props*. A colon, as in `button:OnClick(...)`, calls a method on that specific object. See the [Quick Start](../QUICK_START.md) for the complete setup.
+The `{ ... }` blocks are Lua tables containing component settings (called *props*). A colon, as in `button:OnClick(...)`, calls a method on that Button. See the [Quick Start](../QUICK_START.md) for a complete working script, including how to create the Host and `parent`.
 
 ## Which guide should I open?
 
