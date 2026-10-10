@@ -1,6 +1,6 @@
 # MiliUI Localization
 
-MiliUI treats Miliastra Script Text Variables as a first-class text source. The host API is:
+MiliUI can display translated text from Miliastra's Text Mapping system. The underlying game API is:
 
 ```lua
 game.GetText(textId)
@@ -10,7 +10,7 @@ game.GetText(textId)
 
 ## TextSpec
 
-Every semantic MiliUI text slot uses the same shape:
+A **TextSpec** is a Lua table that tells MiliUI what text to display, which translation to look up, and what to show if it cannot find that translation. Most components that display text accept the same fields:
 
 ```lua
 {
@@ -81,7 +81,7 @@ UI.TextWindow(parent, {
 })
 ```
 
-Literal/non-localized text simply omits `textId`:
+For text that does not need translating, leave out `textId`:
 
 ```lua
 UI.Caption(parent, {
