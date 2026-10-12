@@ -513,7 +513,7 @@ The default decrease/increase controls use image assets `UI.Theme.assets.minus` 
 
 **Preview**
 
-![Party size Stepper and Difficulty segmented control](images/components/stepper-segmented-control.png)
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
 ## SegmentedControl
 
@@ -555,7 +555,7 @@ end)
 
 **Preview**
 
-![Party size Stepper and Difficulty segmented control](images/components/stepper-segmented-control.png)
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
 ## Select
 
@@ -614,7 +614,7 @@ See [Select.md](Select.md) for long-list behavior, surface/image theming, disabl
 
 | Closed | Open |
 | --- | --- |
-| ![Select control showing the selected Hydro option](images/components/select-closed.png) | ![Select dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/select-open.png) |
+| ![Select control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Select dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
 
 ## MultipleChoiceWindow
 
@@ -688,7 +688,7 @@ See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the full grid, stylin
 
 **Preview**
 
-![MultipleChoiceWindow with Pyro and Cryo selected](images/components/multiple-choice-window-2-selections.png)
+![MultipleChoiceWindow with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
 
 ## Tabs
 
