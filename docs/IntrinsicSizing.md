@@ -53,7 +53,7 @@ back:SetContentPadding(18, 10)
 
 **Preview: buttons grow to fit their labels**
 
-![Short and long labels fit inside automatically sized buttons](images/components/location-safe-sizing.png)
+![Short and long labels fit inside automatically sized buttons](images/components/content-sized-buttons.png)
 
 ## Automatic Upward Reflow
 
