@@ -238,6 +238,10 @@ end)
 UpdateResponsiveNavigation()
 ```
 
+**Preview: wide and narrow arrangements**
+
+![Responsive layout changing from three columns to a narrower arrangement](images/components/responsive-layout.png)
+
 ## Useful minimums are decision thresholds
 
 A Responsive child may provide its own minimum useful size:
