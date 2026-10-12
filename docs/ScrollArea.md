@@ -30,7 +30,7 @@ When the content fits, the scrollbar is hidden and the viewport reclaims the ful
 
 **Preview: a scrollable viewport**
 
-![Scrollable gameplay settings showing an initial position and scrollbar](images/components/scrollcolumn-no-scroll.png)
+![Scrollable gameplay settings showing an initial position and scrollbar](images/components/scrollcolumn-top.png)
 
 ## ScrollColumn
 
@@ -54,7 +54,7 @@ Add children to **`list.column`**, not to the outer ScrollArea wrapper. The inne
 
 | At the top | Scrolled down |
 | --- | --- |
-| ![Gameplay settings before scrolling](images/components/scrollcolumn-no-scroll.png) | ![Gameplay settings after scrolling](images/components/scrollcolumn-scrolled.png) |
+| ![Gameplay settings before scrolling](images/components/scrollcolumn-top.png) | ![Gameplay settings after scrolling](images/components/scrollcolumn-scrolled.png) |
 
 ## Interactive and nested content
 
