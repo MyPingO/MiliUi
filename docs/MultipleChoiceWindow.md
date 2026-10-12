@@ -1,5 +1,7 @@
 # Multiple Choice Window
 
+![A multiple-selection tile grid with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
+
 `UI.MultipleChoiceWindow` lets players pick several items from a grid. You can limit how many items they select, change how each item looks, and optionally send the selection to a Server Signal. Items use Lua's **1-based indexes**, so the first item is `1`, not `0`.
 
 MiliUI handles clicks, controller focus, highlighting, selection limits, and item positioning. Use the default item appearance for a basic list, or supply your own item design for something like collectible cards.
