@@ -168,6 +168,10 @@ controllerFocusIndicator = false
 
 Inside ScrollArea, the focus overlay scrolls together with its content without requiring a per-frame update. Call `RefreshControllerFocusIndicator()` if an already-focused Button changes its position independently of the ScrollArea's scroll offset (for example, after a manual position change).
 
+**Preview: focus indicator on PLAY**
+
+![Controller focus chevron highlighting the Play button](images/components/controller-focus.png)
+
 ## Scrollable controller focus
 
 `UI.ScrollArea` and `UI.ScrollColumn` automatically scroll a newly focused
