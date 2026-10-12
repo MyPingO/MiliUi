@@ -6,7 +6,7 @@ This guide shows how to use MiliUI components in Lua, with practical examples. *
 
 You do not need to learn every component at once. Start with the [Screen](#screen), [Text primitives](#text-primitives), and [Button / IconButton](#button--iconbutton) sections.
 
-- **Building a layout:** [Screen](#screen), [Layout](#layout), [Text primitives](#text-primitives)
+- **Building a layout:** [Screen](#screen), [Card / Panel](#card--panel), [Layout](#layout), [Text primitives](#text-primitives)
 - **Making controls interactive:** [Button / IconButton](#button--iconbutton), [Toggle](#toggle), [Slider](#slider), [Select](#select)
 - **Displaying changing data:** [Repeater / ListView](#repeater--listview), [ProgressBar](#progressbar), [Stat](#stat)
 - **Showing messages:** [Alert / Shell](#alert--shell), [ToastManager](#toastmanager), [Modal](#modal)
@@ -159,6 +159,12 @@ OnResize
 Destroy
 ```
 
+## Card / Panel
+
+`UI.Card` provides a styled card surface, while `UI.Panel` is a more general-purpose container surface. Both can hold other UI controls.
+
+![A Card and a Panel shown side by side](images/components/cards-panel.png)
+
 ## Text primitives
 
 ```lua
@@ -185,6 +191,10 @@ UI.Caption(parent, {
 ```
 
 Adaptive font sizing is opt-in for raw `UI.Text`. If `adaptiveFontSize = true` and no explicit `minimumFontSize` is supplied, the raw Text control derives a flexible minimum from the requested font size with a floor of 10. Composed components may provide their own explicit minimums.
+
+**Preview**
+
+![Examples of Heading, Text, Label, and Caption styles](images/components/text-styles.png)
 
 ## Button / IconButton
 
@@ -273,6 +283,10 @@ UI.Theme.Apply({
 })
 ```
 
+**Preview**
+
+![Primary, secondary, success, danger, ghost, disabled, and icon button styles](images/components/buttons.png)
+
 ## Badge / Chip
 
 ```lua
@@ -292,6 +306,10 @@ badge:SetLabel({
 
 `UI.Chip` is an alias of `UI.Badge`.
 
+**Preview**
+
+![Examples of badges and a stat display](images/components/badges-stats.png)
+
 ## Stat
 
 ```lua
@@ -308,6 +326,10 @@ local stat = UI.Stat(parent, {
 
 stat:SetValue({ text = "25", needsTranslation = false })
 ```
+
+**Preview**
+
+![Status badges and a total-wins Stat card](images/components/badges-stats.png)
 
 ## ProgressBar
 
@@ -332,6 +354,10 @@ UI.ProgressBar(parent, {
     },
 })
 ```
+
+**Preview**
+
+![ProgressBar at 68 percent and an interactive Volume slider](images/components/progress-slider.png)
 
 ## Slider
 
@@ -369,6 +395,10 @@ valueLabel = {
 ```
 
 Slider drag math compensates for nested MiliUI scaling.
+
+**Preview**
+
+![ProgressBar and Volume slider examples](images/components/progress-slider.png)
 
 ## Repeater / ListView
 
@@ -418,6 +448,12 @@ The header is controller-focusable by default. Opening and closing animate the b
 
 Use `SetOpen`, `IsOpen`, `Toggle`, `SetEnabled`, `SetTitle`, and `OnChange`. See [Accordion.md](Accordion.md) for body theming, indicator options, and persistence behavior.
 
+**Preview**
+
+| Closed | Expanded |
+| --- | --- |
+| ![Both accordion sections collapsed](images/components/accordion-closed.png) | ![Gameplay options accordion expanded](images/components/accordion-open.png) |
+
 ## Toggle
 
 ```lua
@@ -436,6 +472,10 @@ end)
 
 Use `SetLabel`, `SetValue`, `GetValue`, `Toggle`, `SetEnabled`, and `OnChange`.
 
+**Preview**
+
+![Enabled and disabled toggle and checkbox states](images/components/switches-checkboxes.png)
+
 ## Checkbox
 
 ```lua
@@ -449,6 +489,10 @@ local checkbox = UI.Checkbox(parent, {
 ```
 
 The default marker is the image asset in `UI.Theme.assets.checkboxCheck` (`100102` in the built-in theme). Use `checkIcon` / `SetCheckIcon(...)` to choose another image, or supply `check = { ... }` / `SetCheck(...)` to deliberately switch to a custom text marker.
+
+**Preview**
+
+![Toggle and checkbox states for common settings](images/components/switches-checkboxes.png)
 
 ## Stepper
 
@@ -466,6 +510,10 @@ local partySize = UI.Stepper(parent, {
 ```
 
 The default decrease/increase controls use image assets `UI.Theme.assets.minus` (`100108`) and `UI.Theme.assets.plus` (`100107`) instead of font symbols. Use `decreaseIcon` / `increaseIcon` to replace the images, or explicitly supply `decreaseLabel` / `increaseLabel` when a textual control is intentional.
+
+**Preview**
+
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
 ## SegmentedControl
 
@@ -504,6 +552,10 @@ difficulty:OnChange(function(index, item)
     print(index, item.difficulty)
 end)
 ```
+
+**Preview**
+
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
 ## Select
 
@@ -557,6 +609,12 @@ submit = {
 The Server Node Graph must declare matching scalar parameter types in the same order. Client-submitted gameplay values remain untrusted; authoritative server logic should prefer stable IDs and derive sensitive values server-side.
 
 See [Select.md](Select.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance.
+
+**Preview**
+
+| Closed | Open |
+| --- | --- |
+| ![Select control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Select dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
 
 ## MultipleChoiceWindow
 
@@ -628,6 +686,10 @@ The Server Node Graph must declare matching parameter types in the same order. C
 
 See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the full grid, styling, custom renderer, disabled-state, submit, and security guide.
 
+**Preview**
+
+![MultipleChoiceWindow with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
+
 ## Tabs
 
 ```lua
@@ -666,6 +728,19 @@ UI.Text(tabs:GetContent(1), {
 ```
 
 Tab content is persistent. Switching tabs changes visibility instead of rebuilding content.
+
+**Preview**
+
+![Overview tab selected](images/components/overview-tab.png)
+
+<details>
+<summary>Other tab states</summary>
+
+![Statistics tab selected](images/components/statistics-tab.png)
+
+![Settings tab selected with a music toggle](images/components/settings-tab.png)
+
+</details>
 
 ## PlayingCard
 
@@ -707,6 +782,10 @@ card:Flip("back")
 
 Standard `headerLeft`, `headerRight`, `artwork`, `footer`, and `back` slots can be replaced with arbitrary MiliUI renderers.
 
+**Preview**
+
+![Flamecaller PlayingCard component](images/components/playing-card.png)
+
 ## Alert / Shell
 
 ```lua
@@ -740,6 +819,10 @@ UI.Shell(panel, {
 })
 ```
 
+**Preview**
+
+![Information, success, warning, and error alert variants](images/components/alerts.png)
+
 ## ToastManager
 
 ```lua
@@ -770,6 +853,12 @@ toasts:Show({
 
 Toast text uses the same `title` / `message` TextSpecs as Alert.
 
+**Preview**
+
+| Before notification | Notification visible |
+| --- | --- |
+| ![Settings UI without a toast](images/components/toast-manager-no-toast.png) | ![Settings saved toast above settings UI](images/components/toast-manager-visible-toast.png) |
+
 ## Modal
 
 ```lua
@@ -796,6 +885,12 @@ modal:Open()
 The default close control uses the image asset in `UI.Theme.assets.close` (`100101`). Use `closeIcon` to replace it. `closeLabel` remains available for intentionally textual close controls and automatically switches to wider text-button geometry.
 
 The modal owns a full-screen hit blocker beneath the card, preventing clicks from reaching UI behind it. Set `closeOnBackdrop = true` if the blocked backdrop should close the modal.
+
+**Preview**
+
+| Underlying page | Modal open |
+| --- | --- |
+| ![Inventory page with Open Modal button](images/components/modal-not-opened.png) | ![Discard changes confirmation modal opened over inventory page](images/components/modal-opened.png) |
 
 ## Audio
 
@@ -920,6 +1015,12 @@ local textWindow = UI.TextWindow(parent, {
 ```
 
 `UI.ScrollText` is an alias.
+
+**Preview**
+
+| Initial scroll position | Scrolled |
+| --- | --- |
+| ![Game rules at the start of a native TextWindow](images/components/textwindow-top.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
 
 ## Native GridScroller
 

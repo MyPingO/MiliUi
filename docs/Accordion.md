@@ -1,5 +1,9 @@
 # Accordion
 
+| Both sections collapsed | Gameplay options expanded |
+| --- | --- |
+| ![Both accordion sections closed](images/components/accordion-closed.png) | ![Gameplay options open with interactive settings](images/components/accordion-open.png) |
+
 `UI.Accordion` creates a section that players can expand or collapse. Its header can receive controller focus, and the section's height adjusts to the controls you put inside it.
 
 Use it for settings groups, advanced options, help sections, patch-note groups, debug panels, and other places where long content should be hidden until requested.

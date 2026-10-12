@@ -51,6 +51,10 @@ back:SetContentPadding(18, 10)
 
 `GetNaturalSize()` returns the current preferred size at the requested font size. `GetMinimumNaturalSize()` returns the preferred size at the configured minimum adaptive font size.
 
+**Preview: buttons grow to fit their labels**
+
+![Short and long labels fit inside automatically sized buttons](images/components/content-sized-buttons.png)
+
 ## Automatic Upward Reflow
 
 Rows and Columns now observe their direct children automatically. A size change propagates upward through nested layouts without manual `Refresh()` calls.
