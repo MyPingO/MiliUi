@@ -1,5 +1,11 @@
 # Select / Dropdown
 
+![A closed single-choice dropdown showing Hydro](images/components/dropdown-closed.png)
+
+The open state shows the available elements and highlights the chosen item:
+
+![Dropdown open with Pyro, Hydro, Cryo and Electro](images/components/dropdown-open.png)
+
 `UI.Select` lets players choose one item from a dropdown menu. It can scroll long lists, show disabled options, and open above or below the field depending on the available space. Items use Lua's **1-based indexes**, so `selected = 1` chooses the first item.
 
 ## Basic usage
