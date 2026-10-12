@@ -311,6 +311,10 @@ useful.
 
 ListView exposes `scrollArea` when lower-level scrolling control is needed.
 
+**Preview: a virtualized player list**
+
+![Virtualized ListView showing player rows and scrollbar](images/components/listview.png)
+
 ## Repeater vs ListView
 
 Use **Repeater** when every row should stay alive and stable, and the collection
