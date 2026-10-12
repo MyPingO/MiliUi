@@ -27,6 +27,10 @@ UI.Image(mask, {
 
 The mask image owns the clipping shape. Descendants render only inside its visible alpha area.
 
+**Preview: unmasked and rounded-masked images**
+
+![Comparison of an unmasked image and the same image clipped by a rounded mask](images/components/image-masking.png)
+
 ## Supported native mask props
 
 `UI.Image(...)` accepts these native ImageControl properties:
