@@ -1020,7 +1020,7 @@ local textWindow = UI.TextWindow(parent, {
 
 | Initial scroll position | Scrolled |
 | --- | --- |
-| ![Game rules at the start of a native TextWindow](images/components/textwindow-not-scrolled.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
+| ![Game rules at the start of a native TextWindow](images/components/textwindow-top.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
 
 ## Native GridScroller
 
