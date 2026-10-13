@@ -234,6 +234,10 @@ The empty view exists only while the item array is empty.
 the complete logical item list stays in Lua, while only rows intersecting the
 current viewport window are actual native controls under the ScrollArea mask.
 
+### Visual examples
+
+![Virtualized ListView showing player rows and scrollbar](images/components/listview.png)
+
 That distinction is intentional. Runtime testing showed Miliastra can leave
 image-backed controls visually stale when a large tree of row controls moves
 through one native mask. Keeping only the current render window under that mask
@@ -310,10 +314,6 @@ Increase it only when runtime testing shows the extra pre-rendered rows are
 useful.
 
 ListView exposes `scrollArea` when lower-level scrolling control is needed.
-
-### Visual examples
-
-![Virtualized ListView showing player rows and scrollbar](images/components/listview.png)
 
 ## Repeater vs ListView
 

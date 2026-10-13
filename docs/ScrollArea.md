@@ -4,6 +4,12 @@
 
 ## Basic usage
 
+### Visual examples
+
+| Example 1 | Example 2 |
+| --- | --- |
+| ![Gameplay settings before scrolling](images/components/scrollcolumn-top.png) | ![Gameplay settings after scrolling](images/components/scrollcolumn-scrolled.png) |
+
 ```lua
 local area = UI.ScrollArea(parent, {
     width = 520,
@@ -20,7 +26,7 @@ UI.Card(area.content, {
 
 Create the controls you want to scroll inside `area.content`, not `area.root`. The `content` container is the part that moves when the player scrolls.
 
-`contentHeight` is explicit in v1. MiliUI uses it to compute the scroll range and scrollbar thumb length:
+`contentHeight` is explicitly specified for `UI.ScrollArea`. MiliUI uses it to compute the scroll range and scrollbar thumb length:
 
 ```text
 max scroll offset = contentHeight - viewportHeight
@@ -28,19 +34,11 @@ max scroll offset = contentHeight - viewportHeight
 
 When the content fits, the scrollbar is hidden and the viewport reclaims the full width. Set `alwaysShowScrollbar = true` if a stable reserved lane is preferred.
 
-### Visual examples
-
-![Scrollable gameplay settings showing an initial position and scrollbar](images/components/scrollcolumn-top.png)
-
-| Example 1 | Example 2 |
-| --- | --- |
-| ![Gameplay settings before scrolling](images/components/scrollcolumn-top.png) | ![Gameplay settings after scrolling](images/components/scrollcolumn-scrolled.png) |
-
 ## Interactive and nested content
 
 ScrollArea only owns clipping and vertical movement. Child controls keep their normal interaction behavior.
 
-For example, buttons, toggles, checkboxes, sliders, Tabs, Selects, Cards, Rows, and Columns can all live under `area.content`:
+For example, buttons, toggles, checkboxes, sliders, Tabs, Dropdowns, Cards, Rows, and Columns can all live under `area.content`:
 
 ```lua
 local column = UI.Column(area.content, {
@@ -214,4 +212,4 @@ area.scrollbar
 
 ## Current scope
 
-ScrollArea v1 is vertical only and uses an explicit logical `contentHeight`. It does not attempt automatic descendant measurement, mouse-wheel input, inertial scrolling, or horizontal scrolling. Those can be added later if the Miliastra host exposes reliable input support and real interfaces need them.
+The current ScrollArea is vertical only and uses an explicit logical `contentHeight`. It does not attempt automatic descendant measurement, mouse-wheel input, inertial scrolling, or horizontal scrolling. Those can be added later if the Miliastra host exposes reliable input support and real interfaces need them.

@@ -144,4 +144,4 @@ On a test copy of your game:
 5. Check a fresh Manager install and a beta.2 to beta.3 update, including backup creation.
 6. Verify that release documentation images and code examples match what appears in Test Play.
 
-See the [beta.3 release notes](releases/0.9.0-beta.3.md) for the planned complete release details.
+See the [published beta.3 release notes](../RELEASE_NOTES.md) for complete release details.

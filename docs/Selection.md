@@ -4,6 +4,14 @@
 
 MiliUI handles clicks, controller focus, highlighting, selection limits, and item positioning. Use the default item appearance for a basic list, or supply your own item design for something like collectible cards.
 
+## Visual examples
+
+| Segmented selection | Multiple-choice tiles |
+| --- | --- |
+| ![Difficulty segmented selector beside a party size Stepper](images/components/stepper-selection-segmented.png) | ![Selection tiles with Pyro and Cryo selected](images/components/selection-multiple-tiles.png) |
+
+The screenshots show two configurations of `UI.Selection`. The Stepper at the left of the first screenshot is a separate component.
+
 ## Selection modes and appearances
 
 By default, Selection behaves as a multiple-selection grid with the familiar array-based API. Use `mode = "single"` to switch to one selected item. Clicking another item replaces the previous selection without an intermediate empty state.

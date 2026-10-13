@@ -2,6 +2,14 @@
 
 `UI.Dropdown` lets players choose one item from a dropdown menu. It can scroll long lists, show disabled options, and open above or below the field depending on the available space. Items use Lua's **1-based indexes**, so `selected = 1` chooses the first item.
 
+## Visual example
+
+| Closed dropdown | Open dropdown |
+| --- | --- |
+| ![Single-choice Dropdown showing Hydro](images/components/dropdown-closed.png) | ![Dropdown displaying Pyro, Hydro, Cryo and Electro choices](images/components/dropdown-open.png) |
+
+These screenshots show one themed example; actual appearance depends on your props and theme.
+
 ## Basic usage
 
 `UI.Dropdown` is a collapsible single-item picker; for always-visible segmented or tile choices use [`UI.Selection`](Selection.md).

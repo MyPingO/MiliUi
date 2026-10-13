@@ -162,6 +162,10 @@ MiliUI component wrappers expose their native control through `.root`, so pass t
 
 Controller-focusable Buttons show MiliUI's controller-focus indicator while focused.
 
+### Visual examples
+
+![Controller focus chevron highlighting the Play button](images/components/controller-focus.png)
+
 ```lua
 UI.Button(parent, {
     label = { text = "OPTIONS", needsTranslation = false },
@@ -193,10 +197,6 @@ controllerFocusIndicator = false
 ```
 
 Inside ScrollArea, the focus overlay scrolls together with its content without requiring a per-frame update. Call `RefreshControllerFocusIndicator()` if an already-focused Button changes its position independently of the ScrollArea's scroll offset (for example, after a manual position change).
-
-### Visual examples
-
-![Controller focus chevron highlighting the Play button](images/components/controller-focus.png)
 
 ## Scrollable controller focus
 

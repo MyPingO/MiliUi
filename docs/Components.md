@@ -1,18 +1,18 @@
 # MiliUI Components
 
-This guide shows how to use MiliUI components in Lua, with practical examples. **Props** are the settings inside `{ ... }` when you create a control. To see every supported prop, callback, and object method, use [MiliUI IntelliSense](IntelliSense.md) in VS Code.
+This guide shows how to use MiliUI components in Lua, with practical examples. **Props** are the settings inside `{ ... }` when you create a control. To look up every supported prop, callback, and object method without VS Code, use the [complete API reference](Reference/README.md), generated from the same declarations as [MiliUI IntelliSense](IntelliSense.md).
 
 ## Find what you need
 
-You do not need to learn every component at once. Start with the [Screen](#screen), [Text primitives](#text-primitives), and [Button / IconButton](#button--iconbutton) sections.
+You do not need to learn every component at once. Start with [Screen](#screen), [Card / Panel](#card--panel), [Text primitives](#text-primitives), and [Button / IconButton](#button--iconbutton).
 
-- **Building a layout:** [Screen](#screen), [Layout](#layout), [Text primitives](#text-primitives)
+- **Building a layout:** [Screen](#screen), [Card / Panel](#card--panel), [Layout](#layout), [Text primitives](#text-primitives)
 - **Making controls interactive:** [Button / IconButton](#button--iconbutton), [Toggle](#toggle), [Slider](#slider), [Dropdown](#dropdown), [Selection](#selection)
 - **Displaying changing data:** [Repeater / ListView](#repeater--listview), [ProgressBar](#progressbar), [Stat](#stat)
 - **Showing messages:** [Alert / Shell](#alert--shell), [ToastManager](#toastmanager), [Modal](#modal)
 - **Using editor-provided controls:** [Native UI Animation](#native-ui-animation), [Native TextWindow](#native-textwindow), [Native GridScroller](#native-gridscroller)
 
-For complete setup steps, follow the [Quick Start](../QUICK_START.md). Each example below assumes the required templates are configured and the Host is attached.
+For complete setup steps, follow the [Quick Start](../QUICK_START.md). Each example below assumes the required templates are configured and the Host is attached. Screenshots appear before the corresponding code so you can see the intended result first.
 
 ## Initialization
 
@@ -133,7 +133,7 @@ Explicit constructor props override theme defaults. `UI.Theme.Reset()` restores 
 
 ## Screen
 
-`UI.Screen` creates a canvas-sized root from `game.GetUICanvasSize()` and a padded `content` container for normal page UI.
+`UI.Screen` creates a canvas-sized root from `game.GetUICanvasSize()` and a padded `content` container for normal page UI. It provides the overall canvas and content layout, not a standalone Card or Panel visual.
 
 ```lua
 local screen = UI.Screen(script.object, {
@@ -159,11 +159,45 @@ OnResize
 Destroy
 ```
 
+## Card / Panel
+
+`UI.Card` and `UI.Panel` are containers for grouping related controls. **Card** uses preset card styling, while **Panel** is a general-purpose surface. Both expose `.content` for children.
+
 ### Visual examples
 
 ![A Card and a Panel shown side by side](images/components/cards-panel.png)
 
+```lua
+local card = UI.Card(parent, {
+    width = 280,
+    height = 160,
+    padding = 16,
+})
+UI.Text(card.content, {
+    text = "Card",
+    needsTranslation = false,
+})
+
+local panel = UI.Panel(parent, {
+    width = 280,
+    height = 160,
+    padding = 16,
+    background = "surface2",
+    radius = "lg",
+})
+UI.Text(panel.content, {
+    text = "Panel",
+    needsTranslation = false,
+})
+```
+
+See the [full API reference](Reference/README.md) for `MiliUI.CardProps`, `MiliUI.SurfaceProps`, and returned Panel methods.
+
 ## Text primitives
+
+### Visual examples
+
+![Examples of Heading, Text, Label, and Caption styles](images/components/text-styles.png)
 
 ```lua
 UI.Heading(parent, {
@@ -190,11 +224,11 @@ UI.Caption(parent, {
 
 Adaptive font sizing is opt-in for raw `UI.Text`. If `adaptiveFontSize = true` and no explicit `minimumFontSize` is supplied, the raw Text control derives a flexible minimum from the requested font size with a floor of 10. Composed components may provide their own explicit minimums.
 
+## Button / IconButton
+
 ### Visual examples
 
-![Examples of Heading, Text, Label, and Caption styles](images/components/text-styles.png)
-
-## Button / IconButton
+![Primary, secondary, success, danger, ghost, disabled, and icon button styles](images/components/buttons.png)
 
 ```lua
 local button = UI.Button(parent, {
@@ -281,11 +315,11 @@ UI.Theme.Apply({
 })
 ```
 
+## Badge / Chip
+
 ### Visual examples
 
-![Primary, secondary, success, danger, ghost, disabled, and icon button styles](images/components/buttons.png)
-
-## Badge / Chip
+![Examples of badges and a stat display](images/components/badges-stats.png)
 
 ```lua
 local badge = UI.Badge(parent, {
@@ -304,11 +338,11 @@ badge:SetLabel({
 
 `UI.Chip` is an alias of `UI.Badge`.
 
+## Stat
+
 ### Visual examples
 
-![Examples of badges and a stat display](images/components/badges-stats.png)
-
-## Stat
+![Status badges and a total-wins Stat card](images/components/badges-stats.png)
 
 ```lua
 local stat = UI.Stat(parent, {
@@ -325,15 +359,15 @@ local stat = UI.Stat(parent, {
 stat:SetValue({ text = "25", needsTranslation = false })
 ```
 
+## ProgressBar
+
 ### Visual examples
 
-![Status badges and a total-wins Stat card](images/components/badges-stats.png)
-
-## ProgressBar
+![ProgressBar at 68 percent and an interactive Volume slider](images/components/progress-slider.png)
 
 ```lua
 local progress = UI.ProgressBar(parent, {
-    value = 0.65,
+    value = 0.68,
     width = 300,
     showText = true,
 })
@@ -353,11 +387,11 @@ UI.ProgressBar(parent, {
 })
 ```
 
+## Slider
+
 ### Visual examples
 
-![ProgressBar at 68 percent and an interactive Volume slider](images/components/progress-slider.png)
-
-## Slider
+![ProgressBar and Volume slider examples](images/components/progress-slider.png)
 
 ```lua
 local slider = UI.Slider(parent, {
@@ -394,10 +428,6 @@ valueLabel = {
 
 Slider drag math compensates for nested MiliUI scaling.
 
-### Visual examples
-
-![ProgressBar and Volume slider examples](images/components/progress-slider.png)
-
 ## Repeater / ListView
 
 `UI.Repeater` reconciles keyed data into Row/Column children. `UI.ListView`
@@ -421,6 +451,12 @@ details.
 ## Accordion
 
 `UI.Accordion` creates a collapsible section whose body follows the natural height of its children.
+
+### Visual examples
+
+| Example 1 | Example 2 |
+| --- | --- |
+| ![Both accordion sections collapsed](images/components/accordion-closed.png) | ![Gameplay options accordion expanded](images/components/accordion-open.png) |
 
 ```lua
 local advanced = UI.Accordion(parent, {
@@ -446,13 +482,11 @@ The header is controller-focusable by default. Opening and closing animate the b
 
 Use `SetOpen`, `IsOpen`, `Toggle`, `SetEnabled`, `SetTitle`, and `OnChange`. See [Accordion.md](Accordion.md) for body theming, indicator options, and persistence behavior.
 
+## Toggle
+
 ### Visual examples
 
-| Example 1 | Example 2 |
-| --- | --- |
-| ![Both accordion sections collapsed](images/components/accordion-closed.png) | ![Gameplay options accordion expanded](images/components/accordion-open.png) |
-
-## Toggle
+![Enabled and disabled toggle and checkbox states](images/components/switches-checkboxes.png)
 
 ```lua
 local toggle = UI.Toggle(parent, {
@@ -470,11 +504,11 @@ end)
 
 Use `SetLabel`, `SetValue`, `GetValue`, `Toggle`, `SetEnabled`, and `OnChange`.
 
+## Checkbox
+
 ### Visual examples
 
-![Enabled and disabled toggle and checkbox states](images/components/switches-checkboxes.png)
-
-## Checkbox
+![Toggle and checkbox states for common settings](images/components/switches-checkboxes.png)
 
 ```lua
 local checkbox = UI.Checkbox(parent, {
@@ -488,11 +522,11 @@ local checkbox = UI.Checkbox(parent, {
 
 The default marker is the image asset in `UI.Theme.assets.checkboxCheck` (`100102` in the built-in theme). Use `checkIcon` / `SetCheckIcon(...)` to choose another image, or supply `check = { ... }` / `SetCheck(...)` to deliberately switch to a custom text marker.
 
+## Stepper
+
 ### Visual examples
 
-![Toggle and checkbox states for common settings](images/components/switches-checkboxes.png)
-
-## Stepper
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
 ```lua
 local partySize = UI.Stepper(parent, {
@@ -509,13 +543,15 @@ local partySize = UI.Stepper(parent, {
 
 The default decrease/increase controls use image assets `UI.Theme.assets.minus` (`100108`) and `UI.Theme.assets.plus` (`100107`) instead of font symbols. Use `decreaseIcon` / `increaseIcon` to replace the images, or explicitly supply `decreaseLabel` / `increaseLabel` when a textual control is intentional.
 
-### Visual examples
-
-![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
-
 ## Dropdown
 
 `UI.Dropdown` is a single-selection dropdown with stable 1-based indices, arbitrary item metadata, automatic above/below placement, theming, disabled items, long-list scrolling, and optional scalar ServerSignal submission.
+
+### Visual examples
+
+| Example 1 | Example 2 |
+| --- | --- |
+| ![Dropdown control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
 
 ```lua
 local element = UI.Dropdown(parent, {
@@ -566,15 +602,15 @@ The Server Node Graph must declare matching scalar parameter types in the same o
 
 See [Dropdown.md](Dropdown.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance.
 
-### Visual examples
-
-| Example 1 | Example 2 |
-| --- | --- |
-| ![Dropdown control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
-
 ## Selection
 
 `UI.Selection` supports customizable choices with either segmented or tile styling. It supports `mode = "single"` (one required selection by default, with automatic replacement) or `mode = "multiple"` (select several items).
+
+### Visual examples
+
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
+
+![Multiple-choice Selection with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
 
 For the former compact segmented look:
 
@@ -663,13 +699,15 @@ The Server Node Graph must declare matching parameter types in the same order. C
 
 See [Selection.md](Selection.md) for the full grid, styling, custom renderer, disabled-state, submit, and security guide.
 
+## Tabs
+
 ### Visual examples
 
-![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
+![Overview tab selected](images/components/overview-tab.png)
 
-![Multiple-choice Selection with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
+![Statistics tab selected](images/components/statistics-tab.png)
 
-## Tabs
+![Settings tab selected with a music toggle](images/components/settings-tab.png)
 
 ```lua
 local tabs = UI.Tabs(parent, {
@@ -708,17 +746,13 @@ UI.Text(tabs:GetContent(1), {
 
 Tab content is persistent. Switching tabs changes visibility instead of rebuilding content.
 
-### Visual examples
-
-![Overview tab selected](images/components/overview-tab.png)
-
-![Statistics tab selected](images/components/statistics-tab.png)
-
-![Settings tab selected with a music toggle](images/components/settings-tab.png)
-
 ## PlayingCard
 
 `UI.PlayingCard` is a reusable front/back game-card builder with a stationary hit-test slot and independently animated visual card.
+
+### Visual examples
+
+![Flamecaller PlayingCard component](images/components/playing-card.png)
 
 ```lua
 local card = UI.PlayingCard(parent, {
@@ -756,11 +790,11 @@ card:Flip("back")
 
 Standard `headerLeft`, `headerRight`, `artwork`, `footer`, and `back` slots can be replaced with arbitrary MiliUI renderers.
 
+## Alert / Shell
+
 ### Visual examples
 
-![Flamecaller PlayingCard component](images/components/playing-card.png)
-
-## Alert / Shell
+![Information, success, warning, and error alert variants](images/components/alerts.png)
 
 ```lua
 local alert = UI.Alert(parent, {
@@ -793,11 +827,13 @@ UI.Shell(panel, {
 })
 ```
 
+## ToastManager
+
 ### Visual examples
 
-![Information, success, warning, and error alert variants](images/components/alerts.png)
-
-## ToastManager
+| Example 1 | Example 2 |
+| --- | --- |
+| ![Settings UI without a toast](images/components/toast-manager-no-toast.png) | ![Settings saved toast above settings UI](images/components/toast-manager-visible-toast.png) |
 
 ```lua
 local toasts = UI.ToastManager(screen.root, {
@@ -827,13 +863,13 @@ toasts:Show({
 
 Toast text uses the same `title` / `message` TextSpecs as Alert.
 
+## Modal
+
 ### Visual examples
 
 | Example 1 | Example 2 |
 | --- | --- |
-| ![Settings UI without a toast](images/components/toast-manager-no-toast.png) | ![Settings saved toast above settings UI](images/components/toast-manager-visible-toast.png) |
-
-## Modal
+| ![Inventory page with Open Modal button](images/components/modal-not-opened.png) | ![Discard changes confirmation modal opened over inventory page](images/components/modal-opened.png) |
 
 ```lua
 local modal = UI.Modal(page, {
@@ -859,12 +895,6 @@ modal:Open()
 The default close control uses the image asset in `UI.Theme.assets.close` (`100101`). Use `closeIcon` to replace it. `closeLabel` remains available for intentionally textual close controls and automatically switches to wider text-button geometry.
 
 The modal owns a full-screen hit blocker beneath the card, preventing clicks from reaching UI behind it. Set `closeOnBackdrop = true` if the blocked backdrop should close the modal.
-
-### Visual examples
-
-| Example 1 | Example 2 |
-| --- | --- |
-| ![Inventory page with Open Modal button](images/components/modal-not-opened.png) | ![Discard changes confirmation modal opened over inventory page](images/components/modal-opened.png) |
 
 ## Audio
 
@@ -978,6 +1008,12 @@ The native control displays the binding appropriate to the active input device.
 
 Requires `templates.textWindow`:
 
+### Visual examples
+
+| Example 1 | Example 2 |
+| --- | --- |
+| ![Game rules at the start of a native TextWindow](images/components/textwindow-top.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
+
 ```lua
 local textWindow = UI.TextWindow(parent, {
     width = 520,
@@ -989,12 +1025,6 @@ local textWindow = UI.TextWindow(parent, {
 ```
 
 `UI.ScrollText` is an alias.
-
-### Visual examples
-
-| Example 1 | Example 2 |
-| --- | --- |
-| ![Game rules at the start of a native TextWindow](images/components/textwindow-top.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
 
 ## Native GridScroller
 

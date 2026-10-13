@@ -86,6 +86,10 @@ Native wrappers such as `KeyHint`, `TextWindow`, `GridScroller`, and `UI.Native`
 
 Any standard layout rectangle can constrain either axis:
 
+### Visual examples
+
+![Grow layout with min/max constraints and column growth](images/components/grow-constraints.png)
+
 ```lua
 UI.Card(parent, {
     width = "80%",
@@ -139,10 +143,6 @@ UI.Card(row, {
 ```
 
 Grow starts from each child's minimum, then distributes the remaining main-axis space by weight. If a grow child reaches its maximum, unused space is redistributed across grow children that still have room. If combined minimums exceed the available space, MiliUI honors the minimums and the layout may overflow rather than silently shrink below them.
-
-### Visual examples
-
-![Grow layout with min/max constraints and column growth](images/components/grow-constraints.png)
 
 ## Aspect ratio
 
@@ -225,6 +225,10 @@ Because test-play windows cannot currently be resized live in the normal workflo
 
 `UI.Row` lays children left-to-right. `UI.Column` lays children top-to-bottom.
 
+### Visual examples
+
+![Horizontal Row compared with vertical Column](images/components/row-column.png)
+
 Both expose a padded inner `content` container and accept:
 
 ```text
@@ -273,13 +277,13 @@ row:Add(existingCard, {
 })
 ```
 
-### Visual examples
-
-![Horizontal Row compared with vertical Column](images/components/row-column.png)
-
 ## Grow
 
 `grow` applies on the stack's main axis.
+
+### Visual examples
+
+![Three grow layout demonstrations](images/components/grow.png)
 
 For a Row, grow divides remaining width. For a Column, grow divides remaining height.
 
@@ -304,10 +308,6 @@ UI.Card(row, {
 After fixed-size children and gaps are accounted for, the first card receives 2/5 of the remaining width and the second receives 3/5 unless min/max constraints cap one of them.
 
 When `grow > 0`, grow owns that child's main-axis size. Use a fixed size or percentage instead when you do not want the stack to distribute the remaining axis space.
-
-### Visual examples
-
-![Three grow layout demonstrations](images/components/grow.png)
 
 ## Cross-axis alignment
 

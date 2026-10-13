@@ -6,6 +6,10 @@ A mask determines which parts of its children are visible. For example, you can 
 
 ## Basic mask
 
+### Visual examples
+
+![Comparison of an unmasked image and the same image clipped by a rounded mask](images/components/image-masking.png)
+
 ```lua
 local mask = UI.Image(parent, {
     image = UI.Surface.Rounded("xl", false),
@@ -26,10 +30,6 @@ UI.Image(mask, {
 ```
 
 The mask image owns the clipping shape. Descendants render only inside its visible alpha area.
-
-### Visual examples
-
-![Comparison of an unmasked image and the same image clipped by a rounded mask](images/components/image-masking.png)
 
 ## Supported native mask props
 

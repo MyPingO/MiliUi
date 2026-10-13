@@ -12,6 +12,10 @@ This lets you mix fixed sizes with automatic sizes in the same layout.
 
 A localized button can size itself from its icon, translated label, gap, and padding:
 
+### Visual examples
+
+![Short and long labels fit inside automatically sized buttons](images/components/content-sized-buttons.png)
+
 ```lua
 local back = UI.Button(parent, {
     fitContent = true,
@@ -50,10 +54,6 @@ back:SetContentPadding(18, 10)
 ```
 
 `GetNaturalSize()` returns the current preferred size at the requested font size. `GetMinimumNaturalSize()` returns the preferred size at the configured minimum adaptive font size.
-
-### Visual examples
-
-![Short and long labels fit inside automatically sized buttons](images/components/content-sized-buttons.png)
 
 ## Automatic Upward Reflow
 

@@ -287,7 +287,7 @@ The starter is distributed as:
 MiliUI-Template-Save-File.gil
 ```
 
-Download the starter attached to the [current MiliUI release](https://github.com/MyPingO/MiliUI/releases) and import/open it as a new Miliastra save. The beta.3 package uses the refreshed starter first uploaded to the public beta.2 release; release packaging verifies its exact SHA-256 checksum.
+Download the starter attached to the [current MiliUI release](https://github.com/MyPingO/MiliUI/releases) and import/open it as a new Miliastra save. The current beta.3 release includes the refreshed starter, and its release packaging verifies the exact SHA-256 checksum.
 
 The starter save already includes:
 

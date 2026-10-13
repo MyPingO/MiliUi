@@ -134,6 +134,10 @@ is more actionable than one involving several unnamed `Box` controls.
 
 `UI.Responsive` owns **one set of child controls**. It does not create breakpoint copies.
 
+### Visual examples
+
+![Responsive layout changing from three columns to a narrower arrangement](images/components/responsive-layout.png)
+
 ```lua
 local body = UI.Responsive(page, {
     name = "DashboardBody",
@@ -237,10 +241,6 @@ end)
 
 UpdateResponsiveNavigation()
 ```
-
-### Visual examples
-
-![Responsive layout changing from three columns to a narrower arrangement](images/components/responsive-layout.png)
 
 ## Useful minimums are decision thresholds
 
@@ -562,7 +562,7 @@ UI.Button(column, {
 })
 ```
 
-Interactive descendants remain normal controls; ScrollArea only owns clipping and vertical movement. Nested ScrollAreas and Selects inside ScrollArea have been runtime stress-tested. `contentHeight` is explicit in v1 and must be updated with `SetContentHeight(...)` when the logical content height changes.
+Interactive descendants remain normal controls; ScrollArea only owns clipping and vertical movement. Nested ScrollAreas and Dropdowns inside ScrollArea have been runtime stress-tested. `contentHeight` is explicit in v1 and must be updated with `SetContentHeight(...)` when the logical content height changes.
 
 Use specialized native controls when they better fit the content:
 

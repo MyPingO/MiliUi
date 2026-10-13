@@ -11,6 +11,12 @@ There are two options:
 
 Create the popover under a Screen root (for example, `screen.root`) so it has room to appear outside smaller containers. Set `anchor` to the control the popover should follow:
 
+### Visual examples
+
+| Example 1 | Example 2 |
+| --- | --- |
+| ![Inventory sorting controls with no open overlay](images/components/popover-tooltip-none.png) | ![Inventory sorting Popover with three sorting choices](images/components/popover-tooltip-popover.png) |
+
 ```lua
 local popover = UI.Popover(screen.root, {
     anchor = settingsButton,
@@ -41,15 +47,13 @@ inside the overlay parent's `margin`.
 An explicit side flips to its opposite side when it does not fit unless
 `flip = false`.
 
-### Visual examples
-
-| Example 1 | Example 2 |
-| --- | --- |
-| ![Inventory sorting controls with no open overlay](images/components/popover-tooltip-none.png) | ![Inventory sorting Popover with three sorting choices](images/components/popover-tooltip-popover.png) |
-
 ## Tooltip
 
 Tooltips use the same placement system but are passive and non-interactive:
+
+### Visual examples
+
+![Inventory sorting tooltip displayed below its trigger](images/components/popover-tooltip-tooltip.png)
 
 ```lua
 local tooltip = UI.Tooltip(screen.root, {
@@ -66,10 +70,6 @@ The tooltip listens to cursor enter/exit on `trigger`, which defaults to
 `anchor`. Set `trigger = false` when opening and closing it manually.
 
 The default hover delay is 0.2 seconds.
-
-### Visual examples
-
-![Inventory sorting tooltip displayed below its trigger](images/components/popover-tooltip-tooltip.png)
 
 ## Nested anchors
 
