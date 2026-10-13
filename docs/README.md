@@ -24,6 +24,8 @@ MiliUI uses some names from the Miliastra editor. You do not need to memorize th
 
 See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these parts fit together.
 
+**Complete API reference:** [Browse all functions, component props, callbacks, return types, and object methods](Reference/README.md), generated directly from the MiliUI IntelliSense declarations. VS Code is not required.
+
 ## Building interfaces
 
 - [Intrinsic and Localization-Safe Sizing](IntrinsicSizing.md)

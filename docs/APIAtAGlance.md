@@ -2,7 +2,7 @@
 
 Looking for a component or function? This page lists all **71 top-level `UI.*` functions** in MiliUI beta.3, based on the IntelliSense declarations. Press **Ctrl+F** to search for a name, then open the linked guide to see how it works.
 
-For individual settings (called *props*), callback parameters, and object methods, use [MiliUI IntelliSense](IntelliSense.md) in VS Code. The linked guides also show complete examples.
+For **every prop, callback, return value, class, type alias, and object method**, open the [complete browsable API reference](Reference/README.md) directly on GitHub. It is generated from the same LuaLS declarations as [MiliUI IntelliSense](IntelliSense.md), so VS Code is not required to look up detailed API signatures. The linked usage guides provide complete examples.
 
 ## A tiny example
 

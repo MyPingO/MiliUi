@@ -14,6 +14,7 @@ MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable 
 4. Use the [API at a glance](docs/APIAtAGlance.md) page to find functions, props, and the right guide.
 5. Read the [Project Structure guide](docs/ProjectStructure.md) when your game grows beyond one interface.
 6. Browse the [Documentation Index](docs/README.md) for the other guides.
+7. Browse the [complete API reference](docs/Reference/README.md) for every function, props table, callback, return type, and object method.
 
 **Upgrading from beta.2?** Follow the [beta.3 migration guide](docs/UpgradeBeta3.md) for Selection and Dropdown.
 
