@@ -12,9 +12,13 @@ You do not need to learn every component at once. Start with [Screen](#screen), 
 - **Showing messages:** [Alert / Shell](#alert--shell), [ToastManager](#toastmanager), [Modal](#modal)
 - **Using editor-provided controls:** [Native UI Animation](#native-ui-animation), [Native TextWindow](#native-textwindow), [Native GridScroller](#native-gridscroller)
 
-For complete setup steps, follow the [Quick Start](../QUICK_START.md). Each example below assumes the required templates are configured and the Host is attached. Screenshots appear before the corresponding code so you can see the intended result first.
+For complete setup steps, follow the [Quick Start](../QUICK_START.md). Each example below assumes the required templates are configured and the Host is attached.
+
+**How to read these examples:** **Visual examples** are screenshots from a separately configured component showcase. **Code examples** are focused, independent Lua snippets demonstrating the API, not the exact code or full layout used to produce those screenshots. A screenshot may show multiple components, custom themes, or supporting UI not included in its code example. Visual appearance also depends on your project templates, assets, theme, and parent layout.
 
 ## Initialization
+
+### Code examples
 
 For a project with several interfaces, initialize the complete supported template set once in a shared client setup script that runs once, then let each Control Group script attach the Host (the UI root) it manages:
 
@@ -70,6 +74,8 @@ For the complete editor setup and recommended project structure, see [ProjectStr
 
 ## Localized text
 
+### Code examples
+
 Raw text controls use `text`, `textId`, `needsTranslation`, and optional `args` directly:
 
 ```lua
@@ -110,6 +116,8 @@ See [Localization.md](Localization.md) for code-first fallback behavior, dynamic
 
 ## Theming
 
+### Code examples
+
 Themes are creation-time defaults. Apply a theme before constructing the controls that should use it:
 
 ```lua
@@ -132,6 +140,8 @@ UI.Theme.Apply({
 Explicit constructor props override theme defaults. `UI.Theme.Reset()` restores the built-in theme for controls created afterward. See [Theming.md](Theming.md) for the full component-key and skin-field reference and the multi-Host theme rules.
 
 ## Screen
+
+### Code examples
 
 `UI.Screen` creates a canvas-sized root from `game.GetUICanvasSize()` and a padded `content` container for normal page UI. It provides the overall canvas and content layout, not a standalone Card or Panel visual.
 
@@ -167,6 +177,8 @@ Destroy
 
 ![A Card and a Panel shown side by side](images/components/cards-panel.png)
 
+### Code examples
+
 ```lua
 local card = UI.Card(parent, {
     width = 280,
@@ -199,6 +211,8 @@ See the [full API reference](Reference/README.md) for `MiliUI.CardProps`, `MiliU
 
 ![Examples of Heading, Text, Label, and Caption styles](images/components/text-styles.png)
 
+### Code examples
+
 ```lua
 UI.Heading(parent, {
     text = "SETTINGS",
@@ -229,6 +243,8 @@ Adaptive font sizing is opt-in for raw `UI.Text`. If `adaptiveFontSize = true` a
 ### Visual examples
 
 ![Primary, secondary, success, danger, ghost, disabled, and icon button styles](images/components/buttons.png)
+
+### Code examples
 
 ```lua
 local button = UI.Button(parent, {
@@ -321,6 +337,10 @@ UI.Theme.Apply({
 
 ![Examples of badges and a stat display](images/components/badges-stats.png)
 
+### Code examples
+
+The screenshot includes both badges and a Stat. The code below demonstrates a Badge only.
+
 ```lua
 local badge = UI.Badge(parent, {
     label = {
@@ -344,6 +364,10 @@ badge:SetLabel({
 
 ![Status badges and a total-wins Stat card](images/components/badges-stats.png)
 
+### Code examples
+
+The screenshot also shows badges. The code below demonstrates the Stat component only.
+
 ```lua
 local stat = UI.Stat(parent, {
     label = {
@@ -364,6 +388,10 @@ stat:SetValue({ text = "25", needsTranslation = false })
 ### Visual examples
 
 ![ProgressBar at 68 percent and an interactive Volume slider](images/components/progress-slider.png)
+
+### Code examples
+
+The screenshot also includes a Slider. This snippet demonstrates the ProgressBar only.
 
 ```lua
 local progress = UI.ProgressBar(parent, {
@@ -392,6 +420,10 @@ UI.ProgressBar(parent, {
 ### Visual examples
 
 ![ProgressBar and Volume slider examples](images/components/progress-slider.png)
+
+### Code examples
+
+The screenshot also includes a ProgressBar. This snippet demonstrates the Slider only.
 
 ```lua
 local slider = UI.Slider(parent, {
@@ -433,6 +465,12 @@ Slider drag math compensates for nested MiliUI scaling.
 `UI.Repeater` reconciles keyed data into Row/Column children. `UI.ListView`
 combines the same keyed renderer with `UI.ScrollColumn` for scrolling lists.
 
+### Visual examples
+
+![A virtualized ListView displaying player rows and a scrollbar](images/components/listview.png)
+
+The screenshot shows a `ListView`. A `Repeater` renders keyed items without adding a scrolling viewport.
+
 They intentionally leave selection and row interaction to the rendered controls.
 
 See [DataViews.md](DataViews.md) for keyed reconciliation, empty states, and
@@ -445,8 +483,21 @@ Use `UI.Popover` for interactive content positioned next to another control and
 placement system, including nested anchors, automatic edge flipping, and
 parent-boundary clamping.
 
-See [AnchoredOverlays.md](AnchoredOverlays.md) for placement and lifecycle
-details.
+### Visual examples
+
+**Popover: before and after opening**
+
+| No overlay open | Interactive Popover open |
+| --- | --- |
+| ![Inventory sort controls with no overlay open](images/components/popover-tooltip-none.png) | ![Inventory sorting Popover with selectable options](images/components/popover-tooltip-popover.png) |
+
+**Tooltip: passive hover information**
+
+![Inventory sorting Tooltip shown below its trigger](images/components/popover-tooltip-tooltip.png)
+
+These are showcase screenshots, not the direct output of one shared code snippet. The Popover contains interactive choices; the Tooltip presents information without interactive choices.
+
+For focused `UI.Popover` and `UI.Tooltip` code examples, placement options, and lifecycle details, see the [Anchored Overlays guide](AnchoredOverlays.md).
 
 ## Accordion
 
@@ -457,6 +508,8 @@ details.
 | Example 1 | Example 2 |
 | --- | --- |
 | ![Both accordion sections collapsed](images/components/accordion-closed.png) | ![Gameplay options accordion expanded](images/components/accordion-open.png) |
+
+### Code examples
 
 ```lua
 local advanced = UI.Accordion(parent, {
@@ -488,6 +541,10 @@ Use `SetOpen`, `IsOpen`, `Toggle`, `SetEnabled`, `SetTitle`, and `OnChange`. See
 
 ![Enabled and disabled toggle and checkbox states](images/components/switches-checkboxes.png)
 
+### Code examples
+
+The screenshot includes Toggle and Checkbox states. This code demonstrates a Toggle only.
+
 ```lua
 local toggle = UI.Toggle(parent, {
     label = {
@@ -510,6 +567,10 @@ Use `SetLabel`, `SetValue`, `GetValue`, `Toggle`, `SetEnabled`, and `OnChange`.
 
 ![Toggle and checkbox states for common settings](images/components/switches-checkboxes.png)
 
+### Code examples
+
+The screenshot includes Toggle and Checkbox states. This code demonstrates a Checkbox only.
+
 ```lua
 local checkbox = UI.Checkbox(parent, {
     label = {
@@ -527,6 +588,10 @@ The default marker is the image asset in `UI.Theme.assets.checkboxCheck` (`10010
 ### Visual examples
 
 ![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
+
+### Code examples
+
+The screenshot also includes a segmented Selection. This snippet demonstrates the Stepper only.
 
 ```lua
 local partySize = UI.Stepper(parent, {
@@ -552,6 +617,8 @@ The default decrease/increase controls use image assets `UI.Theme.assets.minus` 
 | Example 1 | Example 2 |
 | --- | --- |
 | ![Dropdown control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
+
+### Code examples
 
 ```lua
 local element = UI.Dropdown(parent, {
@@ -611,6 +678,10 @@ See [Dropdown.md](Dropdown.md) for long-list behavior, surface/image theming, di
 ![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
 ![Multiple-choice Selection with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
+
+### Code examples
+
+The segmented screenshot also shows a separate Stepper. The code examples below focus on Selection configurations.
 
 For the former compact segmented look:
 
@@ -709,6 +780,8 @@ See [Selection.md](Selection.md) for the full grid, styling, custom renderer, di
 
 ![Settings tab selected with a music toggle](images/components/settings-tab.png)
 
+### Code examples
+
 ```lua
 local tabs = UI.Tabs(parent, {
     items = {
@@ -754,6 +827,8 @@ Tab content is persistent. Switching tabs changes visibility instead of rebuildi
 
 ![Flamecaller PlayingCard component](images/components/playing-card.png)
 
+### Code examples
+
 ```lua
 local card = UI.PlayingCard(parent, {
     frameColor = "danger",
@@ -796,6 +871,8 @@ Standard `headerLeft`, `headerRight`, `artwork`, `footer`, and `back` slots can 
 
 ![Information, success, warning, and error alert variants](images/components/alerts.png)
 
+### Code examples
+
 ```lua
 local alert = UI.Alert(parent, {
     variant = "warning",
@@ -835,6 +912,10 @@ UI.Shell(panel, {
 | --- | --- |
 | ![Settings UI without a toast](images/components/toast-manager-no-toast.png) | ![Settings saved toast above settings UI](images/components/toast-manager-visible-toast.png) |
 
+### Code examples
+
+The screenshots also show a surrounding settings interface; this snippet creates only the ToastManager and triggers one toast.
+
 ```lua
 local toasts = UI.ToastManager(screen.root, {
     anchorX = 1,
@@ -871,6 +952,10 @@ Toast text uses the same `title` / `message` TextSpecs as Alert.
 | --- | --- |
 | ![Inventory page with Open Modal button](images/components/modal-not-opened.png) | ![Discard changes confirmation modal opened over inventory page](images/components/modal-opened.png) |
 
+### Code examples
+
+The screenshots also include an underlying inventory page. The snippet demonstrates a Modal and its content, not the inventory screen.
+
 ```lua
 local modal = UI.Modal(page, {
     title = {
@@ -898,6 +983,8 @@ The modal owns a full-screen hit blocker beneath the card, preventing clicks fro
 
 ## Audio
 
+### Code examples
+
 MiliUI exposes the native 2D audio lifecycle without hiding the returned instance ID:
 
 ```lua
@@ -923,6 +1010,8 @@ MiliUI does not guess built-in sound IDs. When `buttonClick` is absent, a Button
 
 ## Native UI Animation
 
+### Code examples
+
 `UI.Animation` wraps Miliastra's native UI Animation control. It is separate from `UI.Motion`, which animates ordinary control properties through tweens.
 
 ```lua
@@ -940,7 +1029,7 @@ effect:Play()
 
 Calling `Play()` while the native animation is already playing restarts it. MiliUI keeps animation configuration inactive while stopped and defers active setter changes until the next `Play()`, avoiding Miliastra property-write side effects that can retrigger animation or sound.
 
-### Fullscreen UI Animation
+#### Fullscreen UI Animation
 
 `UI.FullscreenAnimation` wraps Miliastra's Fullscreen Animation control and requires `templates.fullscreenAnimation`.
 
@@ -962,6 +1051,8 @@ fullscreenEffect:Stop()
 Fullscreen controls do not expose regular UI Animation's native `PlayAnimation()` / `StopAnimation()` methods. Runtime testing confirms that deactivation stops playback and activation starts the configured fullscreen animation from the beginning, so MiliUI uses inactive configuration plus activation as the normalized playback lifecycle. Setter changes made while active are deferred to avoid native property writes replaying authored sound by themselves. This wrapper does not and cannot change the native bottom-layer rendering behavior.
 
 ## Native escape hatch
+
+### Code examples
 
 Use `UI.Native` when an editor-created Client UI template has specialized behavior that MiliUI should not pretend to normalize. It instantiates the supplied template and applies normal layout props; the return value is the raw native Client UI control.
 
@@ -993,6 +1084,8 @@ UI.SetText(nativeText, {
 
 ## Native KeyHint
 
+### Code examples
+
 Requires `templates.keyHint`:
 
 ```lua
@@ -1014,6 +1107,8 @@ Requires `templates.textWindow`:
 | --- | --- |
 | ![Game rules at the start of a native TextWindow](images/components/textwindow-top.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
 
+### Code examples
+
 ```lua
 local textWindow = UI.TextWindow(parent, {
     width = 520,
@@ -1027,6 +1122,8 @@ local textWindow = UI.TextWindow(parent, {
 `UI.ScrollText` is an alias.
 
 ## Native GridScroller
+
+### Code examples
 
 Requires `templates.gridScroller`.
 
@@ -1051,6 +1148,16 @@ If the configured item prefab is visually blank and the callback does not popula
 `SetProgress` clamps to `0-1` and preserves native direction. Runtime testing confirms a vertical GridScroller uses `1 = top/start` and `0 = bottom/end`.
 
 ## Layout
+
+### Visual examples
+
+![Row and Column layout arrangements](images/components/row-column.png)
+
+![Examples of controls using Grow layout behavior](images/components/grow.png)
+
+These screenshots illustrate Row, Column, and Grow behavior; the snippets below separately demonstrate persistent stacks and one-shot layout helpers.
+
+### Code examples
 
 Persistent stack:
 
@@ -1077,6 +1184,8 @@ UI.Fan(cards, { spacing = 145, curve = 12, rotation = 5 })
 Native controls and component wrappers can be mixed in these helpers.
 
 ## Interaction / Motion
+
+### Code examples
 
 For the managed tween/effect API, including reusable presets such as `SlideIn`, `BounceIn`, `Nudge`, `Wobble`, `Punch`, `Squash`, and `SpinIn`, see [Motion](Motion.md).
 
@@ -1112,6 +1221,8 @@ UI.Motion.Shake(card)
 ```
 
 ## Cleanup
+
+### Code examples
 
 For one control/component:
 
