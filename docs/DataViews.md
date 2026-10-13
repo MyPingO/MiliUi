@@ -311,7 +311,7 @@ useful.
 
 ListView exposes `scrollArea` when lower-level scrolling control is needed.
 
-**Preview: a virtualized player list**
+### Visual examples
 
 ![Virtualized ListView showing player rows and scrollbar](images/components/listview.png)
 

@@ -1,6 +1,6 @@
 # MiliUI API at a glance
 
-Looking for a component or function? This page lists all **72 top-level `UI.*` functions** in MiliUI beta.2, based on the IntelliSense declarations. Press **Ctrl+F** to search for a name, then open the linked guide to see how it works.
+Looking for a component or function? This page lists all **71 top-level `UI.*` functions** in MiliUI beta.3, based on the IntelliSense declarations. Press **Ctrl+F** to search for a name, then open the linked guide to see how it works.
 
 For individual settings (called *props*), callback parameters, and object methods, use [MiliUI IntelliSense](IntelliSense.md) in VS Code. The linked guides also show complete examples.
 
@@ -29,7 +29,8 @@ The `{ ... }` blocks are Lua tables containing component settings (called *props
 | Make a simple screen, text, or button | [Components](Components.md) |
 | Put controls side by side or stack them | [Responsive Layout](ResponsiveLayout.md) |
 | Scroll a list of buttons | [ScrollArea / ScrollColumn](ScrollArea.md) |
-| Make a dropdown | [Select](Select.md) |
+| Make a dropdown | [Dropdown](Dropdown.md) |
+| Choose one or several visible options | [Selection](Selection.md) |
 | Make a collapsible section | [Accordion](Accordion.md) |
 | Show an Alert or Toast message | [Alert / Shell](Components.md#alert--shell) or [ToastManager](Components.md#toastmanager) |
 | Change Pages and support Back | [Navigation](Navigation.md) |
@@ -38,6 +39,7 @@ The `{ ... }` blocks are Lua tables containing component settings (called *props
 | Handle different screen sizes | [Responsive Components](ResponsiveComponents.md) |
 | Reuse visual styles | [Theming](Theming.md) |
 | Make things animate | [Motion](Motion.md) |
+| Upgrade from beta.2 | [beta.3 migration guide](UpgradeBeta3.md) |
 | Upgrade from beta.1 | [beta.2 upgrade guide](UpgradeBeta2.md) |
 
 ## Top-level `UI.*` function index
@@ -70,7 +72,7 @@ Arrange children or position existing elements. [Related guide](ResponsiveLayout
 
 Scrollable content, dropdowns, tooltips, and popovers. [Related guide](ScrollArea.md).
 
-`UI.ScrollArea` · `UI.ScrollColumn` · `UI.Scrollbar` · `UI.Select` · `UI.Popover` · `UI.Tooltip`
+`UI.ScrollArea` · `UI.ScrollColumn` · `UI.Scrollbar` · `UI.Dropdown` · `UI.Popover` · `UI.Tooltip`
 
 ### Lists and repeated data
 
@@ -94,7 +96,7 @@ Create simple animated changes and delayed callbacks. [Related guide](Motion.md)
 
 Cards, state controls, forms, and feedback overlays. [Related guide](Components.md).
 
-`UI.Card` · `UI.PlayingCard` · `UI.Badge` · `UI.Chip` · `UI.Stat` · `UI.ProgressBar` · `UI.Accordion` · `UI.Slider` · `UI.SegmentedControl` · `UI.MultipleChoiceWindow` · `UI.Toggle` · `UI.Checkbox` · `UI.Stepper` · `UI.Tabs` · `UI.Shell` · `UI.Alert` · `UI.ToastManager` · `UI.Modal`
+`UI.Card` · `UI.PlayingCard` · `UI.Badge` · `UI.Chip` · `UI.Stat` · `UI.ProgressBar` · `UI.Accordion` · `UI.Slider` · `UI.Selection` · `UI.Toggle` · `UI.Checkbox` · `UI.Stepper` · `UI.Tabs` · `UI.Shell` · `UI.Alert` · `UI.ToastManager` · `UI.Modal`
 
 ### Miliastra native controls
 

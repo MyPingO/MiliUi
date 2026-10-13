@@ -4,6 +4,30 @@ All notable public MiliUI releases will be recorded here.
 
 ## Unreleased
 
+## [0.9.0-beta.3] - 2026-10-13
+
+### Changed
+
+- Consolidated visible segmented and tile selections into `UI.Selection`, supporting `mode = "single"`, `mode = "multiple"`, and segmented appearance.
+- Renamed the single-choice dropdown constructor to `UI.Dropdown`.
+- Updated component documentation, screenshots, examples, and IntelliSense declarations to reflect the beta.3 API.
+- Updated MiliUI IntelliSense to 0.1.9 for the changed constructor names and signatures.
+
+### Breaking changes
+
+- Removed `UI.SegmentedControl`, `UI.MultipleChoiceWindow`, and `UI.Select` without compatibility aliases.
+- `UI.Selection` in single mode uses scalar selected indexes and callback values, while multiple mode uses arrays; single mode requires a selection by default. Existing callers must review their selection state and callbacks.
+
+### Upgrade guidance
+
+- See [Upgrading from beta.2 to beta.3](docs/UpgradeBeta3.md) for before/after examples and a Test Play checklist.
+- MiliUI Manager minimum version remains 0.2.0. The starter save is refreshed from the public beta.2 release asset and pinned by SHA-256. Verify its included runtime version after import and update to beta.3 if needed.
+
+### Known limitations
+
+- Native PC controller safe-area padding, controller focus initialization in running Test Play levels, fullscreen animation layering, inverted native masks, and estimated wrapped-text heights remain engine/framework limitations.
+- Navigation does not yet restore controller focus or scroll position.
+
 ## [0.9.0-beta.2] - 2026-10-10
 
 ### Added

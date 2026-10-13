@@ -36,9 +36,9 @@ See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these
 - [Localization](Localization.md)
 - [ScrollArea](ScrollArea.md)
 - [Scrollbar](Scrollbar.md)
-- [Select](Select.md)
+- [Dropdown](Dropdown.md)
 - [Accordion](Accordion.md)
-- [Multiple Choice Window](MultipleChoiceWindow.md)
+- [Selection](Selection.md)
 - [Anchored Overlays](AnchoredOverlays.md)
 - [Masking](Masking.md)
 - [Data Views](DataViews.md)
@@ -59,6 +59,7 @@ See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these
 ## Releases and tooling
 
 - [Versioning](Versioning.md)
+- [Upgrading from beta.2 to beta.3](UpgradeBeta3.md)
 - [MiliUI Manager](Manager.md)
 - [IntelliSense](IntelliSense.md)
 

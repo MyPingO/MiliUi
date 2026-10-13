@@ -287,7 +287,7 @@ The starter is distributed as:
 MiliUI-Template-Save-File.gil
 ```
 
-Download it from the [MiliUI v0.9.0-beta.1 GitHub Release](https://github.com/MyPingO/MiliUI/releases/tag/v0.9.0-beta.1), then import/open it as a new Miliastra save.
+Download the starter attached to the [current MiliUI release](https://github.com/MyPingO/MiliUI/releases) and import/open it as a new Miliastra save. The beta.3 package uses the refreshed starter first uploaded to the public beta.2 release; release packaging verifies its exact SHA-256 checksum.
 
 The starter save already includes:
 
@@ -300,11 +300,11 @@ The starter save already includes:
 - the Quick Start example interface;
 - example server logic for activating the Quick Start UI.
 
-The published starter save was tested by importing it as a fresh save and entering Test Play successfully. The template references and UI Index survived that import correctly.
+The starter asset's checksum is checked by the beta.3 release workflow. After importing it, verify the bundled runtime version and the template/UI Index references in your own Miliastra project; a valid file checksum does not by itself test a fresh in-game import.
 
 ### Before Test Play
 
-Even though the included references should already be correct, confirm these two things after importing:
+Before relying on an imported starter, confirm these three things:
 
 1. **Confirm the Client Control Container UI Index.** The included `Hello MiliUI Controller.lua` currently uses:
 
@@ -315,6 +315,8 @@ Even though the included references should already be correct, confirm these two
    Select the included Client Control Container Server Template and confirm that its **Index** is also `1073741870`. If Miliastra shows a different Index, update `UI_INDEX` in the controller script to match it.
 
 2. **Confirm the Client Control Template indexes.** Open the Global Script variables and verify that all ten template-ID variables still contain the Index of the matching Client Control Template. Use the mapping table in [Step 7](#7-add-the-template-ids-as-global-script-variables) to compare them.
+
+3. **Confirm the installed runtime version.** Check the `MiliUI/init.lua` version (`UI.VERSION`). If it is older than `0.9.0-beta.3`, use MiliUI Manager to install beta.3 before running the new examples. Restart Test Play after changing the runtime.
 
 After those checks, enter Test Play. The included **Hello, MiliUI!** interface should appear immediately. If Client Script Log monitoring is enabled, clicking **CLICK ME** should print:
 

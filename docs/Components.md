@@ -6,8 +6,8 @@ This guide shows how to use MiliUI components in Lua, with practical examples. *
 
 You do not need to learn every component at once. Start with the [Screen](#screen), [Text primitives](#text-primitives), and [Button / IconButton](#button--iconbutton) sections.
 
-- **Building a layout:** [Screen](#screen), [Card / Panel](#card--panel), [Layout](#layout), [Text primitives](#text-primitives)
-- **Making controls interactive:** [Button / IconButton](#button--iconbutton), [Toggle](#toggle), [Slider](#slider), [Select](#select)
+- **Building a layout:** [Screen](#screen), [Layout](#layout), [Text primitives](#text-primitives)
+- **Making controls interactive:** [Button / IconButton](#button--iconbutton), [Toggle](#toggle), [Slider](#slider), [Dropdown](#dropdown), [Selection](#selection)
 - **Displaying changing data:** [Repeater / ListView](#repeater--listview), [ProgressBar](#progressbar), [Stat](#stat)
 - **Showing messages:** [Alert / Shell](#alert--shell), [ToastManager](#toastmanager), [Modal](#modal)
 - **Using editor-provided controls:** [Native UI Animation](#native-ui-animation), [Native TextWindow](#native-textwindow), [Native GridScroller](#native-gridscroller)
@@ -159,9 +159,7 @@ OnResize
 Destroy
 ```
 
-## Card / Panel
-
-`UI.Card` provides a styled card surface, while `UI.Panel` is a more general-purpose container surface. Both can hold other UI controls.
+### Visual examples
 
 ![A Card and a Panel shown side by side](images/components/cards-panel.png)
 
@@ -192,7 +190,7 @@ UI.Caption(parent, {
 
 Adaptive font sizing is opt-in for raw `UI.Text`. If `adaptiveFontSize = true` and no explicit `minimumFontSize` is supplied, the raw Text control derives a flexible minimum from the requested font size with a floor of 10. Composed components may provide their own explicit minimums.
 
-**Preview**
+### Visual examples
 
 ![Examples of Heading, Text, Label, and Caption styles](images/components/text-styles.png)
 
@@ -283,7 +281,7 @@ UI.Theme.Apply({
 })
 ```
 
-**Preview**
+### Visual examples
 
 ![Primary, secondary, success, danger, ghost, disabled, and icon button styles](images/components/buttons.png)
 
@@ -306,7 +304,7 @@ badge:SetLabel({
 
 `UI.Chip` is an alias of `UI.Badge`.
 
-**Preview**
+### Visual examples
 
 ![Examples of badges and a stat display](images/components/badges-stats.png)
 
@@ -327,7 +325,7 @@ local stat = UI.Stat(parent, {
 stat:SetValue({ text = "25", needsTranslation = false })
 ```
 
-**Preview**
+### Visual examples
 
 ![Status badges and a total-wins Stat card](images/components/badges-stats.png)
 
@@ -355,7 +353,7 @@ UI.ProgressBar(parent, {
 })
 ```
 
-**Preview**
+### Visual examples
 
 ![ProgressBar at 68 percent and an interactive Volume slider](images/components/progress-slider.png)
 
@@ -396,7 +394,7 @@ valueLabel = {
 
 Slider drag math compensates for nested MiliUI scaling.
 
-**Preview**
+### Visual examples
 
 ![ProgressBar and Volume slider examples](images/components/progress-slider.png)
 
@@ -448,9 +446,9 @@ The header is controller-focusable by default. Opening and closing animate the b
 
 Use `SetOpen`, `IsOpen`, `Toggle`, `SetEnabled`, `SetTitle`, and `OnChange`. See [Accordion.md](Accordion.md) for body theming, indicator options, and persistence behavior.
 
-**Preview**
+### Visual examples
 
-| Closed | Expanded |
+| Example 1 | Example 2 |
 | --- | --- |
 | ![Both accordion sections collapsed](images/components/accordion-closed.png) | ![Gameplay options accordion expanded](images/components/accordion-open.png) |
 
@@ -472,7 +470,7 @@ end)
 
 Use `SetLabel`, `SetValue`, `GetValue`, `Toggle`, `SetEnabled`, and `OnChange`.
 
-**Preview**
+### Visual examples
 
 ![Enabled and disabled toggle and checkbox states](images/components/switches-checkboxes.png)
 
@@ -490,7 +488,7 @@ local checkbox = UI.Checkbox(parent, {
 
 The default marker is the image asset in `UI.Theme.assets.checkboxCheck` (`100102` in the built-in theme). Use `checkIcon` / `SetCheckIcon(...)` to choose another image, or supply `check = { ... }` / `SetCheck(...)` to deliberately switch to a custom text marker.
 
-**Preview**
+### Visual examples
 
 ![Toggle and checkbox states for common settings](images/components/switches-checkboxes.png)
 
@@ -511,58 +509,16 @@ local partySize = UI.Stepper(parent, {
 
 The default decrease/increase controls use image assets `UI.Theme.assets.minus` (`100108`) and `UI.Theme.assets.plus` (`100107`) instead of font symbols. Use `decreaseIcon` / `increaseIcon` to replace the images, or explicitly supply `decreaseLabel` / `increaseLabel` when a textual control is intentional.
 
-**Preview**
+### Visual examples
 
 ![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
 
-## SegmentedControl
+## Dropdown
 
-Items are tables with a localized `label`; additional fields are preserved as game metadata.
-
-```lua
-local difficulty = UI.SegmentedControl(parent, {
-    items = {
-        {
-            label = {
-                text = "Easy",
-                textId = "Difficulty.Easy",
-            },
-            difficulty = 1,
-        },
-        {
-            label = {
-                text = "Normal",
-                textId = "Difficulty.Normal",
-            },
-            difficulty = 2,
-        },
-        {
-            label = {
-                text = "Hard",
-                textId = "Difficulty.Hard",
-            },
-            difficulty = 3,
-        },
-    },
-    selected = 2,
-    width = 420,
-})
-
-difficulty:OnChange(function(index, item)
-    print(index, item.difficulty)
-end)
-```
-
-**Preview**
-
-![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
-
-## Select
-
-`UI.Select` is a single-selection dropdown with stable 1-based indices, arbitrary item metadata, automatic above/below placement, theming, disabled items, long-list scrolling, and optional scalar ServerSignal submission.
+`UI.Dropdown` is a single-selection dropdown with stable 1-based indices, arbitrary item metadata, automatic above/below placement, theming, disabled items, long-list scrolling, and optional scalar ServerSignal submission.
 
 ```lua
-local element = UI.Select(parent, {
+local element = UI.Dropdown(parent, {
     items = {
         { name = "Pyro", meta = "BURST", elementId = 1 },
         { name = "Hydro", meta = "CONTROL", elementId = 2 },
@@ -580,12 +536,12 @@ element:OnChange(function(index, item)
 end)
 ```
 
-The default dropdown indicator is `UI.Theme.assets.selectIndicator` (`100111`). Only one MiliUI Select stays open at a time, and outside clicks close the active menu.
+The default dropdown indicator is `UI.Theme.assets.selectIndicator` (`100111`). Only one MiliUI Dropdown stays open at a time, and outside clicks close the active menu.
 
 Long lists automatically receive a built-in scrollbar after eight visible rows by default. Change the window with `maxVisibleItems` or `maxMenuHeight`:
 
 ```lua
-local mapSelect = UI.Select(parent, {
+local mapSelect = UI.Dropdown(parent, {
     items = maps,
     maxVisibleItems = 5,
 })
@@ -608,20 +564,41 @@ submit = {
 
 The Server Node Graph must declare matching scalar parameter types in the same order. Client-submitted gameplay values remain untrusted; authoritative server logic should prefer stable IDs and derive sensitive values server-side.
 
-See [Select.md](Select.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance.
+See [Dropdown.md](Dropdown.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance.
 
-**Preview**
+### Visual examples
 
-| Closed | Open |
+| Example 1 | Example 2 |
 | --- | --- |
-| ![Select control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Select dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
+| ![Dropdown control showing the selected Hydro option](images/components/dropdown-closed.png) | ![Dropdown showing Pyro, Hydro, Cryo, and Electro options](images/components/dropdown-open.png) |
 
-## MultipleChoiceWindow
+## Selection
 
-`UI.MultipleChoiceWindow` is a checkbox-like multi-selection grid with stable 1-based indices, arbitrary item metadata, selection limits, auto-wrap, custom rendering, theming, and optional typed ServerSignal submission.
+`UI.Selection` supports customizable choices with either segmented or tile styling. It supports `mode = "single"` (one required selection by default, with automatic replacement) or `mode = "multiple"` (select several items).
+
+For the former compact segmented look:
 
 ```lua
-local choices = UI.MultipleChoiceWindow(parent, {
+local difficulty = UI.Selection(parent, {
+    items = {
+        { label = { text = "Easy" } },
+        { label = { text = "Normal" } },
+        { label = { text = "Hard" } },
+    },
+    mode = "single",
+    appearance = "segmented",
+    selected = 2,
+    width = 428,
+    height = 60,
+})
+```
+
+Use `columns = 1` for a vertical segmented selector. For custom editor tiles use `renderItem` and `updateItem`. See [Selection.md](Selection.md) for selection policies.
+
+`UI.Selection` is a configurable single- or multi-selection group with stable 1-based indices, arbitrary item metadata, selection limits, auto-wrap, custom rendering, theming, and optional typed ServerSignal submission.
+
+```lua
+local choices = UI.Selection(parent, {
     items = {
         { name = "Pyro", amount = 3 },
         { name = "Hydro", amount = 5 },
@@ -684,11 +661,13 @@ submit = {
 
 The Server Node Graph must declare matching parameter types in the same order. Client-submitted gameplay values are not automatically trustworthy; authoritative server logic should prefer stable IDs and look up sensitive values server-side.
 
-See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the full grid, styling, custom renderer, disabled-state, submit, and security guide.
+See [Selection.md](Selection.md) for the full grid, styling, custom renderer, disabled-state, submit, and security guide.
 
-**Preview**
+### Visual examples
 
-![MultipleChoiceWindow with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
+![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
+
+![Multiple-choice Selection with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
 
 ## Tabs
 
@@ -729,18 +708,13 @@ UI.Text(tabs:GetContent(1), {
 
 Tab content is persistent. Switching tabs changes visibility instead of rebuilding content.
 
-**Preview**
+### Visual examples
 
 ![Overview tab selected](images/components/overview-tab.png)
-
-<details>
-<summary>Other tab states</summary>
 
 ![Statistics tab selected](images/components/statistics-tab.png)
 
 ![Settings tab selected with a music toggle](images/components/settings-tab.png)
-
-</details>
 
 ## PlayingCard
 
@@ -782,7 +756,7 @@ card:Flip("back")
 
 Standard `headerLeft`, `headerRight`, `artwork`, `footer`, and `back` slots can be replaced with arbitrary MiliUI renderers.
 
-**Preview**
+### Visual examples
 
 ![Flamecaller PlayingCard component](images/components/playing-card.png)
 
@@ -819,7 +793,7 @@ UI.Shell(panel, {
 })
 ```
 
-**Preview**
+### Visual examples
 
 ![Information, success, warning, and error alert variants](images/components/alerts.png)
 
@@ -853,9 +827,9 @@ toasts:Show({
 
 Toast text uses the same `title` / `message` TextSpecs as Alert.
 
-**Preview**
+### Visual examples
 
-| Before notification | Notification visible |
+| Example 1 | Example 2 |
 | --- | --- |
 | ![Settings UI without a toast](images/components/toast-manager-no-toast.png) | ![Settings saved toast above settings UI](images/components/toast-manager-visible-toast.png) |
 
@@ -886,9 +860,9 @@ The default close control uses the image asset in `UI.Theme.assets.close` (`1001
 
 The modal owns a full-screen hit blocker beneath the card, preventing clicks from reaching UI behind it. Set `closeOnBackdrop = true` if the blocked backdrop should close the modal.
 
-**Preview**
+### Visual examples
 
-| Underlying page | Modal open |
+| Example 1 | Example 2 |
 | --- | --- |
 | ![Inventory page with Open Modal button](images/components/modal-not-opened.png) | ![Discard changes confirmation modal opened over inventory page](images/components/modal-opened.png) |
 
@@ -1016,9 +990,9 @@ local textWindow = UI.TextWindow(parent, {
 
 `UI.ScrollText` is an alias.
 
-**Preview**
+### Visual examples
 
-| Initial scroll position | Scrolled |
+| Example 1 | Example 2 |
 | --- | --- |
 | ![Game rules at the start of a native TextWindow](images/components/textwindow-top.png) | ![Game rules TextWindow scrolled to later sections](images/components/textwindow-scrolled.png) |
 

@@ -90,17 +90,17 @@ built-in component fallback
 
 Explicit Lua props are always authoritative.
 
-`UI.Select` also consumes the shared scrollbar theme before its component-specific defaults:
+`UI.Dropdown` also consumes the shared scrollbar theme before its component-specific defaults:
 
 ```text
 built-in fallback
     -> Theme.scrollbar
-    -> Theme.components.select
+    -> Theme.components.dropdown
     -> utility class values
-    -> explicit Select props
+    -> explicit Dropdown props
 ```
 
-This lets a project establish one general compact-scrollbar style while still allowing Select-specific or instance-specific overrides.
+This lets a project establish one general compact-scrollbar style while still allowing Dropdown-specific or instance-specific overrides.
 
 ```lua
 UI.Theme.Apply({
@@ -135,9 +135,8 @@ toggle
 accordion
 checkbox
 stepper
-segmentedControl
-select
-multipleChoiceWindow
+selection
+dropdown
 tabs
 alert
 modal
@@ -157,7 +156,7 @@ UI.Theme.Apply({
             thumbImage = 107058,
         },
 
-        select = {
+        dropdown = {
             maxVisibleItems = 6,
             selectedColor = "accentPressed",
             menuImage = 107020,
@@ -210,7 +209,7 @@ Per-instance `clickAudioId` and `commitAudioId` props override these shared soun
 
 ## Shared scrollbar defaults
 
-`Theme.scrollbar` defines reusable defaults for compact MiliUI scrollbars. `UI.Select` is the first component to consume this shared section; future scrollable components can adopt the same contract without copying a visual style into every component theme.
+`Theme.scrollbar` defines reusable defaults for compact MiliUI scrollbars. `UI.Dropdown` is the first component to consume this shared section; future scrollable components can adopt the same contract without copying a visual style into every component theme.
 
 The built-in style intentionally uses different silhouettes for the track and thumb:
 
@@ -240,14 +239,14 @@ UI.Theme.Apply({
 
 The shared scrollbar section also controls lane width/gap, arrow size/image/colors, button spacing, and minimum thumb height. The MiliUI IntelliSense extension exposes the full typed field list in VS Code.
 
-## Select themes
+## Dropdown themes
 
-`select` themes can control the field, menu, built-in options, indicator, long-list limits, and scrollbar with the same property names accepted by `UI.Select`.
+`dropdown` themes can control the field, menu, built-in options, indicator, long-list limits, and scrollbar with the same property names accepted by `UI.Dropdown`.
 
 ```lua
 UI.Theme.Apply({
     components = {
-        select = {
+        dropdown = {
             background = "surface2",
             hoverColor = "surfaceHover",
             selectedColor = "accentPressed",
@@ -261,7 +260,7 @@ UI.Theme.Apply({
 })
 ```
 
-Specialized Select image fields include:
+Specialized Dropdown image fields include:
 
 ```text
 fieldImage / fieldBorderImage
@@ -271,20 +270,20 @@ scrollbarTrackImage
 scrollbarThumbImage
 ```
 
-A Select-specific scrollbar value under `Theme.components.select` overrides the corresponding shared `Theme.scrollbar` value. Explicit constructor props override both.
+A Dropdown-specific scrollbar value under `Theme.components.dropdown` overrides the corresponding shared `Theme.scrollbar` value. Explicit constructor props override both.
 
 The field also accepts the normal surface-style aliases `backgroundImage`, `backgroundStretch`, `borderImage`, `borderStretch`, and `clipToRadius`. Use the matching `...Stretch` and `...ClipToRadius` fields for the specialized menu/item/scrollbar surfaces.
 
-See [Select.md](Select.md) for long-list behavior, metadata, ServerSignal submission, and the full theming examples.
+See [Dropdown.md](Dropdown.md) for long-list behavior, metadata, ServerSignal submission, and the full theming examples.
 
-## Multiple Choice Window item themes
+## Selection item themes
 
-`multipleChoiceWindow` can theme both the outer component and the built-in item renderer. Group normal item-state styling under `itemStyle`:
+`selection` can theme both the outer component and the built-in item renderer. Group normal item-state styling under `itemStyle`:
 
 ```lua
 UI.Theme.Apply({
     components = {
-        multipleChoiceWindow = {
+        selection = {
             itemStyle = {
                 background = "surface2",
                 hoverBackground = "surfaceHover",
@@ -306,9 +305,11 @@ UI.Theme.Apply({
 })
 ```
 
-Projects can still override any of those values on one specific Multiple Choice Window. Explicit flat item props such as `selectedColor` also remain authoritative over grouped `itemStyle` defaults.
+Projects can still override any of those values on one specific Selection component. Explicit flat item props such as `selectedColor` also remain authoritative over grouped `itemStyle` defaults.
 
-Use `renderItem` / `updateItem` for genuinely custom card layouts rather than trying to encode a whole custom composition into theme values. See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the styling progression and custom renderer contract.
+The segmented appearance uses the same `selection` theme key and `itemStyle` as tiles, not a separate component theme. Layout and selection mode use normal props.
+
+Use `renderItem` / `updateItem` for genuinely custom card layouts rather than trying to encode a whole custom composition into theme values. See [Selection.md](Selection.md) for the styling progression and custom renderer contract.
 
 ## Custom surface assets
 
@@ -393,9 +394,8 @@ ProgressBar          radius, fillRadius, fillImage
 Slider               radius, fillRadius, trackImage, fillImage, thumbImage
 Toggle               trackImage, thumbImage
 Checkbox             boxImage
-SegmentedControl     itemImage
-Select               fieldImage, menuImage, itemImage, scrollbarTrackImage, scrollbarThumbImage
-MultipleChoiceWindow itemImage, itemBorderImage, selectionFrameImage, itemStyle
+Dropdown             fieldImage, menuImage, itemImage, scrollbarTrackImage, scrollbarThumbImage
+Selection            itemImage, itemBorderImage, selectionFrameImage, itemStyle
 Tabs                 tabBarImage, tabImage
 Alert                shellImage
 Modal                overlayImage

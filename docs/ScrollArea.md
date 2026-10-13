@@ -28,31 +28,11 @@ max scroll offset = contentHeight - viewportHeight
 
 When the content fits, the scrollbar is hidden and the viewport reclaims the full width. Set `alwaysShowScrollbar = true` if a stable reserved lane is preferred.
 
-**Preview: a scrollable viewport**
+### Visual examples
 
 ![Scrollable gameplay settings showing an initial position and scrollbar](images/components/scrollcolumn-top.png)
 
-## ScrollColumn
-
-`UI.ScrollColumn` is a convenience wrapper around `UI.ScrollArea`. They use the same scrolling and clipping behavior, so their screenshots can look identical. The difference is content layout: `ScrollArea` lets you position children inside `area.content` and specify `contentHeight`, while `ScrollColumn` automatically stacks and measures children.
-
-```lua
-local list = UI.ScrollColumn(parent, {
-    width = 520,
-    height = 320,
-    column = { gap = 12, padding = 16, align = "stretch" },
-})
-
-UI.Button(list.column, {
-    label = { text = "CONTROLS", needsTranslation = false },
-})
-```
-
-Add children to **`list.column`**, not to the outer ScrollArea wrapper. The inner Column calculates the scrollable content height.
-
-**Preview: before and after scrolling**
-
-| At the top | Scrolled down |
+| Example 1 | Example 2 |
 | --- | --- |
 | ![Gameplay settings before scrolling](images/components/scrollcolumn-top.png) | ![Gameplay settings after scrolling](images/components/scrollcolumn-scrolled.png) |
 
@@ -90,7 +70,7 @@ UI.Checkbox(column, {
 })
 ```
 
-Pressable controls inside `area.content` participate in grab-to-scroll automatically. This includes Buttons/IconButtons, Toggle, Checkbox, Stepper Buttons, SegmentedControl segments, Tabs, Select triggers, MultipleChoiceWindow choices, PlayingCard, and ordinary `UI.Hitbox` click surfaces.
+Pressable controls inside `area.content` participate in grab-to-scroll automatically. This includes Buttons/IconButtons, Toggle, Checkbox, Stepper Buttons, Tabs, Dropdown triggers, Selection choices, PlayingCard, and ordinary `UI.Hitbox` click surfaces.
 
 When a press moves far enough for Miliastra to emit `CursorBeginDrag`, the ScrollArea claims that gesture. MiliUI cancels the child's pending activation and resets its pressed/hover transform before scrolling. Releasing after the drag therefore scrolls instead of accidentally toggling, selecting, opening, or clicking the control that received the original press. A press/release that never becomes a drag remains the control's normal activation.
 

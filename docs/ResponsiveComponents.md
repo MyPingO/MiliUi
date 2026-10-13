@@ -15,7 +15,7 @@ Confirmed behaviors include:
 - three-column responsive grids at roomy sizes;
 - automatic reduction to fewer columns as width tightens;
 - focus fallback when useful minimum width/height can no longer be preserved;
-- `ProgressBar`, `Slider`, `SegmentedControl`, Cards, and text content remaining usable through those transitions;
+- `ProgressBar`, `Slider`, `Selection`, Cards, and text content remaining usable through those transitions;
 - one native `TextWindow` remaining clean through the same transitions;
 - layout diagnostics reporting an intentionally introduced 2.00-unit bottom overflow exactly.
 
@@ -33,7 +33,7 @@ The responsive component pass covers:
 - `UI.Toggle`
 - `UI.Checkbox`
 - `UI.Stepper`
-- `UI.SegmentedControl`
+- `UI.Selection`
 - `UI.Tabs`
 - `UI.Alert`
 - `UI.ToastManager`
@@ -109,7 +109,7 @@ The switch/box remains an authored fixed-size control. The label region expands 
 
 The minus/plus buttons preserve `buttonWidth`, move to the current left/right edges, and fill the current root height. The center value region consumes the remaining width.
 
-### SegmentedControl
+### Selection
 
 All segments are recalculated from the current root width. Gap remains fixed while segment widths divide the remaining space evenly.
 

@@ -2,7 +2,7 @@
 
 MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable components, responsive layouts, theming, localization helpers, controller support, scrolling, navigation, Pages, Session state, motion, audio, and other UI infrastructure for Miliastra creators.
 
-> **Public Beta: v0.9.0-beta.2**
+> **Public Beta: v0.9.0-beta.3**
 >
 > MiliUI is available for real Miliastra creator testing. This repository is the public home for releases, documentation, examples, and issue tracking. The framework's development source remains private.
 
@@ -15,7 +15,9 @@ MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable 
 5. Read the [Project Structure guide](docs/ProjectStructure.md) when your game grows beyond one interface.
 6. Browse the [Documentation Index](docs/README.md) for the other guides.
 
-**Upgrading from beta.1?** See the [beta.2 upgrade checklist](docs/UpgradeBeta2.md), including the breaking `UI.Player` setup change.
+**Upgrading from beta.2?** Follow the [beta.3 migration guide](docs/UpgradeBeta3.md) for Selection and Dropdown.
+
+**Upgrading from beta.1?** See the [beta.2 upgrade checklist](docs/UpgradeBeta2.md), including the breaking `UI.Player` setup change. If you are moving directly from beta.1 to beta.3, complete both migrations in order.
 
 ## Downloads
 
@@ -55,4 +57,4 @@ In short: you may use official MiliUI releases in your Miliastra projects, but y
 
 ## Status
 
-The current public beta is **v0.9.0-beta.2**. APIs are intended to be usable in real projects, but changes may still occur before 1.0 as creator feedback reveals problems. See [Known Issues](KNOWN_ISSUES.md) for current framework and Miliastra-platform limitations that may affect projects.
+The current public beta is **v0.9.0-beta.3**. APIs are intended to be usable in real projects, but changes may still occur before 1.0 as creator feedback reveals problems. See [Known Issues](KNOWN_ISSUES.md) for current framework and Miliastra-platform limitations that may affect projects.

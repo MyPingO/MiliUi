@@ -1,10 +1,10 @@
 # Controller Support
 
-MiliUI uses Miliastra's built-in controller focus system. **Focus** is the Button the controller will activate when you press Confirm. **Selection** is a value your game has chosen, such as the selected menu option. A Button can be selected without being focused, and moving focus does not automatically change your game's selection.
+MiliUI uses Miliastra's built-in controller focus system. **Focus** is the native UI control that will receive Confirm (a Button or a focusable Hitbox). **Selection** is a value your game has chosen, such as the selected menu option. A Button can be selected without being focused, and moving focus does not automatically change your game's selection.
 
 ## Focusable controls
 
-`UI.Button` and `UI.IconButton` are controller-focusable by default unless `controllerFocus = false` is supplied.
+`UI.Button` and `UI.IconButton` are controller-focusable by default. `UI.Hitbox` is not focusable by default, but `controllerFocus = true` enables controller focus and Confirm. Composed controls such as `UI.Selection` choices and `UI.Dropdown` options opt in automatically. Use `controllerFocus = false` when a focus target must be excluded.
 
 When a focusable Button is created, MiliUI configures native controller navigation in all four directions with:
 
@@ -43,6 +43,32 @@ end)
 ```
 
 Mouse click and controller Confirm both reach the same `OnClick` callback.
+
+## Visible selection groups
+
+`UI.Selection` uses controller-focusable choice hitboxes by default, including custom-rendered visuals. Each focused hitbox also shows the shared controller chevron, with `controllerFocusIndicator = false` available to hide it. Moving focus does **not** change the selected item; use Confirm to select it. A focused choice receives the same hover/outline styling as pointer hover, and `updateItem` receives `state.hovered = true` while controller focused.
+
+```lua
+local choices = UI.Selection(parent, {
+    items = items,
+    mode = "single",
+    appearance = "segmented",
+    selected = 1,
+})
+
+-- After the Host/page and its UI have been created:
+game.SetControllerFocus(choices.choices[1].hitbox.root)
+```
+
+For debugging in Test Play, first inspect `game.GetControllerFocus()`. If it remains `nil` after switching to Controller and restarting the level, the native controller system may not have initialized. Do not equate a missing visual focus indicator with a confirmed missing focus event.
+
+## Controller behavior in Selection and Dropdown
+
+`UI.Selection` explicitly links neighboring tiles and segments in all four directions. Inside a `ScrollColumn`, MiliUI navigates within the current group before following the column into another section, so moving Down in a vertical selector does not immediately escape to the next section.
+
+`UI.Dropdown` moves focus from the trigger into its selected visible option (or first enabled option) when opened with Confirm. Up/Down traverses options and automatically scrolls one row when moving beyond the visible list boundary, without needing to focus the scrollbar arrows. At the actual first or last item, native focus stays on the option. By default the scrollbar arrows accept mouse/touch only (`scrollbarControllerFocus = false`), avoiding navigation traps when a scroll arrow disables itself. Controller Cancel or choosing an option closes the popup and restores focus to its trigger. If mouse/other scrolling pushes a focused option offscreen, focus moves to a visible enabled option. Popup chevrons render in the popup's own overlay.
+
+Hitbox focus indicators use the same `controllerFocusIndicator` settings as Buttons. Only focusable hitboxes receive them. A hitbox's `SetEnabled(true)` does not reset existing directional links when the value was already true.
 
 ## Explicit navigation between regions
 
@@ -168,7 +194,7 @@ controllerFocusIndicator = false
 
 Inside ScrollArea, the focus overlay scrolls together with its content without requiring a per-frame update. Call `RefreshControllerFocusIndicator()` if an already-focused Button changes its position independently of the ScrollArea's scroll offset (for example, after a manual position change).
 
-**Preview: focus indicator on PLAY**
+### Visual examples
 
 ![Controller focus chevron highlighting the Play button](images/components/controller-focus.png)
 
@@ -210,9 +236,8 @@ UI.Button(buttons, { label = { text = "YES", needsTranslation = false } })
 UI.Button(buttons, { label = { text = "NO", needsTranslation = false } })
 ```
 
-With `controllerNavigation=true`, MiliUI connects each Stack child group
-to the nearest focusable target in the adjacent group along the Stack's main
-axis: Up/Down in a Column, Left/Right in a Row. Nested rows preserve
+With `controllerNavigation=true`, MiliUI first follows focusable controls **within** each Stack child group in the main-axis direction, then connects to the nearest control in the adjacent group at the boundary. This applies to multi-row selections and nested groups.
+The Stack-owned axis is: Up/Down in a Column, Left/Right in a Row. Nested rows preserve
 cross-axis alignment rather than forming a flat zig-zag sequence. Edges retain
 native nearest-control navigation. Offscreen scroll targets remain eligible
 and are revealed on focus.
@@ -250,7 +275,7 @@ Additional native quirks observed in controller mode:
 
 Use it when controller navigation should remain inside that screen/root instead of escaping to unrelated native controls outside it.
 
-Do not enable input capture or navigation isolation merely because a screen uses MiliUI. HUD-style interfaces should normally leave gameplay input alone.
+For a self-contained full-screen menu or controller test page, use `isolateNavigation = true` so focus cannot leave the MiliUI screen for unrelated native/Genshin UI. Do not force isolation on HUD-style interfaces that should allow normal gameplay input.
 
 ## Practical pattern: sidebar enters a panel
 

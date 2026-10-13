@@ -13,7 +13,7 @@ Session can remember things such as:
 ```text
 which Menu pages are logically open
 which page is frontmost inside Menu
-which Select item was chosen
+which Dropdown item or Selection choices were chosen
 which Toggle value was set
 where a ScrollArea was scrolled
 custom plain Lua page state
@@ -50,7 +50,7 @@ Outside `WithScope`, state falls back directly to the global Session scope. It d
 
 ```lua
 UI.Session.WithScope("Inventory", function()
-    UI.Select(parent, {
+    UI.Dropdown(parent, {
         id = "Sort Mode",
         remember = true,
         items = sortItems,
@@ -77,7 +77,7 @@ With `remember = true`, a stable `id` is required. IDs must be unique among live
 A custom persistence ID can also be supplied directly:
 
 ```lua
-UI.Select(parent, {
+UI.Dropdown(parent, {
     remember = "Selected Update",
     items = updateItems,
 })
@@ -103,10 +103,9 @@ The current adapters remember:
 - `Accordion` open/closed state
 - `Checkbox` value
 - `Stepper` value
-- `SegmentedControl` selected index
+- `Dropdown` selected index (or nil)
+- `Selection` selected index in single mode or indices in multiple mode
 - `Tabs` selected index
-- `Select` selection
-- `MultipleChoiceWindow` selected indices
 - `Scrollbar` value
 - `ScrollArea` scroll offset
 

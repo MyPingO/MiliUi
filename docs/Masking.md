@@ -27,7 +27,7 @@ UI.Image(mask, {
 
 The mask image owns the clipping shape. Descendants render only inside its visible alpha area.
 
-**Preview: unmasked and rounded-masked images**
+### Visual examples
 
 ![Comparison of an unmasked image and the same image clipped by a rounded mask](images/components/image-masking.png)
 
@@ -71,12 +71,12 @@ When `clipToRadius = true`, MiliUI keeps the custom image as the visible backgro
 
 This is preferable to simply putting a square image underneath a rounded border, because the square corners are actually clipped instead of merely covered.
 
-## Multiple Choice Window image skins
+## Selection image skins
 
-Built-in Multiple Choice Window items support the same behavior through `itemStyle`:
+Built-in multiple-mode Selection items support the same behavior through `itemStyle`:
 
 ```lua
-UI.MultipleChoiceWindow(parent, {
+UI.Selection(parent, {
     items = items,
 
     itemStyle = {
@@ -94,7 +94,7 @@ UI.MultipleChoiceWindow(parent, {
 
 This keeps the normal grid, hover, selection, controller navigation, and submit behavior while allowing square texture assets to fit rounded selection tiles cleanly.
 
-See [MultipleChoiceWindow.md](MultipleChoiceWindow.md) for the full selection API, custom renderer path, item theming, and ServerSignal submission contract.
+See [Selection.md](Selection.md) for the full selection API, custom renderer path, item theming, and ServerSignal submission contract.
 
 ## Selection hover defaults
 
@@ -104,6 +104,6 @@ Set `selectedHoverBackground` explicitly when a distinct selected-hover appearan
 
 ## Related docs
 
-- [Multiple Choice Window](MultipleChoiceWindow.md): selection grids with custom item designs
+- [Selection](Selection.md): selection grids with custom item designs
 - [Theming](Theming.md): default component styles and custom images
 - [Common Mistakes](CommonMistakes.md): sizing and image-related issues

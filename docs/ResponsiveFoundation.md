@@ -238,7 +238,7 @@ end)
 UpdateResponsiveNavigation()
 ```
 
-**Preview: wide and narrow arrangements**
+### Visual examples
 
 ![Responsive layout changing from three columns to a narrower arrangement](images/components/responsive-layout.png)
 

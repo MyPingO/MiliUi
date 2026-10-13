@@ -68,7 +68,7 @@ Calling `SetPageSize(...)` switches back to page-size-derived sizing.
 
 ## Shared theme
 
-`UI.Scrollbar` consumes `UI.Theme.scrollbar` directly. The built-in theme uses the same visual language established for Select:
+`UI.Scrollbar` consumes `UI.Theme.scrollbar` directly. The built-in theme uses the same visual language established for Dropdown:
 
 - rectangular dark track;
 - light-rounded blue thumb;
@@ -103,11 +103,11 @@ end)
 scrollbar:Destroy()
 ```
 
-Dragging compensates for nested MiliUI scale through `Core.ScreenDeltaToLocal`, matching Slider and Select scrollbar behavior.
+Dragging compensates for nested MiliUI scale through `Core.ScreenDeltaToLocal`, matching Slider and Dropdown scrollbar behavior.
 
 ## Composed-control integration
 
-Long-list `UI.Select` composes this same `UI.Scrollbar` internally instead of maintaining a separate scrollbar implementation. Select maps its visible-item window to a 1-based scrollbar range, keeps one-row arrow increments, and uses `pageSize` so the thumb size still represents the visible fraction of the item list.
+Long-list `UI.Dropdown` composes this same `UI.Scrollbar` internally instead of maintaining a separate scrollbar implementation. Dropdown maps its visible-item window to a 1-based scrollbar range, keeps one-row arrow increments, and uses `pageSize` so the thumb size still represents the visible fraction of the item list.
 
 `UI.ScrollArea` also composes `UI.Scrollbar`, mapping arbitrary content height to a pixel-style scroll range from `0` to `contentHeight - viewportHeight`.
 

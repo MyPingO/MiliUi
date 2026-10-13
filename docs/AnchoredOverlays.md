@@ -41,9 +41,9 @@ inside the overlay parent's `margin`.
 An explicit side flips to its opposite side when it does not fit unless
 `flip = false`.
 
-**Preview: closed and open states**
+### Visual examples
 
-| Closed | Popover open |
+| Example 1 | Example 2 |
 | --- | --- |
 | ![Inventory sorting controls with no open overlay](images/components/popover-tooltip-none.png) | ![Inventory sorting Popover with three sorting choices](images/components/popover-tooltip-popover.png) |
 
@@ -67,7 +67,7 @@ The tooltip listens to cursor enter/exit on `trigger`, which defaults to
 
 The default hover delay is 0.2 seconds.
 
-**Preview: explanatory tooltip**
+### Visual examples
 
 ![Inventory sorting tooltip displayed below its trigger](images/components/popover-tooltip-tooltip.png)
 

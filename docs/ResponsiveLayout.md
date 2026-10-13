@@ -140,7 +140,7 @@ UI.Card(row, {
 
 Grow starts from each child's minimum, then distributes the remaining main-axis space by weight. If a grow child reaches its maximum, unused space is redistributed across grow children that still have room. If combined minimums exceed the available space, MiliUI honors the minimums and the layout may overflow rather than silently shrink below them.
 
-**Preview: bounded growth**
+### Visual examples
 
 ![Grow layout with min/max constraints and column growth](images/components/grow-constraints.png)
 
@@ -273,7 +273,7 @@ row:Add(existingCard, {
 })
 ```
 
-**Preview**
+### Visual examples
 
 ![Horizontal Row compared with vertical Column](images/components/row-column.png)
 
@@ -305,7 +305,7 @@ After fixed-size children and gaps are accounted for, the first card receives 2/
 
 When `grow > 0`, grow owns that child's main-axis size. Use a fixed size or percentage instead when you do not want the stack to distribute the remaining axis space.
 
-**Preview: equal shares, weighted ratios, and fixed-plus-grow**
+### Visual examples
 
 ![Three grow layout demonstrations](images/components/grow.png)
 

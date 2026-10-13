@@ -459,9 +459,9 @@ component theme defaults -> utility class -> explicit constructor props
 
 If one component does not match the active theme, check for an explicit background/image/border/color prop overriding the theme.
 
-## Multiple Choice Window rows and columns must fit the items
+## Selection rows and columns must fit the items
 
-For `UI.MultipleChoiceWindow`, fixed `rows` and `columns` describe real capacity.
+For `UI.Selection`, fixed `rows` and `columns` describe real capacity.
 
 This is invalid for six items:
 
@@ -474,7 +474,7 @@ because the grid has only four cells.
 
 Use enough capacity, define only one axis, or use `autoWrap = true`.
 
-## Multiple Choice Window selection order is item order, not click order
+## Selection selection order is item order, not click order
 
 Selected identities are stable 1-based item indices. Returned and submitted selections are sorted by item index.
 
@@ -505,7 +505,7 @@ Define `selectedHoverBackground` only when selected+hovered should deliberately 
 
 ## ServerSignal field order must match the Server Node Graph
 
-Multiple Choice Window submit fields are positional. This contract:
+Selection submit fields are positional. This contract:
 
 ```lua
 submit = {
@@ -556,7 +556,7 @@ window:Submit()
 
 or through a connected submit button.
 
-## Let Multiple Choice Window own selection interaction
+## Let Selection own selection interaction
 
 A custom `renderItem` should primarily build visual content. MiliUI owns the cell hitbox, selection state, hover handling, limits, and submit behavior.
 

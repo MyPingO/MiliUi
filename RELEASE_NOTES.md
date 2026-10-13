@@ -1,59 +1,42 @@
-# MiliUI 0.9.0-beta.2
+# MiliUI 0.9.0-beta.3
 
-This beta updates the public MiliUI runtime, reference documentation, and editor declarations with systems validated during the development cycle after beta.1.
+This beta consolidates MiliUI's choice components around `UI.Selection` and `UI.Dropdown`. **It is a breaking beta** for projects using the removed constructors.
 
 ## Highlights
 
-- Optional sequential Page navigation through `UI.Navigation`, including Push, Replace, Back, Reset, per-Host history, and Session-backed restoration.
-- Optional `slideLeft` and `slideRight` Page transitions with configurable duration. Without transition options, Navigation remains immediate.
-- `UI.Accordion` collapsible sections with fitted content, controller-focusable headers, and optional remembered state.
-- `UI.Select` dropdown improvements, including a same-Host overlay portal for placement beyond clipped/scrolling containers.
-- Expanded `UI.Motion` preset library for reusable scale, slide, position, and rotation feedback effects.
-- Host-owned incoming Server Signal and Custom Variable subscriptions through `UI.Signals` and `UI.Variables`.
-- Native controller focus navigation for Rows, Columns, and ScrollColumns, automatic scroll-to-focused-Button, stable press/release states, and visible above-content focus chevrons.
+- `UI.Selection` replaces both `UI.SegmentedControl` and `UI.MultipleChoiceWindow`. It supports visible single-choice and multiple-choice groups, custom item rendering, and an optional compact `appearance = "segmented"` style.
+- `UI.Dropdown` replaces `UI.Select` for collapsible single-choice menus, retaining the overlay, scrolling, and controller handling documented for the new constructor.
+- Updated LuaLS / IntelliSense declarations, component examples, and reference documentation for the consolidated APIs.
+- MiliUI IntelliSense 0.1.9 accompanies this runtime because the constructors and API signatures changed.
 
-## Added
+## Breaking changes
 
-- `UI.Navigation.Push`, `Replace`, `Back`, `Reset`, `GetCurrent`, `GetHistory`, and `CanGoBack`, plus Page-context shortcuts.
-- `UI.Accordion` with `remember = true` support.
-- More `UI.Motion` effects including `SlideIn`, `BounceIn`, `Nudge`, `Wobble`, `Punch`, `Squash`, `SpinIn`, `Hop`, `Swing`, `RubberBand`, `DropIn`, `Slam`, and `Breathe`.
-- Host-scoped `UI.Signals.Listen` and `UI.Variables.Watch` utilities.
+The following constructors are **removed** and are not compatibility aliases:
 
-## Changed
+| beta.2 | beta.3 |
+| --- | --- |
+| `UI.SegmentedControl(parent, props)` | `UI.Selection(parent, { mode = "single", appearance = "segmented", ... })` |
+| `UI.MultipleChoiceWindow(parent, props)` | `UI.Selection(parent, { mode = "multiple", ... })` |
+| `UI.Select(parent, props)` | `UI.Dropdown(parent, props)` |
 
-- `UI.Select` dropdowns now open through an overlay belonging to their existing Host/page rather than remaining clipped by a parent `ScrollArea` or `Accordion`.
-- `UI.Player` now resolves the current Player Entity from a configured `PlayerSelf` Custom Variable. Signal-driven Player registration is no longer needed.
-- Controller-focus indicators now support inset and outside placement, with a dedicated focus overlay that stays above scroll-list Buttons and permits horizontal overhang while clipping vertically.
-- MiliUI Manager preserves a newer bundled beta runtime when the published online manifest still points to an older beta; newer public releases continue to update normally.
-- MiliUI IntelliSense 0.1.8 provides plain-language property and function hover descriptions, examples for Row/Column sizing, responsive layouts, controller focus, and common components, plus a beginner-oriented VS Code extension guide.
+For `UI.Selection`, `mode = "single"` returns a single 1-based index (or `nil` when selection is optional), while `mode = "multiple"` returns an ascending array of 1-based indices. Their change and submit callbacks use matching scalar or array values. Single mode defaults to `required = true`; set `required = false` for optional selection. The segmented appearance does not require the old `SegmentedControl` constructor.
 
-## Breaking change: Player setup
-
-The old `UI.Player.SetEntity`, `IsRegistered`, and `RegisterFromSignal` APIs have been removed.
-
-Instead, create an Entity-valued Player Custom Variable referencing the current Player Entity and configure its name from shared client initialization:
-
-```lua
-UI.Player.Configure("PlayerSelf")
-```
-
-Use `UI.Player.GetEntity()` or `UI.Player.RequireEntity()` in scripts that need the Entity. `"PlayerSelf"` is an example variable name; use your actual Custom Variable name. See the public Player guide for complete setup.
+Do not perform a blind text replacement: review `selected`, any older `selectedIndex` usage, callbacks, item metadata, selection limits, and automatic ServerSignal submit field types. See [Upgrading from beta.2 to beta.3](https://github.com/MyPingO/MiliUI/blob/main/docs/UpgradeBeta3.md) for working before/after examples.
 
 ## Installation and upgrade
 
-MiliUI Manager is the recommended installation/update path. Updating the runtime replaces `MiliUI/init.lua` after creating a backup. Restart Test Play after updating.
+Use MiliUI Manager to back up and update the runtime in a test copy of your project, then restart Test Play. If you install IntelliSense manually, update its VSIX separately; changing the runtime alone does not change your editor declarations.
 
-The runtime, Windows Manager, IntelliSense VSIX, manifest, and optional `MiliUI-Template-Save-File.gil` are included in the GitHub Release.
+The Manager minimum version remains 0.2.0. This release packages the **refreshed starter `.gil`** uploaded to the public beta.2 release, verified against its pinned SHA-256. After importing the starter, check the installed `MiliUI/init.lua` runtime version and upgrade to beta.3 if necessary.
 
-**Starter-save note:** beta.2 carries forward the *unchanged* official beta.1 starter save, verified against its published SHA-256. It is an optional starting project; install/update the new beta.2 runtime after importing the save. A newly rebuilt and in-game revalidated starter save is not claimed.
+## Validation
+
+The beta.3 release candidate passed automated runtime, Manager, IntelliSense, metadata, and packaging checks. The interactive Miliastra Test Play lab was also exercised successfully, including Selection, Dropdown, controller navigation, and page lifecycle behavior.
+
+For projects upgrading from beta.2, use a disposable Miliastra project to confirm fresh setup, Manager backup and upgrade behavior, nested ScrollArea/Accordion interactions, Modal, Pages/Navigation, and Host cleanup.
 
 ## Known limitations
 
-- Some PC controller configurations apply Miliastra-native UI safe-area padding.
-- On affected PC Test Play builds, native controller focus must be initialized by restarting the level after switching into Controller mode; switching input mid-level can leave native focus unavailable.
-- Navigation does not yet automatically restore controller focus or scroll position.
-- Native fullscreen UI animations render behind normal UI layers.
-- Native `reverseMaskArea` remains unreliable.
-- Preferred wrapped-text height is estimated by the framework.
+Native PC controller safe-area padding and focus initialization while a Test Play level is already running are Miliastra engine limitations. Native fullscreen animation layering, inverted native masks, and estimated wrapped-text heights also remain limitations. Navigation does not automatically restore controller focus or scroll position.
 
-This remains a beta release. Please report reproducible issues through the public repository and the community support channel.
+For API details, see [Selection](https://github.com/MyPingO/MiliUI/blob/main/docs/Selection.md), [Dropdown](https://github.com/MyPingO/MiliUI/blob/main/docs/Dropdown.md), and [Controller Support](https://github.com/MyPingO/MiliUI/blob/main/docs/ControllerSupport.md).

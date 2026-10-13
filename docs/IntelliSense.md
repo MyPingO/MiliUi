@@ -97,7 +97,7 @@ UI.Hosts
 UI.Pages
 UI.Session
 UI.Modal
-UI.Select
+UI.Dropdown
 UI.ScrollArea
 ```
 

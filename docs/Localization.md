@@ -139,7 +139,7 @@ UI.Stat(parent, {
 })
 ```
 
-### Tabs / SegmentedControl
+### Tabs / Selection
 
 Items are tables so the localized label can coexist with arbitrary game metadata:
 
