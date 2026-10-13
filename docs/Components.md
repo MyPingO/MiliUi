@@ -331,15 +331,17 @@ UI.Theme.Apply({
 })
 ```
 
-## Badge / Chip
+## Badge / Chip and Stat
+
+The screenshot shows Badge/Chip labels and a Stat display together. The following examples demonstrate each component separately.
 
 ### Visual examples
 
-![Examples of badges and a stat display](images/components/badges-stats.png)
+![Badges and a Stat display](images/components/badges-stats.png)
 
 ### Code examples
 
-The screenshot includes both badges and a Stat. The code below demonstrates a Badge only.
+#### Badge / Chip
 
 ```lua
 local badge = UI.Badge(parent, {
@@ -358,15 +360,7 @@ badge:SetLabel({
 
 `UI.Chip` is an alias of `UI.Badge`.
 
-## Stat
-
-### Visual examples
-
-![Status badges and a total-wins Stat card](images/components/badges-stats.png)
-
-### Code examples
-
-The screenshot also shows badges. The code below demonstrates the Stat component only.
+#### Stat
 
 ```lua
 local stat = UI.Stat(parent, {
@@ -383,15 +377,17 @@ local stat = UI.Stat(parent, {
 stat:SetValue({ text = "25", needsTranslation = false })
 ```
 
-## ProgressBar
+## ProgressBar and Slider
+
+The same showcase screenshot demonstrates a read-only ProgressBar and an interactive Slider. Their Lua examples are grouped below.
 
 ### Visual examples
 
-![ProgressBar at 68 percent and an interactive Volume slider](images/components/progress-slider.png)
+![ProgressBar and interactive Volume Slider](images/components/progress-slider.png)
 
 ### Code examples
 
-The screenshot also includes a Slider. This snippet demonstrates the ProgressBar only.
+#### ProgressBar
 
 ```lua
 local progress = UI.ProgressBar(parent, {
@@ -415,15 +411,7 @@ UI.ProgressBar(parent, {
 })
 ```
 
-## Slider
-
-### Visual examples
-
-![ProgressBar and Volume slider examples](images/components/progress-slider.png)
-
-### Code examples
-
-The screenshot also includes a ProgressBar. This snippet demonstrates the Slider only.
+#### Slider
 
 ```lua
 local slider = UI.Slider(parent, {
@@ -621,15 +609,17 @@ The header is controller-focusable by default. Opening and closing animate the b
 
 Use `SetOpen`, `IsOpen`, `Toggle`, `SetEnabled`, `SetTitle`, and `OnChange`. See [Accordion.md](Accordion.md) for body theming, indicator options, and persistence behavior.
 
-## Toggle
+## Toggle and Checkbox
+
+The screenshot shows Toggle and Checkbox states together. Use the examples below for the individual controls.
 
 ### Visual examples
 
-![Enabled and disabled toggle and checkbox states](images/components/switches-checkboxes.png)
+![Enabled and disabled Toggle and Checkbox states](images/components/switches-checkboxes.png)
 
 ### Code examples
 
-The screenshot includes Toggle and Checkbox states. This code demonstrates a Toggle only.
+#### Toggle
 
 ```lua
 local toggle = UI.Toggle(parent, {
@@ -647,15 +637,7 @@ end)
 
 Use `SetLabel`, `SetValue`, `GetValue`, `Toggle`, `SetEnabled`, and `OnChange`.
 
-## Checkbox
-
-### Visual examples
-
-![Toggle and checkbox states for common settings](images/components/switches-checkboxes.png)
-
-### Code examples
-
-The screenshot includes Toggle and Checkbox states. This code demonstrates a Checkbox only.
+#### Checkbox
 
 ```lua
 local checkbox = UI.Checkbox(parent, {
@@ -668,31 +650,6 @@ local checkbox = UI.Checkbox(parent, {
 ```
 
 The default marker is the image asset in `UI.Theme.assets.checkboxCheck` (`100102` in the built-in theme). Use `checkIcon` / `SetCheckIcon(...)` to choose another image, or supply `check = { ... }` / `SetCheck(...)` to deliberately switch to a custom text marker.
-
-## Stepper
-
-### Visual examples
-
-![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
-
-### Code examples
-
-The screenshot also includes a segmented Selection. This snippet demonstrates the Stepper only.
-
-```lua
-local partySize = UI.Stepper(parent, {
-    min = 1,
-    max = 8,
-    step = 1,
-    value = 4,
-    valueLabel = {
-        text = "{value}",
-        needsTranslation = false,
-    },
-})
-```
-
-The default decrease/increase controls use image assets `UI.Theme.assets.minus` (`100108`) and `UI.Theme.assets.plus` (`100107`) instead of font symbols. Use `decreaseIcon` / `increaseIcon` to replace the images, or explicitly supply `decreaseLabel` / `increaseLabel` when a textual control is intentional.
 
 ## Dropdown
 
@@ -755,19 +712,36 @@ The Server Node Graph must declare matching scalar parameter types in the same o
 
 See [Dropdown.md](Dropdown.md) for long-list behavior, surface/image theming, disabled-state semantics, submit payloads, and security guidance.
 
-## Selection
+## Stepper and Selection
 
-`UI.Selection` supports customizable choices with either segmented or tile styling. It supports `mode = "single"` (one required selection by default, with automatic replacement) or `mode = "multiple"` (select several items).
+The first screenshot combines a Stepper with a segmented Selection. The second shows Selection in multiple-choice mode. Each component's code follows below.
 
 ### Visual examples
 
-![Party size Stepper and Difficulty segmented control](images/components/stepper-selection-segmented.png)
+![Party-size Stepper and segmented Difficulty Selection](images/components/stepper-selection-segmented.png)
 
-![Multiple-choice Selection with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
+![Multiple-choice Selection tiles with Pyro and Cryo selected](images/components/selection-multiple-tiles.png)
 
 ### Code examples
 
-The segmented screenshot also shows a separate Stepper. The code examples below focus on Selection configurations.
+#### Stepper
+
+```lua
+local partySize = UI.Stepper(parent, {
+    min = 1,
+    max = 8,
+    step = 1,
+    value = 4,
+    valueLabel = {
+        text = "{value}",
+        needsTranslation = false,
+    },
+})
+```
+
+The default decrease/increase controls use image assets `UI.Theme.assets.minus` (`100108`) and `UI.Theme.assets.plus` (`100107`) instead of font symbols. Use `decreaseIcon` / `increaseIcon` to replace the images, or explicitly supply `decreaseLabel` / `increaseLabel` when a textual control is intentional.
+
+#### Selection
 
 For the former compact segmented look:
 
