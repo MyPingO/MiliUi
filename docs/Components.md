@@ -471,6 +471,47 @@ combines the same keyed renderer with `UI.ScrollColumn` for scrolling lists.
 
 The screenshot shows a `ListView`. A `Repeater` renders keyed items without adding a scrolling viewport.
 
+### Code examples
+
+**Repeater:** render a collection of keyed items without scrolling.
+
+```lua
+local players = {
+    { id = 1, name = "Player One" },
+    { id = 2, name = "Player Two" },
+    { id = 3, name = "Player Three" },
+}
+
+local function renderPlayer(rowParent, player)
+    return UI.Text(rowParent, {
+        text = player.name,
+        needsTranslation = false,
+    })
+end
+
+local playerRows = UI.Repeater(parent, {
+    items = players,
+    key = "id",
+    gap = 8,
+    renderItem = renderPlayer,
+})
+```
+
+**ListView:** show the same data in a scrolling viewport that virtualizes off-screen rows.
+
+```lua
+local playerList = UI.ListView(parent, {
+    items = players,
+    key = "id",
+    width = 360,
+    height = 240,
+    itemHeight = 48,
+    renderItem = renderPlayer,
+})
+```
+
+These examples use the same `players` and `renderPlayer` values. They illustrate the API rather than reproducing the screenshot's complete styling and layout.
+
 They intentionally leave selection and row interaction to the rendered controls.
 
 See [DataViews.md](DataViews.md) for keyed reconciliation, empty states, and
@@ -497,7 +538,52 @@ parent-boundary clamping.
 
 These are showcase screenshots, not the direct output of one shared code snippet. The Popover contains interactive choices; the Tooltip presents information without interactive choices.
 
-For focused `UI.Popover` and `UI.Tooltip` code examples, placement options, and lifecycle details, see the [Anchored Overlays guide](AnchoredOverlays.md).
+### Code examples
+
+Both examples assume `screen` is an existing `UI.Screen`, as introduced in the [Screen](#screen) section. Create the trigger buttons within `screen.content` and the overlays under `screen.root` so they have room to extend beyond other controls.
+
+**Popover:** open and close an interactive panel by clicking a button.
+
+```lua
+local sortButton = UI.Button(screen.content, {
+    label = { text = "Sort", needsTranslation = false },
+})
+
+local popover = UI.Popover(screen.root, {
+    anchor = sortButton,
+    placement = "auto",
+    width = 260,
+    height = 180,
+    closeOnOutsideClick = true,
+})
+
+UI.Button(popover.content, {
+    label = { text = "Sort by name", needsTranslation = false },
+})
+
+sortButton:OnClick(function()
+    popover:Toggle()
+end)
+```
+
+**Tooltip:** show passive help text when the pointer hovers over its trigger.
+
+```lua
+local helpButton = UI.Button(screen.content, {
+    label = { text = "Help", needsTranslation = false },
+})
+
+local tooltip = UI.Tooltip(screen.root, {
+    anchor = helpButton,
+    text = {
+        text = "Choose how to sort the items.",
+        needsTranslation = false,
+    },
+    placement = "auto",
+})
+```
+
+The Popover is interactive and can be toggled by its trigger; the Tooltip uses its anchor for hover detection by default. For placement, clipping, lifecycle, and advanced options, see the [Anchored Overlays guide](AnchoredOverlays.md).
 
 ## Accordion
 
