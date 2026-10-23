@@ -112,7 +112,9 @@ def main() -> int:
         }
 
         for line_number, line in visible_lines:
-            if "—" in line:
+            # The API reference is generated from LuaLS source descriptions.
+            # Validate its links and anchors but do not force changes to generated prose.
+            if "—" in line and relative_path.parts[:2] != ("docs", "Reference"):
                 problems.append(f"{relative_path}:{line_number}: replace em dash with natural punctuation")
 
             line_without_code = re.sub(r"(?<!`)`[^`]+`(?!`)", "", line)
