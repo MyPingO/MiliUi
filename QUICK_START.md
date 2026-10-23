@@ -1,12 +1,12 @@
 # MiliUI Quick Start
 
-This guide builds one small MiliUI interface from scratch and explains the important code as you go.
+You will make a small screen with a title and a clickable Button. Each step shows the code to add and explains what it does. **You do not need to know Lua already.**
 
-You do **not** need previous Lua experience to follow the code below. This guide assumes that the one-time MiliUI project setup is already complete.
+If you imported the MiliUI starter save, this example is already included. You can open it and follow along instead of creating everything again.
 
 ## Before you start
 
-Before continuing, complete [Installation + Setup](docs/Installation.md). It installs MiliUI, maps `MiliUI/init` in the Sandbox, creates the Global Script, creates the Client Control Templates, and initializes them.
+First, finish [Installation + Setup](docs/Installation.md). The fastest route for a new project is to import the starter save. If you set up MiliUI yourself, follow the numbered installation steps before coming back here.
 
 > If you imported the **MiliUI Template Save File**, this setup and the example interface built in this guide are already included. You can still follow the steps below to understand how the example works, or begin modifying the included interface. See the [Starter Template](docs/Installation.md#starter-template) section for the import checks.
 
@@ -36,7 +36,7 @@ Hello MiliUI Controller.lua
 
 [![Create the Hello MiliUI controller Client Script](docs/images/getting-started/create-test-controller-script.png)](docs/images/getting-started/create-test-controller-script.png)
 
-The `UI Controllers` folder name is only a recommendation. What matters is that the script is available in the Client Script Resource Explorer so it can be attached to the root `ContainerControl` inside a Client Control Container.
+The `UI Controllers` folder is just a suggested name. What matters is that you can find this script in the Client Script Resource Explorer and attach it to your UI.
 
 ## 2. Create a Client Control Container Server Template
 
@@ -52,9 +52,9 @@ Hello MiliUI Controller
 
 The **Client Control Container Server Template** is what the server activates. Inside it, each Client Control can have its own attached Client Scripts.
 
-For this controller, we attach the script to the top-level `ContainerControl`. When the Server Template is created for a player, that control is instantiated and the controller script starts.
+We attach the script to the top-level `ContainerControl`. When Miliastra shows this UI to a player, the script starts.
 
-Inside this script, `script.object` is the live `ContainerControl` the script is attached to. It is **not** the Client Control Container Server Template you created in the editor. MiliUI uses this live control as the root of your Host.
+In the script, `script.object` means the UI control the script is attached to **right now**. MiliUI uses it as the place to build your screen. It is not the saved template in the editor.
 
 ## 3. Open the controller script
 
@@ -68,7 +68,7 @@ We will add the code in small pieces and explain each one immediately.
 
 Select the Server Control Template you created earlier and find its **Index** in the details panel.
 
-The UI Index is Miliastra's numeric identity for this UI entry. MiliUI stores that same Index with the Host so your game can refer back to the native UI entry when needed.
+The **UI Index** is the number Miliastra gives this UI. Copy it from the editor so your script points to the correct interface.
 
 For example, if the editor shows:
 
@@ -110,13 +110,13 @@ function OnStart()
 end
 ```
 
-A **Host** is MiliUI's name for one active UI root.
+A **Host** is MiliUI's name for one interface, such as a menu or HUD.
 
-This line registers `script.object` as the live native root for the `"Hello MiliUI"` Host.
+This line tells MiliUI that `"Hello MiliUI"` is the name of the UI it should build inside `script.object`.
 
 It does **not** decide where every control is physically placed. The parent you pass to `UI.Screen`, `UI.Button`, and other MiliUI controls does that.
 
-The Host tells MiliUI which interface owns the controls and related runtime work created under this root, such as listeners, tweens, layout state, and Pages. That lets MiliUI manage or clean up one interface without affecting another Host such as a HUD or overlay.
+The Host name helps MiliUI keep this interface separate from others. For example, closing a menu should not delete the HUD.
 
 Here, `script.object` comes from Miliastra and refers to the top-level `ContainerControl` where you attached this controller script in Step 2.
 
@@ -242,9 +242,9 @@ function OnDestroy()
 end
 ```
 
-Miliastra calls `OnDestroy()` when the Client Control this script is mounted on is being removed.
+Miliastra calls `OnDestroy()` when it removes the UI control this script is attached to.
 
-`UI.Hosts.Detach(HOST_ID)` tells MiliUI that this Host's native root is gone, so MiliUI can clean up the live controls, listeners, tweens, and other runtime work that belonged to it.
+`UI.Hosts.Detach(HOST_ID)` tells MiliUI to clean up this interface when it disappears. It does not remove other interfaces.
 
 `Detach` is different from `UI.Pages.Close(...)`. For example, imagine a `"Menu"` Host with a few Pages open:
 

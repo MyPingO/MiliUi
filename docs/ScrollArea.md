@@ -26,17 +26,17 @@ UI.Card(area.content, {
 
 Create the controls you want to scroll inside `area.content`, not `area.root`. The `content` container is the part that moves when the player scrolls.
 
-`contentHeight` is explicitly specified for `UI.ScrollArea`. MiliUI uses it to compute the scroll range and scrollbar thumb length:
+`contentHeight` tells MiliUI how tall the **whole list** is, including the part you cannot see. In this example the list is 900 units tall, but the visible area is only 320 units tall. That difference is how far it can scroll.
 
 ```text
-max scroll offset = contentHeight - viewportHeight
+how far you can scroll = contentHeight - visible area height
 ```
 
 When the content fits, the scrollbar is hidden and the viewport reclaims the full width. Set `alwaysShowScrollbar = true` if a stable reserved lane is preferred.
 
 ## Interactive and nested content
 
-ScrollArea only owns clipping and vertical movement. Child controls keep their normal interaction behavior.
+A ScrollArea hides the part of its contents that does not fit. Buttons, Toggles, and other controls inside it still work normally.
 
 For example, buttons, toggles, checkboxes, sliders, Tabs, Dropdowns, Cards, Rows, and Columns can all live under `area.content`:
 
@@ -68,7 +68,7 @@ UI.Checkbox(column, {
 })
 ```
 
-Pressable controls inside `area.content` participate in grab-to-scroll automatically. This includes Buttons/IconButtons, Toggle, Checkbox, Stepper Buttons, Tabs, Dropdown triggers, Selection choices, PlayingCard, and ordinary `UI.Hitbox` click surfaces.
+You can drag across most Buttons and other clickable controls to scroll the list. A short tap still clicks the control; a drag moves the list instead. The details below explain how that works. This includes Buttons/IconButtons, Toggle, Checkbox, Stepper Buttons, Tabs, Dropdown triggers, Selection choices, PlayingCard, and ordinary `UI.Hitbox` click surfaces.
 
 When a press moves far enough for Miliastra to emit `CursorBeginDrag`, the ScrollArea claims that gesture. MiliUI cancels the child's pending activation and resets its pressed/hover transform before scrolling. Releasing after the drag therefore scrolls instead of accidentally toggling, selecting, opening, or clicking the control that received the original press. A press/release that never becomes a drag remains the control's normal activation.
 
@@ -88,7 +88,7 @@ Nested ScrollAreas are supported when a real interface needs independent inner a
 
 ### Controller Navigation V2
 
-Inside a managed `UI.Screen(..., { controllerNavigation = "auto" })` the **right stick** scrolls the focused ScrollArea; left stick/D-pad navigate its Buttons. When a focused Button leaves the viewport, a real passive proxy takes focus and draws its chevron beside **that area's scrollbar**. Press **Left** from the proxy to return into its own eligible list, including with nested or adjacent ScrollAreas.
+If your Screen has `controllerNavigation = "auto"` (available in beta.4 and later), use the **left stick or D-pad** to move between Buttons and the **right stick** to scroll the current list. If the focused Button scrolls out of view, the focus arrow appears beside that list's scrollbar. Press **Left** to return to a Button in the same list. This also works with lists inside or next to other lists.
 
 Passive content after the last selectable item remains right-stick scrollable. An extra right-stick input at the physical top/bottom may exit the region. Auto-reveal reacts to confirmed focus changes only, preventing temporary native Focus events from resetting the scroll position.
 

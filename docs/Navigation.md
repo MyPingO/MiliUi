@@ -1,6 +1,6 @@
 # Navigation
 
-`UI.Navigation` remembers which Page the player came from, so a Back button can return to it. It works with `UI.Pages`, which creates, opens, and closes the actual screens inside a Host.
+`UI.Navigation` makes a **Back button** possible. It remembers which Page the player visited before the current one. `UI.Pages` opens and closes screens; Navigation remembers the order you visited them.
 
 Use it when one Host contains a flow such as:
 
@@ -24,7 +24,7 @@ UI.Navigation
     How did the player get to the current page, and where should Back go?
 ```
 
-Navigation does not replace `UI.Pages.Open`, `Close`, or `BringToFront`. Manually opened Pages, Modals, and overlays can coexist with a navigation flow without automatically becoming history entries.
+Navigation does not replace `UI.Pages`. You can still open a separate popup or Page without adding it to the Back-button history.
 
 For example:
 

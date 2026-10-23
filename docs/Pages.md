@@ -1,10 +1,10 @@
 # Pages
 
-`UI.Pages` manages screens within a MiliUI Host. For example, a Menu Host can have a Main Menu Page, a Settings Page, and a Help Page. More than one Page can be open at once, and MiliUI tracks which one appears in front.
+Think of a game menu with three screens: **Main Menu**, **Settings**, and **Inventory**. `UI.Pages` lets MiliUI open these screens and decide which one appears in front, all inside one Menu Host.
 
-A Page is **not** a Miliastra UI Control Group. Pages live *inside* one attached host/root. Cross-Control-Group ordering still belongs to Miliastra's Layer system.
+A **Page** is one screen inside an interface. A **Control Group** is the interface that Miliastra creates or removes. You can put several Pages inside one Control Group. If you need one Control Group to appear above another, use Miliastra's **Layer** setting.
 
-Each Page ID must be unique across the running MiliUI app, even if the Pages belong to different Hosts. Page IDs and Host IDs are separate names, so a Page and a Host may share the same text.
+Give each Page a different name (its Page ID), even when Pages belong to different Hosts. A Host name and a Page name can be the same because they refer to different things.
 
 For the recommended Control Group setup, see [ControlGroups.md](ControlGroups.md).
 
@@ -21,7 +21,7 @@ Menu Host
 
 You do not need Pages for a simple HUD that just builds one UI tree whenever its Control Group exists.
 
-When those Pages form a sequential flow with Back history, use the optional [Navigation](Navigation.md) layer on top of Pages. Pages remains the lower-level open/close/order system.
+If you want a Back button that remembers where the player came from, use [Navigation](Navigation.md) together with Pages. Pages handles which screen is open; Navigation remembers the path the player took.
 
 ## Register
 
@@ -107,7 +107,7 @@ leaving Page 1 and Page 3 open.
 
 ## Controller Navigation V2 across Pages
 
-A logical Page may own a `UI.Screen` with `controllerNavigation = "auto"`. When that Page becomes active, MiliUI suspends other managed Screen scopes in the same Host; on return, eligible focus is restored using stable `focusKey` identities when controls are rebuilt. Re-activating the current Page does not forcibly move otherwise valid focus.
+A Page can use `UI.Screen(..., { controllerNavigation = "auto" })` (beta.4 and later). When you switch Pages, the controller moves to the new Page. When you go back, MiliUI tries to restore the earlier focused Button. Give important Buttons a stable `focusKey` name so MiliUI can find them again.
 
 Managed Dropdowns temporarily restrict controller focus to the open popup and restore the trigger when closed. If you mutate native controls directly, call `UI.Focus.Refresh(screen)`. See [Controller Navigation V2](ControllerNavigationV2.md).
 

@@ -1,6 +1,8 @@
 # Control Groups and MiliUI Hosts
 
-Miliastra creates and removes UI Control Groups. MiliUI handles the controls inside each group's Client Control Container. That means your game decides **when a UI appears**, while MiliUI handles **what appears inside it**.
+Your game decides **when to show a menu or HUD**. MiliUI decides **what goes inside it**, such as Buttons, text, and images.
+
+Miliastra calls a complete UI a **Control Group**. Inside it, a **Client Control Container** holds the UI controls and the script that builds them. MiliUI calls each active UI a **Host** so it can keep your menu separate from your HUD.
 
 The recommended setup is:
 
@@ -15,7 +17,7 @@ Server Node Graph
 
 When the Control Group is removed, its attached script is destroyed and calls `UI.Hosts.Detach(...)`.
 
-This means you normally **do not need a separate "Show Lua UI" signal** just to tell Lua that a UI should appear. Creating the Control Group in server logic already makes its attached Client UI run.
+You usually do **not** need a second "Show Lua UI" signal. When the game creates the Control Group, its script starts and builds the UI automatically.
 
 ## On this page
 

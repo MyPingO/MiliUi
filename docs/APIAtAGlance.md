@@ -1,8 +1,8 @@
 # MiliUI API at a glance
 
-Looking for a component or function? This page lists all **71 top-level `UI.*` functions** in MiliUI beta.3, based on the IntelliSense declarations. Press **Ctrl+F** to search for a name, then open the linked guide to see how it works.
+Need to find a Button, screen setting, or Lua function? This page groups MiliUI's **71 top-level `UI.*` functions** by what they do. It matches the beta.4 IntelliSense reference. Use **Ctrl+F** to search for a name, then open its guide for examples. You do not need to memorize this list.
 
-For **every prop, callback, return value, class, type alias, and object method**, open the [complete browsable API reference](Reference/README.md) directly on GitHub. It is generated from the same LuaLS declarations as [MiliUI IntelliSense](IntelliSense.md), so VS Code is not required to look up detailed API signatures. The linked usage guides provide complete examples.
+For more details about a function, open the [complete API reference](Reference/README.md). It lists its settings, what goes into it, and what it returns. The [Components guide](Components.md) shows how to use these functions in real examples. Start with the [Quick Start](../QUICK_START.md) if you are new.
 
 ## A tiny example
 
@@ -20,7 +20,7 @@ button:OnClick(function()
 end)
 ```
 
-The `{ ... }` blocks are Lua tables containing component settings (called *props*). A colon, as in `button:OnClick(...)`, calls a method on that Button. See the [Quick Start](../QUICK_START.md) for a complete working script, including how to create the Host and `parent`.
+The `{ ... }` part holds settings (called *props*), such as a Button's label. `button:OnClick(...)` means "run this code when the player clicks the Button." For a complete working script with a Host and `parent`, use the [Quick Start](../QUICK_START.md).
 
 ## Which guide should I open?
 
@@ -40,6 +40,7 @@ The `{ ... }` blocks are Lua tables containing component settings (called *props
 | Handle different screen sizes | [Responsive Components](ResponsiveComponents.md) |
 | Reuse visual styles | [Theming](Theming.md) |
 | Make things animate | [Motion](Motion.md) |
+| Upgrade to beta.4 | [beta.4 upgrade guide](UpgradeBeta4.md) |
 | Upgrade from beta.2 | [beta.3 migration guide](UpgradeBeta3.md) |
 | Upgrade from beta.1 | [beta.2 upgrade guide](UpgradeBeta2.md) |
 

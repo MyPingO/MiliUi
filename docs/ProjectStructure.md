@@ -4,7 +4,7 @@ MiliUI does not force one project layout. For one small interface, keeping every
 
 As a project grows, it becomes easier to read and fix your code when each file has one main job. For example, keep shared setup, Control Group behavior, interface layout, and editable content separate instead of putting everything into one large script.
 
-This guide shows one beginner-friendly structure that can grow from a single screen into several interfaces such as an Updates screen, Settings screen, HUD, inventory, or overlay.
+This guide shows one way to organize your Lua files as you add more screens, such as Settings, Inventory, or a HUD. You **do not need this structure for your first Button or menu**. Follow the [Quick Start](../QUICK_START.md) first if you are new.
 
 > **Rule of thumb:** one shared setup, one controller per Host, one module per Page.
 

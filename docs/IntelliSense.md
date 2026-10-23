@@ -1,14 +1,14 @@
 # MiliUI IntelliSense
 
-MiliUI IntelliSense helps you write Lua in VS Code. It can suggest function names and settings as you type, show which values a function accepts, and explain an API when you hover over it. These features use Lua Language Server (LuaLS).
+MiliUI IntelliSense helps you write Lua in **Visual Studio Code (VS Code)**. It suggests MiliUI function names while you type and explains settings when you hover over them. Think of it as a coding helper, not something that runs inside your game.
 
 ## Browse the API without VS Code
 
-The [complete MiliUI API reference](Reference/README.md) is published on GitHub, generated from the same LuaLS declarations packaged in IntelliSense. It covers top-level functions, components and inherited props, callback signatures, return-object methods, enum aliases, and descriptions. You do not need VS Code to read it. Continue using the [usage guides](Components.md) for examples and Miliastra setup instructions.
+You can also read the [complete API reference](Reference/README.md) in your browser without installing VS Code. It lists the available functions and settings. For step-by-step examples, use the [Components guide](Components.md) instead.
 
 ## How it works
 
-IntelliSense includes files that describe MiliUI's functions and settings to VS Code. These files are separate from the runtime you install into your Miliastra project.
+The IntelliSense extension is separate from MiliUI itself. Install the **runtime** in Miliastra to make the UI work, and install **IntelliSense** in VS Code if you want coding suggestions. For beta.4, the matching IntelliSense version is `0.1.10`.
 
 Your game project still contains only:
 
