@@ -16,8 +16,17 @@ If Hosts, Control Groups, Pages, or Layers are new to you, start with [Control G
 - [Check Server Signals](#serversignal-field-order-must-match-the-server-node-graph)
 - [Check client and server trust](#do-not-trust-client-submitted-metadata-as-authoritative-server-state)
 - [Fix template setup](#check-the-global-script-template-variables)
+- [Troubleshoot managed controller navigation](#managed-controller-v2-focus-and-scrolling)
 
 For other problems, use your browser's search (Ctrl+F) to find an error message or component name.
+
+## Managed Controller V2 focus and scrolling
+
+An opted-in `UI.Screen(..., { controllerNavigation = "auto" })` owns native directional links. Do not manually call `SetControllerNavigation` for its children. Use `UI.Focus.Link` and `UI.Focus.Block` for rare exceptions.
+
+When a right-stick-scrolled Button leaves its viewport, a chevron beside the scrollbar is **intentional**: the ScrollArea proxy now owns native focus. Right stick continues scrolling and Left returns to the correct list. Nested ScrollAreas scroll independently.
+
+If advanced direct native hide, disable, active-state or geometry changes confuse navigation, call `UI.Focus.Refresh(screen)`. PC Test Play may require starting the level in Controller mode rather than switching after it loads. See the [V2 guide](ControllerNavigationV2.md) and [migration checklist](ControllerNavigationV2Migration.md).
 
 ## Do not use `UI.DestroyAll()` in every Control Group script
 

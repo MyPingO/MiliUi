@@ -8,27 +8,28 @@ This reference contains every declared top-level `UI.*` function, namespace/inst
 
 **Getting started:** [Installation](../Installation.md) · [Quick Start](../../QUICK_START.md) · [API at a glance](../APIAtAGlance.md) · [Components guide](../Components.md) · [Migration to beta.3](../UpgradeBeta3.md)
 
-**Coverage:** 30 declaration files · **71 top-level `UI.*` functions** · 645 total callable signatures · 213 classes · 1958 typed fields · 30 aliases.
+**Coverage:** 31 declaration files · **71 top-level `UI.*` functions** · 653 total callable signatures · 215 classes · 1972 typed fields · 31 aliases.
 
 ## Find a reference chapter
 
 | Declaration area | Classes | Fields | Aliases | Callable signatures |
 | --- | ---: | ---: | ---: | ---: |
 | [Aliases](aliases.md) | 9 | 109 | 16 | 0 |
-| [Api](api.md) | 1 | 19 | 0 | 71 |
+| [Api](api.md) | 1 | 20 | 0 | 71 |
 | [Components Advanced](components_advanced.md) | 11 | 213 | 0 | 39 |
 | [Components Anchored Overlay](components_anchored_overlay.md) | 5 | 54 | 2 | 15 |
-| [Components Base](components_base.md) | 19 | 231 | 0 | 27 |
+| [Components Base](components_base.md) | 19 | 233 | 0 | 27 |
 | [Components Data Views](components_data_views.md) | 8 | 67 | 4 | 34 |
 | [Components Dropdown](components_dropdown.md) | 8 | 151 | 1 | 24 |
 | [Components Feedback](components_feedback.md) | 9 | 106 | 0 | 17 |
 | [Components Native](components_native.md) | 10 | 44 | 0 | 39 |
 | [Components Playing Card](components_playing_card.md) | 8 | 120 | 1 | 17 |
-| [Components Screen](components_screen.md) | 4 | 37 | 0 | 13 |
+| [Components Screen](components_screen.md) | 4 | 38 | 0 | 15 |
 | [Components Scroll Area](components_scroll_area.md) | 2 | 50 | 0 | 20 |
 | [Components Scrollbar](components_scrollbar.md) | 2 | 42 | 0 | 11 |
 | [Components Selection](components_selection.md) | 11 | 145 | 1 | 21 |
-| [Helpers](helpers.md) | 40 | 180 | 2 | 100 |
+| [Focus](focus.md) | 2 | 8 | 1 | 6 |
+| [Helpers](helpers.md) | 40 | 182 | 2 | 100 |
 | [Hosts](hosts.md) | 1 | 0 | 0 | 8 |
 | [Intrinsic](intrinsic.md) | 2 | 14 | 0 | 11 |
 | [Localization](localization.md) | 1 | 0 | 0 | 9 |
@@ -329,6 +330,15 @@ This includes public namespace methods and declared instance methods. Some names
 - [`Dropdown:SetSubmitButton`](components_dropdown.md#dropdownsetsubmitbuttonbutton)
 - [`Dropdown:Submit`](components_dropdown.md#dropdownsubmit)
 - [`Dropdown:Toggle`](components_dropdown.md#dropdowntoggle)
+
+### `FocusAPI`
+
+- [`FocusAPI.Block`](focus.md#focusapiblocksource-direction)
+- [`FocusAPI.Explain`](focus.md#focusapiexplainscope)
+- [`FocusAPI.Get`](focus.md#focusapigetscope)
+- [`FocusAPI.Link`](focus.md#focusapilinksource-direction-destination)
+- [`FocusAPI.Refresh`](focus.md#focusapirefreshscope)
+- [`FocusAPI.Set`](focus.md#focusapisettarget)
 
 ### `FullscreenAnimation`
 
@@ -676,8 +686,10 @@ This includes public namespace methods and declared instance methods. Some names
 - [`Screen:Matches`](components_screen.md#screenmatchesquery)
 - [`Screen:OnResize`](components_screen.md#screenonresizecallback)
 - [`Screen:Refresh`](components_screen.md#screenrefresh)
+- [`Screen:RefreshControllerNavigation`](components_screen.md#screenrefreshcontrollernavigation)
 - [`Screen:ReleaseInput`](components_screen.md#screenreleaseinput)
 - [`Screen:SetCursorVisible`](components_screen.md#screensetcursorvisiblevisible)
+- [`Screen:SetInitialFocus`](components_screen.md#screensetinitialfocustarget)
 - [`Screen:SetInputCapture`](components_screen.md#screensetinputcaptureoptions)
 - [`Screen:SetInsets`](components_screen.md#screensetinsetsleft-right-top-bottom)
 - [`Screen:SetPadding`](components_screen.md#screensetpaddingpadding)
@@ -964,6 +976,8 @@ Search this list for `MiliUI.ButtonProps`, `MiliUI.SelectionProps`, `MiliUI.Page
 - [`MiliUI.DropdownSubmit`](components_dropdown.md#miliuidropdownsubmit)
 - [`MiliUI.DropdownSubmitField`](components_dropdown.md#miliuidropdownsubmitfield)
 - [`MiliUI.FanLayoutOptions`](helpers.md#miliuifanlayoutoptions)
+- [`MiliUI.FocusAPI`](focus.md#miliuifocusapi)
+- [`MiliUI.FocusExplanation`](focus.md#miliuifocusexplanation)
 - [`MiliUI.FullscreenAnimation`](components_native.md#miliuifullscreenanimation)
 - [`MiliUI.FullscreenAnimationControl`](native.md#miliuifullscreenanimationcontrol)
 - [`MiliUI.FullscreenAnimationProps`](components_native.md#miliuifullscreenanimationprops)
@@ -1152,6 +1166,7 @@ Search this list for `MiliUI.ButtonProps`, `MiliUI.SelectionProps`, `MiliUI.Page
 - [`MiliUI.DataViewSortOrder`](components_data_views.md#miliuidataviewsortorder)
 - [`MiliUI.Dimension`](aliases.md#miliuidimension)
 - [`MiliUI.DropdownValueType`](components_dropdown.md#miliuidropdownvaluetype)
+- [`MiliUI.FocusDirection`](focus.md#miliuifocusdirection)
 - [`MiliUI.MotionChannel`](helpers.md#miliuimotionchannel)
 - [`MiliUI.MotionDirection`](helpers.md#miliuimotiondirection)
 - [`MiliUI.NativeControl`](aliases.md#miliuinativecontrol)

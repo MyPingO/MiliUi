@@ -86,6 +86,14 @@ Focusable Buttons and click Hitboxes that participate in parent scrolling also l
 
 Nested ScrollAreas are supported when a real interface needs independent inner and outer scroll regions. Use nesting deliberately; one ScrollArea is easier to navigate when the design does not genuinely need independent scroll regions.
 
+### Controller Navigation V2
+
+Inside a managed `UI.Screen(..., { controllerNavigation = "auto" })` the **right stick** scrolls the focused ScrollArea; left stick/D-pad navigate its Buttons. When a focused Button leaves the viewport, a real passive proxy takes focus and draws its chevron beside **that area's scrollbar**. Press **Left** from the proxy to return into its own eligible list, including with nested or adjacent ScrollAreas.
+
+Passive content after the last selectable item remains right-stick scrollable. An extra right-stick input at the physical top/bottom may exit the region. Auto-reveal reacts to confirmed focus changes only, preventing temporary native Focus events from resetting the scroll position.
+
+Managed ScrollArea scrollbar arrows are mouse/touch targets by default, not separate controller focus buttons. Legacy unmanaged behavior is unchanged. See the [V2 guide](ControllerNavigationV2.md) and [migration checklist](ControllerNavigationV2Migration.md).
+
 
 ## Coordinate model
 

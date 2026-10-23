@@ -54,6 +54,7 @@ When a `UI.Text` or `UI.TextWindow` does **not** explicitly own its vertical siz
 - a `grow`/`fillHeight` control receives that value as its default `minHeight`;
 - an explicit `height` or explicit `minHeight` remains authoritative;
 - an explicit `aspectRatio` is not silently overridden.
+- `fitContentHeight = true` is supported by `UI.TextWindow` for wrapped prose. It is **not supported by `UI.Text`** and is ignored when deciding the normal `UI.Text` safe height. Passing it accidentally does not remove the safe-height fallback.
 
 This follows normal layout expectations: MiliUI supplies a useful intrinsic size when the developer leaves the axis automatic, while explicit geometry remains the developer's choice.
 

@@ -5,7 +5,7 @@
 **Use `UI.*` entry points or the documented public `UI.<namespace>.*` tables.** Support types and implementation helper declarations may also appear here for type completeness; their presence does not imply they are public entry points.
 
 **Source declaration:** `api.lua`  
-**Coverage:** 1 classes, 19 fields, 0 aliases, 71 callable signatures.
+**Coverage:** 1 classes, 20 fields, 0 aliases, 71 callable signatures.
 
 [Reference index](README.md) · [Documentation index](../README.md)
 
@@ -31,6 +31,7 @@
 | `Variables` | `MiliUI.VariablesAPI` | Host-owned global Custom Variable reads/watchers. |
 | `Pages` | `MiliUI.PagesAPI` | Host-aware ordered page registry backed by UI.Session. |
 | `Navigation` | `MiliUI.NavigationAPI` | Optional per-Host sequential page history built on UI.Pages. |
+| `Focus` | `MiliUI.FocusAPI` | Opt-in Screen-scoped native controller focus coordination, directional links and diagnostics. |
 | `Session` | `MiliUI.SessionAPI` | In-memory logical UI state that survives Host recreation in the same Lua session. |
 | `Player` | `MiliUI.PlayerAPI` | Optional local Player Entity lookup through a project-defined Player Custom Variable. |
 | `ResponsiveLayout` | `MiliUI.ResponsiveClass` | Responsive layout class for layouts that adapt to available space. |

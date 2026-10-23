@@ -5,7 +5,7 @@
 **Use `UI.*` entry points or the documented public `UI.<namespace>.*` tables.** Support types and implementation helper declarations may also appear here for type completeness; their presence does not imply they are public entry points.
 
 **Source declaration:** `components_screen.lua`  
-**Coverage:** 4 classes, 37 fields, 0 aliases, 13 callable signatures.
+**Coverage:** 4 classes, 38 fields, 0 aliases, 15 callable signatures.
 
 [Reference index](README.md) · [Documentation index](../README.md)
 
@@ -32,6 +32,7 @@
 | `disableKeyEventPassthrough?` | `boolean` | Advanced: stop keyboard events from passing through the native screen container to controls behind it. Leave unset for normal gameplay. |
 | `disableCursorEventPassthrough?` | `boolean` | Advanced: stop pointer events from passing through this screen container. Use only for menus that intentionally capture clicks. |
 | `isolateNavigation?` | `boolean` | Keep controller focus movement within this screen rather than jumping to unrelated controls. Useful for separate full-screen menus. |
+| `controllerNavigation?` | `'auto'` | Enable Controller Navigation V2 for this Screen. Unset leaves the legacy component navigation behavior intact. |
 
 ### `MiliUI.ScreenQuery`
 
@@ -73,6 +74,38 @@
 ## Callables and object methods
 
 Signatures below are taken directly from IntelliSense declarations. `:` denotes an instance method; `.` denotes a table function.
+
+### `Screen:SetInitialFocus(target)`
+
+Designates the preferred first native controller focus target for an opted-in managed Screen. The target should already have been created.
+
+| Kind | Type | Description |
+| --- | --- | --- |
+| Parameter `target` | `MiliUI.Parent` | — |
+| Returns | `MiliUI.Screen` | — |
+
+**Original LuaLS annotations:**
+
+```lua
+---@param target MiliUI.Parent
+---@return MiliUI.Screen
+```
+
+
+### `Screen:RefreshControllerNavigation()`
+
+Re-evaluate eligible focus targets and directional links after advanced direct-native control mutations.
+
+| Kind | Type | Description |
+| --- | --- | --- |
+| Returns | `boolean` | success, string? reason |
+
+**Original LuaLS annotations:**
+
+```lua
+---@return boolean success, string? reason
+```
+
 
 ### `Screen:Refresh()`
 

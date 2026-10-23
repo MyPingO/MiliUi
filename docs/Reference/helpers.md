@@ -5,7 +5,7 @@
 **Use `UI.*` entry points or the documented public `UI.<namespace>.*` tables.** Support types and implementation helper declarations may also appear here for type completeness; their presence does not imply they are public entry points.
 
 **Source declaration:** `helpers.lua`  
-**Coverage:** 40 classes, 180 fields, 2 aliases, 100 callable signatures.
+**Coverage:** 40 classes, 182 fields, 2 aliases, 100 callable signatures.
 
 [Reference index](README.md) · [Documentation index](../README.md)
 
@@ -352,6 +352,8 @@
 | `interactable?` | `boolean` | Let the player click or touch this invisible interaction area. Default: `true`. |
 | `raycastTarget?` | `boolean` | Let mouse or touch input detect this hitbox. Set `false` if the pointer should pass through it. Default: `true`. |
 | `controllerFocus?` | `boolean` | Default false. When true, this Cursor Event Area receives native controller focus and Confirm invokes its click path. A focus chevron is shown unless disabled. |
+| `focusKey?` | `string` | Stable managed focus identity to use after a Page is rebuilt. |
+| `controllerFocusContent?` | `MiliUI.Parent` | Optional native/wrapped visible label or content rectangle for inside-chevron collision checks. |
 | `controllerFocusIndicator?` | `boolean\|MiliUI.ControllerFocusIndicatorProps` | Set false to hide the focus chevron on a focusable Hitbox, or supply placement, size, and animation overrides. |
 | `parentScroll?` | `boolean` | Default true. When inside ScrollArea content, false keeps pointer/controller scrolling owned by this control instead of the parent ScrollArea. |
 

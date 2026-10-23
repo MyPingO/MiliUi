@@ -4,6 +4,34 @@ All notable public MiliUI releases will be recorded here.
 
 ## Unreleased
 
+## [0.9.0-beta.4] - 2026-10-23
+
+### Added
+
+- Opt-in Controller Navigation V2 for `UI.Screen`, with hierarchical automatic navigation and managed `UI.Focus` overrides.
+- Focus-preserving right-stick scrolling, nested ScrollArea proxy ownership, and Left re-entry into the scrollbar's own list.
+- New Controller V2 usage and migration guides, updated LuaLS declarations, and public example.
+
+### Fixed
+
+- #104: Unsupported `fitContentHeight` no longer disables `UI.Text` safe-height sizing.
+- #105: Destroying a Repeater during `SetItems` or `Refresh` no longer causes deferred access to invalid native controls.
+- #106: Removed progressive slowdowns from repeated jumps through large virtualized ListViews in native testing.
+- #107: Corrected immediate managed ScrollArea fallback after focusable child destruction.
+- #108: Improved controller-chevron placement and inside-label collision handling.
+- Reduced controller-focus flicker and unexpected scroll offset resets during right-stick scrolling.
+
+### Compatibility
+
+- Controller Navigation V2 is opt-in; existing unmanaged Screens retain legacy navigation.
+- MiliUI IntelliSense 0.1.10 matches the new APIs. Minimum supported MiliUI Manager remains 0.2.0.
+- See [Upgrading from beta.3 to beta.4](docs/UpgradeBeta4.md) for adoption and validation guidance.
+
+### Known limitations
+
+- Native controller safe-area padding and mid-Test-Play input-mode focus initialization vary by platform.
+- Fullscreen animation layering, inverted native masking, and wrapped-text height estimation remain limited by Miliastra's native behavior.
+
 ## [0.9.0-beta.3] - 2026-10-13
 
 ### Changed

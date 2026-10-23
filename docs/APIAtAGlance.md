@@ -36,6 +36,7 @@ The `{ ... }` blocks are Lua tables containing component settings (called *props
 | Change Pages and support Back | [Navigation](Navigation.md) |
 | Watch game signals or variables | [Signals and Custom Variables](Subscriptions.md) |
 | Support controller focus | [Controller Support](ControllerSupport.md) |
+| Create a controller-navigable multi-region menu | [Controller Navigation V2](ControllerNavigationV2.md) · [Migration](ControllerNavigationV2Migration.md) |
 | Handle different screen sizes | [Responsive Components](ResponsiveComponents.md) |
 | Reuse visual styles | [Theming](Theming.md) |
 | Make things animate | [Motion](Motion.md) |

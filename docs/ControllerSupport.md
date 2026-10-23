@@ -2,6 +2,47 @@
 
 MiliUI uses Miliastra's built-in controller focus system. **Focus** is the native UI control that will receive Confirm (a Button or a focusable Hitbox). **Selection** is a value your game has chosen, such as the selected menu option. A Button can be selected without being focused, and moving focus does not automatically change your game's selection.
 
+## Controller Navigation V2 (opt-in)
+
+A full-screen menu may opt in to **managed** directional controller navigation. Legacy Screens remain unaffected when the setting is omitted:
+
+```lua
+local screen = UI.Screen(hostRoot, {
+    controllerNavigation = "auto",
+    isolateNavigation = true,
+})
+
+local actions = UI.Column(screen.content, { gap = 12 })
+local play = UI.Button(actions, {
+    label = { text = "PLAY", needsTranslation = false },
+    focusKey = "play",
+})
+local settings = UI.Button(actions, {
+    label = { text = "SETTINGS", needsTranslation = false },
+    focusKey = "settings",
+})
+
+screen:SetInitialFocus(play)
+```
+
+Use `UI.Focus.Get(screen)` to look up the **actual native focused target** when it belongs to that managed Screen; `UI.Focus.Set(play)` requests and immediately verifies native focus. It returns `true, "confirmed"` only when `game.GetControllerFocus()` agrees; otherwise it returns `false, reason`. The engine may settle focus later, and the reason `"not-yet-confirmed"` is not proof of permanent failure.
+
+`UI.Focus.Link(play, "Down", settings)` adds a directional override. `UI.Focus.Block(play, "Up")` prevents an intentional exit. `UI.Focus.Refresh(screen)` recomputes after direct native property changes, while `UI.Focus.Explain(screen)` reports focus identity, Host, eligible count and the latest request. Both named logical Pages and Dropdown modals now participate in managed focus coordination. When a Page is rebuilt, provide `focusKey` values to restore logical identity instead of retaining destroyed native handles.
+
+Managed ScrollAreas default their scrollbar arrow buttons to mouse/touch interaction; the controller uses the right stick and a visible focus proxy for scrollable areas with no focusable children. **Right-stick scrolling keeps native focus on the actual Button as long as the Button remains fully visible**. When scrolling moves that Button out of view, the viewport proxy takes focus and its chevron points at the ScrollArea's scrollbar, rather than floating over unrelated content. On an additional right-stick input at the physical boundary, navigation may leave the entire ScrollArea. D-pad and left-stick behavior is unchanged. A single deferred focus check handles native focus changes after a RightStick callback, without any per-frame polling or separate chevron state. During that short scroll-settlement interval the central focus manager retains the current chevron and ignores intermediate native Focus/LostFocus visual changes; after confirming the actual target it releases the hold. This prevents a one-frame chevron flash on neighboring buttons without introducing a second indicator or changing left-stick navigation.
+
+Native Hitbox eligibility can be registered before the public MiliUI wrapper is constructed. ControllerFocus upgrades that early record when final component props arrive, preserving focus keys, wrapper identity, and ScrollArea proxy ownership across later native eligibility notifications.
+
+A managed ScrollArea's focused scrollbar proxy treats **Left as re-entry into its own list**, preferring a visible eligible item, or the nearest offscreen item when the visible tail contains only passive content. If there is no eligible list item, it falls back to normal directional navigation. This is automatic, including nested ScrollAreas; no `UI.Focus.Link` is required. Manual links and blocks continue to override automatic behavior.
+
+Inactive managed Pages register ScrollArea focus subscriptions at construction time, so activation never falls back to raw native Focus events. Re-activating the already active Page preserves an eligible native focus target instead of forcibly resetting it; switching Pages still restores the correct managed focus.
+
+Managed V2 navigation traverses the **actual UI control hierarchy**. It searches sibling controls within the current Row, Column or other container before climbing toward the Screen to find neighboring regions. Eligible descendants define each region's rectangular bounds, and navigation stops at true Screen edges. Explicit `UI.Focus.Link`/`Block` and component-specific policies still take priority. Standalone unmanaged Stacks retain legacy native links; unusual interaction designs may still benefit from manual overrides.
+
+See the [V2 usage guide](ControllerNavigationV2.md), [migration checklist](ControllerNavigationV2Migration.md), and [Menu Control Group example](../examples/ControllerNavigationV2Menu.lua). V2 is native-tested and integrated into development `main`; use a public runtime version that includes it before using these APIs.
+
+The remainder of this document describes the **legacy** controller behavior unless otherwise specified.
+
 ## Focusable controls
 
 `UI.Button` and `UI.IconButton` are controller-focusable by default. `UI.Hitbox` is not focusable by default, but `controllerFocus = true` enables controller focus and Confirm. Composed controls such as `UI.Selection` choices and `UI.Dropdown` options opt in automatically. Use `controllerFocus = false` when a focus target must be excluded.
@@ -70,47 +111,20 @@ For debugging in Test Play, first inspect `game.GetControllerFocus()`. If it rem
 
 Hitbox focus indicators use the same `controllerFocusIndicator` settings as Buttons. Only focusable hitboxes receive them. A hitbox's `SetEnabled(true)` does not reset existing directional links when the value was already true.
 
-## Explicit navigation between regions
+## Explicit navigation overrides
 
-Nearest-control navigation is not always enough. A common layout has a navigation list on the left and a content region on the right.
+**Managed V2 Screens ordinarily need no directional links.** A Row, Column, or other container gives the automatic navigator its parent-child structure; moving from a sidebar toward an adjacent content region should work without writing navigation code.
 
-Use Miliastra's native `SetControllerNavigation` when moving in one direction should always go to a specific control.
+When a design truly requires a non-geometric destination, use the central focus API:
 
 ```lua
-local navigationButton = UI.Button(sidebar, {
-    label = { text = "SETTINGS", needsTranslation = false },
-})
-
-local firstSetting = UI.Button(content, {
-    label = { text = "AUDIO", needsTranslation = false },
-})
-
-navigationButton.root:SetControllerNavigation(
-    Enum.ControllerNavigationDir.Right,
-    Enum.ControllerNavigationMode.Specified,
-    firstSetting.root
-)
-
-firstSetting.root:SetControllerNavigation(
-    Enum.ControllerNavigationDir.Left,
-    Enum.ControllerNavigationMode.Specified,
-    navigationButton.root
-)
+UI.Focus.Link(navigationButton, "Right", firstSetting)
+UI.Focus.Link(firstSetting, "Left", navigationButton)
+-- To deliberately prevent movement at a boundary:
+UI.Focus.Block(navigationButton, "Up")
 ```
 
-With that bridge:
-
-```text
-left list
-    -- Left Stick Right -->
-content controls
-
-content controls
-    -- Left Stick Left -->
-left list
-```
-
-This is useful for menus with clear visual regions because it avoids depending on geometric nearest-neighbor guesses across the whole screen.
+These overrides win over the automatic hierarchy. **Do not call native `SetControllerNavigation` directly for controls in a managed Screen**: the V2 graph writer owns their native edges and can overwrite unmanaged changes during refresh. Native `SetControllerNavigation` remains appropriate for legacy/unmanaged layouts.
 
 ## Deterministic navigation inside a group
 
@@ -181,6 +195,25 @@ Supported placements are `auto`, `left`, `right`, `top`, `bottom`, `inside-left`
 
 Focus chevrons render on a visually higher overlay layer rather than underneath other Buttons. Inside ScrollArea, a **wide, vertically clipped focus mask** sits above the content and scrollbar, following the same scroll offset. It allows focus chevrons to extend beyond the viewport horizontally while clipping at the top and bottom edges. `focusIndicatorOverflow` (default 64 UI units per side) controls the allowed horizontal overhang. Increase it for unusually large custom indicators. Outside ScrollArea, chevrons use the page-level overlay. Explicit `left`/`right` placements sit outside the Button edge, while `inside-left`/`inside-right` remain inset.
 
+For narrow Buttons or localized text, you can opt in to label-aware
+collision avoidance while keeping `inside-left`/`inside-right` as the
+preferred placement:
+
+```lua
+controllerFocusIndicator = {
+    placement = "inside-left",
+    avoidLabelOverlap = true,
+}
+```
+
+When the estimated rendered label would overlap the inset chevron, MiliUI
+moves the indicator to the matching outside edge for that Button. The decision
+is re-evaluated when focus enters, after `button:SetLabel(...)`, and on
+Button root resizing. This uses **estimated Unicode glyph widths** because
+native Miliastra glyph bounds are not exposed; always visually test large-font,
+long localized and wrapped labels. The option defaults to `false` to preserve
+explicit inside placement for existing games.
+
 The indicator may also be static:
 
 ```lua
@@ -217,6 +250,8 @@ local list = UI.ScrollColumn(parent, {
 list:ScrollControlIntoView(button.root)
 ```
 
+In managed Screens, ScrollArea auto-reveal listens to **committed focus changes** from ControllerFocus, not raw native Focus events. This prevents queued or transient Focus events from snapping a right-stick-scrolled list back to a previously visible Button. Explicitly navigating to a new Button still reveals it. Unmanaged ScrollAreas retain their native Focus-event behavior.
+
 The focus overlay shares the content's centered coordinate system and
 moves in lockstep with scrolling. It is drawn after the list and scrollbar.
 Its rectangular mask spans the viewport height, with configurable horizontal
@@ -236,21 +271,11 @@ UI.Button(buttons, { label = { text = "YES", needsTranslation = false } })
 UI.Button(buttons, { label = { text = "NO", needsTranslation = false } })
 ```
 
-With `controllerNavigation=true`, MiliUI first follows focusable controls **within** each Stack child group in the main-axis direction, then connects to the nearest control in the adjacent group at the boundary. This applies to multi-row selections and nested groups.
-The Stack-owned axis is: Up/Down in a Column, Left/Right in a Row. Nested rows preserve
-cross-axis alignment rather than forming a flat zig-zag sequence. Edges retain
-native nearest-control navigation. Offscreen scroll targets remain eligible
-and are revealed on focus.
+In **unmanaged** layouts, `controllerNavigation=true` lets the Stack author native links along its main axis: Up/Down in a Column, Left/Right in a Row. Nested Stacks use groups of focusable controls and prefer cross-axis alignment. Native nearest-control fallback remains available at boundaries.
 
-Disabled, hidden, and inactive targets are omitted when the graph is refreshed.
-Re-enabling a MiliUI Button automatically updates its parent Stack.
-After changing native visibility/focusability directly, call
-`stack:RefreshControllerNavigation()` to rebuild the graph. Custom links
-on a Stack-owned axis should be applied after mutations, or use
-`controllerNavigation=false` to retain full manual control.
+In a **managed V2 Screen**, Row/Column ancestry is already used by the Screen-level hierarchical navigator. Stack layout contributes structure, but its legacy authored main-axis edges do not override V2 automatically. Offscreen scroll targets stay eligible and reveal on confirmed focus. For directional exceptions, use `UI.Focus.Link` / `UI.Focus.Block`, not native edges.
 
-Navigation graph construction is deferred during `Stack:Batch()`, so large
-dynamic lists get one final graph pass after layout settles.
+Disabled, hidden and inactive controls are excluded when the relevant graph refreshes. Use `UI.Focus.Refresh(screen)` after directly changing native visibility, active state, or geometry. `Stack:Batch()` still coalesces large Stack layout changes.
 
 ## Miliastra Test Play limitations
 
@@ -288,6 +313,6 @@ Left           return to the sidebar
 Confirm        activate the focused Button
 ```
 
-The important part is not the exact direction scheme; it is defining explicit bridges at region boundaries while allowing normal nearest-control or explicit ordering inside each region.
+In a managed Screen, the hierarchy normally provides these transitions automatically. Test the actual layout before adding explicit overrides; use `UI.Focus.Link` only when the intended destination cannot be inferred from the structure.
 
 For working controller examples, see [the Button and menu examples](../examples/getting-started/README.md).

@@ -29,7 +29,7 @@
 | `dragScrollMultiplier?` | `number` | Multiplier applied to viewport drag distance. Default 1. |
 | `controllerScroll?` | `boolean` | Let players scroll this area using the controller's **right stick**. Set `false` to turn off right-stick scrolling. Default: `true`. |
 | `controllerScrollStep?` | `number` | Controller right-stick event step. Defaults to scrollStep. |
-| `controllerScrollFocus?` | `boolean` | Allow the ScrollArea root to become a fallback controller focus target when no registered descendant can focus. Default true. |
+| `controllerScrollFocus?` | `boolean` | Allow fallback controller focus when no eligible child remains. In a managed V2 Screen, a passive viewport proxy (not the ScrollArea root) owns this focus; it may also take focus when the selected row scrolls out of view. Default true. |
 | `autoScrollOnControllerFocus?` | `boolean` | When controller navigation selects a Button that is outside the visible part of the list, move the scroll position until the Button can be seen. Default: `true`. |
 | `controllerFocusPadding?` | `number` | Small vertical space MiliUI tries to leave between a newly focused Button and the viewport edge. Example: `controllerFocusPadding = 12`. |
 | `focusIndicatorOverflow?` | `number` | Extra space **outside the left and right edges** of this scrolling area where the controller focus indicator is allowed to appear. Example: `focusIndicatorOverflow = 64` gives the indicator 64 UI units of extra room on each side, while keeping items hidden above and below the scrolling viewport. |
@@ -39,7 +39,7 @@
 | `maskStretch?` | `boolean` | Mask image stretch mode. Default true. |
 | `scrollbarWidth?` | `number` | Scrollbar lane width. Default Theme.scrollbar.width. |
 | `scrollbarGap?` | `number` | Gap between viewport and scrollbar lane. Default Theme.scrollbar.gap. |
-| `scrollbarControllerFocus?` | `boolean` | Allow the scrollbar's up and down Buttons to receive controller focus. Default: `true`. |
+| `scrollbarControllerFocus?` | `boolean` | Allow the scrollbar's up/down Buttons to receive controller focus. Default false inside managed V2 Screens; legacy/unmanaged ScrollAreas retain the true default. |
 | `scrollbarTrackWidth?` | `number` | Set the thickness of the scrollbar's track (the narrow line behind the handle). Example: `scrollbarTrackWidth = 5`. |
 | `scrollbarTrackEndInset?` | `number` | Leave this much space at the top and bottom ends of the scrollbar's track, without changing how far the handle can travel. |
 | `scrollbarTrackColor?` | `MiliUI.ColorValue` | Choose the color of the scrollbar's track. Example: `scrollbarTrackColor = 'surface2'`. |

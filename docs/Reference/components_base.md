@@ -5,7 +5,7 @@
 **Use `UI.*` entry points or the documented public `UI.<namespace>.*` tables.** Support types and implementation helper declarations may also appear here for type completeness; their presence does not imply they are public entry points.
 
 **Source declaration:** `components_base.lua`  
-**Coverage:** 19 classes, 231 fields, 0 aliases, 27 callable signatures.
+**Coverage:** 19 classes, 233 fields, 0 aliases, 27 callable signatures.
 
 [Reference index](README.md) · [Documentation index](../README.md)
 
@@ -77,6 +77,7 @@
 | --- | --- | --- |
 | `enabled?` | `boolean` | Show or hide this controller focus indicator. Set `enabled = false` to hide it. Default: `true`. |
 | `placement?` | `MiliUI.AnchorPlacement\|'inside-left'\|'inside-right'` | Choose where the **controller focus indicator** appears when a control has focus. `'right'` places it outside the control's right edge, while `'inside-right'` keeps it inside that edge. Also supports left, top, bottom, and `'auto'`. Example: `placement = 'inside-right'`. |
+| `avoidLabelOverlap?` | `boolean` | When using `inside-left` or `inside-right`, estimate localized label width and move the chevron outside if the inset would overlap its text. Opt-in; default `false`. Native glyph widths are approximate. |
 | `align?` | `MiliUI.AnchorAlign` | Choose where the indicator lines up along the chosen control edge. For left/right placement this is the up/down position; for top/bottom placement it is the left/right position. Default: `'center'`. |
 | `gap?` | `number` | Space between the **focus indicator** and the nearest Button edge, in UI units. With `placement = 'right'`, `gap = 8` moves the indicator 8 units outside the right edge. With `'inside-right'`, it moves the indicator 8 units inward. |
 | `margin?` | `number` | Extra space MiliUI tries to leave between the indicator and the edge of the available area when `placement = 'auto'`. Has no effect if you choose a specific placement. |
@@ -124,6 +125,7 @@
 | `interactable?` | `boolean` | Can the player press this Button? `false` disables clicks and controller activation. Default true. |
 | `raycastTarget?` | `boolean` | Let mouse and touch input detect this Button. Set `false` if you want the pointer to ignore it. Default: `true`. |
 | `controllerFocus?` | `boolean` | Allow the controller's D-pad or left stick to select this Button. When selected, the controller Confirm button activates it. Use `controllerFocus = false` to skip it. Default: `true`. |
+| `focusKey?` | `string` | Stable identity for remembering focus across rebuilding a managed Screen or logical Page. Use a unique key within each Screen. |
 | `parentScroll?` | `boolean` | When inside a ScrollArea, allow dragging on this Button to scroll the list. Set `false` when this Button needs to handle its own drag. Default true. |
 | `controllerFocusIndicator?` | `boolean\|MiliUI.ControllerFocusIndicatorProps` | Show a **controller focus indicator** to identify the Button selected using a controller. Set `false` to hide it. Example: `controllerFocusIndicator = { placement = 'inside-right', size = 20, animation = false }`. See `UI.Button` for a complete example. |
 | `clickAudioId?` | `integer\|false` | Sound asset ID played when pressed. Set `false` for a silent Button; otherwise MiliUI uses the configured theme/template click sound. |

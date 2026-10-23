@@ -105,6 +105,12 @@ UI.Pages.Close("Page 2")
 
 leaving Page 1 and Page 3 open.
 
+## Controller Navigation V2 across Pages
+
+A logical Page may own a `UI.Screen` with `controllerNavigation = "auto"`. When that Page becomes active, MiliUI suspends other managed Screen scopes in the same Host; on return, eligible focus is restored using stable `focusKey` identities when controls are rebuilt. Re-activating the current Page does not forcibly move otherwise valid focus.
+
+Managed Dropdowns temporarily restrict controller focus to the open popup and restore the trigger when closed. If you mutate native controls directly, call `UI.Focus.Refresh(screen)`. See [Controller Navigation V2](ControllerNavigationV2.md).
+
 ## Bring to front
 
 ```lua

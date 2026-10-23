@@ -4,7 +4,7 @@
 
 - **New to MiliUI?** Follow [Installation + Setup](Installation.md), then the illustrated [Quick Start](../QUICK_START.md). No previous Lua experience is assumed.
 - **Using the starter save?** Open the [Getting Started Examples](../examples/getting-started/README.md) to understand and modify the example UI.
-- **Already using beta.1 or beta.2?** Follow the [beta.3 migration guide](UpgradeBeta3.md) for the removed constructors. If upgrading from beta.1, also review the [beta.2 upgrade checklist](UpgradeBeta2.md) for Player API changes.
+- **Upgrading an existing beta?** Review the [beta.4 upgrade guide](UpgradeBeta4.md). If starting from beta.1 or beta.2, also follow the earlier beta.2 and beta.3 migration checklists in order.
 - **Looking for a component or function?** Use [API at a glance](APIAtAGlance.md) or the practical [Components reference](Components.md).
 - **Want code to copy and adapt?** Browse [all available public examples](../examples/README.md).
 
@@ -45,6 +45,7 @@ See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these
 - [Masking](Masking.md)
 - [Data Views](DataViews.md)
 - [Controller Support](ControllerSupport.md)
+- [Controller Navigation V2](ControllerNavigationV2.md)
 
 ## Application structure
 
@@ -62,6 +63,7 @@ See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these
 
 - [Versioning](Versioning.md)
 - [Upgrading from beta.2 to beta.3](UpgradeBeta3.md)
+- [Upgrading from beta.3 to beta.4](UpgradeBeta4.md)
 - [MiliUI Manager](Manager.md)
 - [IntelliSense](IntelliSense.md)
 
