@@ -6,7 +6,7 @@
 
 ## Migration checklist
 
-1. **Update MiliUI to beta.4 or later.** If you use VS Code IntelliSense, update that too (beta.4 uses IntelliSense `0.1.10`).
+1. **Update MiliUI to beta.4 or later.** If you use VS Code IntelliSense, install the current version from the [release manifest](../manifest.json).
 2. **Turn V2 on for your menu:** Add `controllerNavigation = "auto"` to `UI.Screen(...)`.
 3. **Keep focus inside a full-screen menu:** Add `isolateNavigation = true` if that is what your menu needs.
 4. **Give Buttons names:** Set `focusKey`, then call `screen:SetInitialFocus(first)` after creating the first Button.

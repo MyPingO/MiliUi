@@ -8,7 +8,7 @@ You can also read the [complete API reference](Reference/README.md) in your brow
 
 ## How it works
 
-The IntelliSense extension is separate from MiliUI itself. Install the **runtime** in Miliastra to make the UI work, and install **IntelliSense** in VS Code if you want coding suggestions. For beta.4, the matching IntelliSense version is `0.1.10`.
+The IntelliSense extension is separate from MiliUI itself. Install the **runtime** in Miliastra to make the UI work, and install **IntelliSense** in VS Code if you want coding suggestions. For beta.4, use the IntelliSense version listed in the [current release manifest](../manifest.json). IntelliSense updates may be published without changing the game runtime version.
 
 Your game project still contains only:
 
