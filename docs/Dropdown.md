@@ -35,6 +35,20 @@ print(elementDropdown:GetSelectedItem().name)
 
 For the example above, those values are `2` and `Hydro`.
 
+## Upgrading from the removed UI.Select API
+
+**`UI.Select(...)` was removed in MiliUI 0.9.0-beta.3.** Older beta.2 examples using that constructor need to use `UI.Dropdown(...)` instead. The current Dropdown supports single selection, disabled options, scrolling, and optional Server Signal submission, as described in this guide.
+
+```lua
+-- Old beta.2 constructor, no longer supported:
+-- local dropdown = UI.Select(parent, props)
+
+-- Use this in beta.3 and later:
+local dropdown = UI.Dropdown(parent, props)
+```
+
+See the [beta.3 upgrade checklist](UpgradeBeta3.md#4-replace-uiselect-with-uidropdown) for the migration, and the [complete API reference](Reference/components_dropdown.md) for current properties and methods.
+
 ## Item metadata
 
 Every item is an ordinary Lua table. MiliUI reserves only the optional display fields `label`, `name`, `meta`, and `disabled`; other fields are left untouched.

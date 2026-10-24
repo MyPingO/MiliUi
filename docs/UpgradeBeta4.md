@@ -35,7 +35,7 @@ screen:SetInitialFocus(first)
 
 V2 looks at how you arranged Buttons in Rows and Columns to decide where the controller moves next. Most menus no longer need manual navigation links. If your layout needs a special direction, use `UI.Focus.Link` or `UI.Focus.Block` instead of native `SetControllerNavigation` calls.
 
-See [Controller Navigation V2](ControllerNavigationV2.md#upgrading-an-existing-menu) for the upgrade checklist, examples, and troubleshooting.
+See [Controller Navigation V2](ControllerSupport.md#upgrading-an-existing-menu) for the upgrade checklist, examples, and troubleshooting.
 
 ## 3. ScrollArea and controller behavior
 

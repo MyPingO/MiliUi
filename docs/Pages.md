@@ -109,7 +109,7 @@ leaving Page 1 and Page 3 open.
 
 A Page can use `UI.Screen(..., { controllerNavigation = "auto" })` (beta.4 and later). When you switch Pages, the controller moves to the new Page. When you go back, MiliUI tries to restore the earlier focused Button. Give important Buttons a stable `focusKey` name so MiliUI can find them again.
 
-Managed Dropdowns temporarily restrict controller focus to the open popup and restore the trigger when closed. If you mutate native controls directly, call `UI.Focus.Refresh(screen)`. See [Controller Navigation V2](ControllerNavigationV2.md).
+Managed Dropdowns temporarily restrict controller focus to the open popup and restore the trigger when closed. If you mutate native controls directly, call `UI.Focus.Refresh(screen)`. See [Controller Navigation V2](ControllerSupport.md).
 
 ## Bring to front
 
