@@ -1,6 +1,6 @@
 # MiliUI examples
 
-These are the examples **actually included in the public repository**. If you're new to MiliUI, start with the small examples and work your way down.
+These examples are included in the public MiliUI repository. **New to MiliUI?** Try the first small example, change its Button text, and see what happens. You can learn the larger examples later.
 
 ## Start here
 

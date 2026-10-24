@@ -1,6 +1,6 @@
 # Controller Support
 
-MiliUI uses Miliastra's built-in controller focus system. **Focus** is the native UI control that will receive Confirm (a Button or a focusable Hitbox). **Selection** is a value your game has chosen, such as the selected menu option. A Button can be selected without being focused, and moving focus does not automatically change your game's selection.
+MiliUI lets players use a controller to move between Buttons and choose options. **Focus** means "where the controller is pointing right now." The focused Button responds when the player presses Confirm. **Selection** means "what the player has chosen." Moving focus does not automatically change a chosen setting.
 
 ## Controller Navigation V2 (opt-in)
 
@@ -25,23 +25,20 @@ local settings = UI.Button(actions, {
 screen:SetInitialFocus(play)
 ```
 
-Use `UI.Focus.Get(screen)` to look up the **actual native focused target** when it belongs to that managed Screen; `UI.Focus.Set(play)` requests and immediately verifies native focus. It returns `true, "confirmed"` only when `game.GetControllerFocus()` agrees; otherwise it returns `false, reason`. The engine may settle focus later, and the reason `"not-yet-confirmed"` is not proof of permanent failure.
+Most menus only need the Screen setting above. For extra control:
 
-`UI.Focus.Link(play, "Down", settings)` adds a directional override. `UI.Focus.Block(play, "Up")` prevents an intentional exit. `UI.Focus.Refresh(screen)` recomputes after direct native property changes, while `UI.Focus.Explain(screen)` reports focus identity, Host, eligible count and the latest request. Both named logical Pages and Dropdown modals now participate in managed focus coordination. When a Page is rebuilt, provide `focusKey` values to restore logical identity instead of retaining destroyed native handles.
+- `UI.Focus.Get(screen)` tells you what is focused. `UI.Focus.Set(play)` asks to focus a Button.
+- `UI.Focus.Link(play, "Down", settings)` makes Down go to Settings. `UI.Focus.Block(play, "Up")` stops Up from leaving Play.
+- `UI.Focus.Refresh(screen)` updates focus after you change a native control directly.
+- `UI.Focus.Explain(screen)` provides details when you are debugging.
 
-Managed ScrollAreas default their scrollbar arrow buttons to mouse/touch interaction; the controller uses the right stick and a visible focus proxy for scrollable areas with no focusable children. **Right-stick scrolling keeps native focus on the actual Button as long as the Button remains fully visible**. When scrolling moves that Button out of view, the viewport proxy takes focus and its chevron points at the ScrollArea's scrollbar, rather than floating over unrelated content. On an additional right-stick input at the physical boundary, navigation may leave the entire ScrollArea. D-pad and left-stick behavior is unchanged. A single deferred focus check handles native focus changes after a RightStick callback, without any per-frame polling or separate chevron state. During that short scroll-settlement interval the central focus manager retains the current chevron and ignores intermediate native Focus/LostFocus visual changes; after confirming the actual target it releases the hold. This prevents a one-frame chevron flash on neighboring buttons without introducing a second indicator or changing left-stick navigation.
+**Right-stick scrolling:** The right stick scrolls the focused list, even if lists are next to or inside each other. If its focused Button scrolls out of view, the focus arrow moves to the scrollbar. Press Left to return to a Button in the same list.
 
-Native Hitbox eligibility can be registered before the public MiliUI wrapper is constructed. ControllerFocus upgrades that early record when final component props arrive, preserving focus keys, wrapper identity, and ScrollArea proxy ownership across later native eligibility notifications.
+**Pages and Dropdowns:** MiliUI keeps focus in the active Page or open Dropdown and restores a usable Button when possible. Give important Buttons a `focusKey` so they can be found again.
 
-A managed ScrollArea's focused scrollbar proxy treats **Left as re-entry into its own list**, preferring a visible eligible item, or the nearest offscreen item when the visible tail contains only passive content. If there is no eligible list item, it falls back to normal directional navigation. This is automatic, including nested ScrollAreas; no `UI.Focus.Link` is required. Manual links and blocks continue to override automatic behavior.
+See the [step-by-step Controller V2 guide](ControllerNavigationV2.md), [upgrade checklist](ControllerNavigationV2Migration.md), or [complete menu example](../examples/ControllerNavigationV2Menu.lua). V2 is available in beta.4 and later.
 
-Inactive managed Pages register ScrollArea focus subscriptions at construction time, so activation never falls back to raw native Focus events. Re-activating the already active Page preserves an eligible native focus target instead of forcibly resetting it; switching Pages still restores the correct managed focus.
-
-Managed V2 navigation traverses the **actual UI control hierarchy**. It searches sibling controls within the current Row, Column or other container before climbing toward the Screen to find neighboring regions. Eligible descendants define each region's rectangular bounds, and navigation stops at true Screen edges. Explicit `UI.Focus.Link`/`Block` and component-specific policies still take priority. Standalone unmanaged Stacks retain legacy native links; unusual interaction designs may still benefit from manual overrides.
-
-See the [V2 usage guide](ControllerNavigationV2.md), [migration checklist](ControllerNavigationV2Migration.md), and [Menu Control Group example](../examples/ControllerNavigationV2Menu.lua). V2 is native-tested and integrated into development `main`; use a public runtime version that includes it before using these APIs.
-
-The remainder of this document describes the **legacy** controller behavior unless otherwise specified.
+**Below are details of older controller behavior.** They still apply to Screens that do not enable V2.
 
 ## Focusable controls
 

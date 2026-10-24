@@ -1,6 +1,6 @@
 # MiliUI
 
-MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable components, responsive layouts, theming, localization helpers, controller support, scrolling, navigation, Pages, Session state, motion, audio, and other UI infrastructure for Miliastra creators.
+MiliUI helps you build **menus, Buttons, text, and other game screens** in Miliastra Wonderland using Lua. You write what you want the interface to show, and MiliUI creates the controls and helps them work together. It also provides tools for scrolling, controller support, screen sizes, and more.
 
 > **Public Beta: v0.9.0-beta.4**
 >
@@ -8,19 +8,17 @@ MiliUI is a Lua UI framework for **Miliastra Wonderland**. It provides reusable 
 
 ## Start here
 
-1. Follow [Installation + Setup](docs/Installation.md) to install MiliUI and prepare the Miliastra project.
-2. Build your first interface with the [Quick Start](QUICK_START.md).
-3. Try the [getting-started examples](examples/getting-started/README.md) or browse the [public example scripts](examples/README.md).
-4. Use the [API at a glance](docs/APIAtAGlance.md) page to find functions, props, and the right guide.
-5. Read the [Project Structure guide](docs/ProjectStructure.md) when your game grows beyond one interface.
-6. Browse the [Documentation Index](docs/README.md) for the other guides.
-7. Browse the [complete API reference](docs/Reference/README.md) for every function, props table, callback, return type, and object method.
+**Making your first MiliUI screen?** Follow these three steps in order:
 
-**Upgrading from beta.3?** See the [beta.4 upgrade guide](docs/UpgradeBeta4.md) for managed controller navigation, scrolling fixes, and compatibility checks.
+1. **Set up MiliUI:** [Installation + Setup](docs/Installation.md) shows how to install it. If you are starting a new game, the ready-made starter save can skip most of the setup.
+2. **Make your first menu:** [Quick Start](QUICK_START.md) walks through one small screen and explains the code as you add it.
+3. **Try another example:** [Getting Started Examples](examples/getting-started/README.md) has small scripts you can copy and change.
 
-**Upgrading from beta.2?** Follow the [beta.3 migration guide](docs/UpgradeBeta3.md) for Selection and Dropdown.
+You do not need to know Lua already. Words like *Host* and *Page* are explained in the [Documentation Index](docs/README.md).
 
-**Upgrading from beta.1?** See the [beta.2 upgrade checklist](docs/UpgradeBeta2.md), including the breaking `UI.Player` setup change. When upgrading from beta.1 or beta.2 directly to beta.4, follow each intervening upgrade guide in order.
+**Already using MiliUI?** Read the [beta.4 upgrade guide](docs/UpgradeBeta4.md). For a specific Button, setting, or function, try [API at a glance](docs/APIAtAGlance.md), [Components](docs/Components.md), or the [complete API reference](docs/Reference/README.md).
+
+**Using an older beta?** Follow the upgrade guides in order: [beta.2](docs/UpgradeBeta2.md), [beta.3](docs/UpgradeBeta3.md), then [beta.4](docs/UpgradeBeta4.md).
 
 ## Downloads
 
@@ -30,7 +28,7 @@ The recommended installation path is **MiliUI Manager**, which installs the prod
 
 For a new project, the release also includes `MiliUI-Template-Save-File.gil`, a ready-to-use starter save with the one-time MiliUI setup and Quick Start example already configured. See [Installation + Setup](docs/Installation.md#starter-template) before entering Test Play.
 
-For VS Code editor support, install [MiliUI IntelliSense from the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense). The GitHub Release keeps a VSIX as a manual/offline fallback.
+For VS Code editor support, the public beta.4 GitHub Release currently includes **[MiliUI IntelliSense v0.1.15](https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.4/MiliUI-IntelliSense.vsix)**. Install the VSIX using **Extensions → ... → Install from VSIX...**. The [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense) also lists MiliUI IntelliSense; its version may differ. See the [IntelliSense setup and troubleshooting guide](docs/IntelliSense.md).
 
 Advanced users can also download the production `MiliUI-init.lua` runtime directly.
 

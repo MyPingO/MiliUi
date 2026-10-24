@@ -22,9 +22,9 @@ For other problems, use your browser's search (Ctrl+F) to find an error message 
 
 ## Managed Controller V2 focus and scrolling
 
-An opted-in `UI.Screen(..., { controllerNavigation = "auto" })` owns native directional links. Do not manually call `SetControllerNavigation` for its children. Use `UI.Focus.Link` and `UI.Focus.Block` for rare exceptions.
+If your Screen uses `controllerNavigation = "auto"` (beta.4 or later), MiliUI decides which Button gets focus when you press a direction. Do not also set native `SetControllerNavigation` links for those Buttons. Use `UI.Focus.Link` or `UI.Focus.Block` only if you want a special direction.
 
-When a right-stick-scrolled Button leaves its viewport, a chevron beside the scrollbar is **intentional**: the ScrollArea proxy now owns native focus. Right stick continues scrolling and Left returns to the correct list. Nested ScrollAreas scroll independently.
+If you scroll a Button out of view with the right stick, the focus arrow may move beside that list's scrollbar. **That is normal.** Keep scrolling with the right stick or press Left to go back into the same list. A list inside another list can scroll on its own.
 
 If advanced direct native hide, disable, active-state or geometry changes confuse navigation, call `UI.Focus.Refresh(screen)`. PC Test Play may require starting the level in Controller mode rather than switching after it loads. See the [V2 guide](ControllerNavigationV2.md) and [migration checklist](ControllerNavigationV2Migration.md).
 

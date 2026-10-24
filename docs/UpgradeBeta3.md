@@ -1,6 +1,8 @@
 # Upgrading from beta.2 to beta.3
 
-MiliUI `0.9.0-beta.3` changes the constructors for selections and dropdowns. **This is a breaking API migration.** Existing beta.2 scripts will fail if they still call the removed constructors. Make these edits on a backup or disposable Miliastra project before updating your working game.
+This is the older upgrade guide for moving from beta.2 to beta.3. Beta.3 changed how you create Selections and Dropdowns, so some beta.2 code must be updated. Make a backup of your game before changing it.
+
+**Going all the way to beta.4?** Finish this guide first, then follow [Upgrading from beta.3 to beta.4](UpgradeBeta4.md).
 
 ## 1. Install and restart
 
@@ -144,4 +146,4 @@ On a test copy of your game:
 5. Check a fresh Manager install and a beta.2 to beta.3 update, including backup creation.
 6. Verify that release documentation images and code examples match what appears in Test Play.
 
-See the [published beta.3 release notes](../RELEASE_NOTES.md) for complete release details.
+See the [beta.3 GitHub Release](https://github.com/MyPingO/MiliUI/releases/tag/v0.9.0-beta.3) for the notes from that version. The repository's current `RELEASE_NOTES.md` describes the latest release instead.

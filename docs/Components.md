@@ -1,6 +1,8 @@
 # MiliUI Components
 
-This guide shows how to use MiliUI components in Lua, with practical examples. **Props** are the settings inside `{ ... }` when you create a control. To look up every supported prop, callback, and object method without VS Code, use the [complete API reference](Reference/README.md), generated from the same declarations as [MiliUI IntelliSense](IntelliSense.md).
+A **component** is a piece of your UI, like a Button, Text box, or Slider. This guide shows how to create each one in Lua.
+
+You do not need to learn every component. Start with the [Quick Start](../QUICK_START.md) if this is your first screen. Settings inside `{ ... }` are called *props*. For a full list of settings, see the [API reference](Reference/README.md).
 
 ## Find what you need
 
@@ -14,7 +16,7 @@ You do not need to learn every component at once. Start with [Screen](#screen), 
 
 For complete setup steps, follow the [Quick Start](../QUICK_START.md). Each example below assumes the required templates are configured and the Host is attached.
 
-**How to read these examples:** **Visual examples** are screenshots from a separately configured component showcase. **Code examples** are focused, independent Lua snippets demonstrating the API, not the exact code or full layout used to produce those screenshots. A screenshot may show multiple components, custom themes, or supporting UI not included in its code example. Visual appearance also depends on your project templates, assets, theme, and parent layout.
+**About the pictures and code:** The pictures show what components can look like. The small Lua snippets show how individual components work, but are **not complete scripts** and might not exactly match a picture. Your colors and layout may look different depending on your project.
 
 ## Initialization
 

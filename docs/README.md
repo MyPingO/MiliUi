@@ -2,11 +2,18 @@
 
 ## Where to start
 
-- **New to MiliUI?** Follow [Installation + Setup](Installation.md), then the illustrated [Quick Start](../QUICK_START.md). No previous Lua experience is assumed.
-- **Using the starter save?** Open the [Getting Started Examples](../examples/getting-started/README.md) to understand and modify the example UI.
-- **Upgrading an existing beta?** Review the [beta.4 upgrade guide](UpgradeBeta4.md). If starting from beta.1 or beta.2, also follow the earlier beta.2 and beta.3 migration checklists in order.
-- **Looking for a component or function?** Use [API at a glance](APIAtAGlance.md) or the practical [Components reference](Components.md).
-- **Want code to copy and adapt?** Browse [all available public examples](../examples/README.md).
+Pick the path that matches what you want to do:
+
+| I want to... | Open this |
+| --- | --- |
+| Start a new project quickly | [Installation + Setup](Installation.md), then the [Quick Start](../QUICK_START.md) |
+| Learn by changing a working script | [Getting Started Examples](../examples/getting-started/README.md) |
+| Add a Button, Slider, or other control | [Components](Components.md) |
+| Make a menu that works with a controller | [Controller Navigation V2](ControllerNavigationV2.md) |
+| Update an older MiliUI project | [Upgrade to beta.4](UpgradeBeta4.md) (read earlier upgrade guides if needed) |
+| Find one function or setting | [API at a glance](APIAtAGlance.md) |
+
+**New to Lua?** Start with the Quick Start and try changing the Button text. You can come back to the longer reference pages when you need them. For editor assistance, [MiliUI IntelliSense v0.1.15](IntelliSense.md) explains autocomplete, settings tables, and how to diagnose oversized Lua files.
 
 ## A few terms worth knowing
 
@@ -14,17 +21,17 @@ MiliUI uses some names from the Miliastra editor. You do not need to memorize th
 
 | Term | What it means |
 | --- | --- |
-| **Control Group** | An interface that the game can create or remove using Miliastra's server logic. |
-| **Client Control Container** | The part of a Control Group that contains the client-side UI controls and their attached scripts. |
-| **UI Controller** | A client Lua script attached to that container. It tells MiliUI what to show and cleans up when the container disappears. |
+| **Control Group** | A complete UI that Miliastra can show or remove, such as a menu or HUD. |
+| **Client Control Container** | The part of that UI where your MiliUI controls and Lua script live. |
+| **UI Controller** | The Lua script that builds the UI when it appears and cleans it up when it closes. |
 | **UI Index** | The number assigned to the Control Group's Server Template in the editor. |
-| **Host** | MiliUI's name for one attached UI root. It keeps that interface separate from others, such as a HUD and a menu. |
+| **Host** | The name MiliUI uses to keep one UI separate from another, such as `"Menu"` and `"HUD"`. |
 | **Page** | A logical screen inside a Host, such as Settings or Inventory. One Host can contain several Pages. |
-| **Props** | Settings passed to a component when you create it, such as `width`, `text`, or `gap`. |
+| **Props** | Settings inside `{ ... }` that tell a control what to look like or do, such as `width` or `text`. |
 
 See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these parts fit together.
 
-**Complete API reference:** [Browse all functions, component props, callbacks, return types, and object methods](Reference/README.md), generated directly from the MiliUI IntelliSense declarations. VS Code is not required.
+**Need every setting or function?** Use the [complete API reference](Reference/README.md). It is a lookup book, not a guide you need to read from start to finish. You do not need VS Code to browse it.
 
 ## Building interfaces
 

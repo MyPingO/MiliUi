@@ -1,10 +1,8 @@
 # Installation + Setup
 
-This guide takes a new Miliastra project from **no MiliUI setup** to a project that is ready to follow the [Quick Start](../QUICK_START.md).
+This guide shows how to add MiliUI to a Miliastra game. Once setup is done, you can follow the [Quick Start](../QUICK_START.md) and make your first screen. **No previous Lua experience is needed.**
 
-You do not need previous Lua experience. The steps below explain the Miliastra-specific setup that MiliUI needs before an interface can be created.
-
-> **Starting a new project?** You can skip most of these setup steps by importing the ready-to-use MiliUI starter save. It already includes the Global Script, required Client Control Templates, template variables, example controller, and Quick Start interface. See [Starter Template](#starter-template) at the end of this guide.
+> **Easiest option for a new project:** Import the [MiliUI starter save](#starter-template). It already has the setup, a working example, and the required UI templates. **After importing, check the installed MiliUI version** before Test Play. If you prefer setting things up yourself, start with Step 1 below.
 
 > If MiliUI is already installed, mapped in the Client Script Resource Explorer, and your Global Script already initializes the MiliUI templates in `OnInit()`, you can skip to the [Quick Start](../QUICK_START.md).
 
@@ -85,7 +83,7 @@ For a larger project, see [Recommended Game Project Structure](ProjectStructure.
 
 ## 3. Map the installed MiliUI runtime in the Sandbox
 
-Having `external_lua_file/MiliUI/init.lua` on disk is not enough by itself. Miliastra also needs that file available through the **Client Script Resource Explorer** so your scripts can load it with:
+Having `external_lua_file/MiliUI/init.lua` on disk is not enough by itself. Miliastra must also know where to find that file. Add it in the **Client Script Resource Explorer** so your scripts can load it with:
 
 ```lua
 local UI = require("MiliUI/init")
@@ -253,16 +251,15 @@ MiliUI IntelliSense is separate from the runtime.
 
 It adds MiliUI autocomplete, hover information, and type information to VS Code through Lua Language Server (LuaLS). It does **not** install or change the runtime used by Miliastra.
 
-The recommended installation is:
+The current beta.4 GitHub Release provides **MiliUI IntelliSense v0.1.15**. To install this version:
 
-1. open the VS Code **Extensions** view;
-2. search for **MiliUI IntelliSense**;
-3. confirm it is published by **MyPing0**;
-4. click **Install**.
+1. download [**MiliUI-IntelliSense.vsix**](https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.4/MiliUI-IntelliSense.vsix);
+2. in VS Code, open **Extensions**, then **... → Install from VSIX...**;
+3. choose the downloaded file and open a Lua script.
 
-You can also open [MiliUI IntelliSense on the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense).
+The [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense) also offers the extension, but its listed version may differ from the current GitHub Release.
 
-See [MiliUI IntelliSense](IntelliSense.md) for the VSIX fallback, expected editor behavior, and troubleshooting.
+See [MiliUI IntelliSense](IntelliSense.md) for examples, the new table-setting suggestions, and help if a formatted `MiliUI/init.lua` is too large for Lua Language Server.
 
 ## Setup checklist
 
@@ -287,7 +284,7 @@ The starter is distributed as:
 MiliUI-Template-Save-File.gil
 ```
 
-Download the starter attached to the [current MiliUI release](https://github.com/MyPingO/MiliUI/releases) and import/open it as a new Miliastra save. The current beta.3 release includes the refreshed starter, and its release packaging verifies the exact SHA-256 checksum.
+Download the starter save from the [latest MiliUI GitHub Release](https://github.com/MyPingO/MiliUI/releases) and import it as a new Miliastra save. The beta.4 release includes the starter save carried forward from beta.3. The release build checks that the file matches its expected checksum.
 
 The starter save already includes:
 
@@ -300,7 +297,7 @@ The starter save already includes:
 - the Quick Start example interface;
 - example server logic for activating the Quick Start UI.
 
-The starter asset's checksum is checked by the beta.3 release workflow. After importing it, verify the bundled runtime version and the template/UI Index references in your own Miliastra project; a valid file checksum does not by itself test a fresh in-game import.
+The starter file is checked before release, but you still need to open it in Miliastra and check the UI setup. In particular, confirm the template IDs, UI Index, and MiliUI runtime version in your own game.
 
 ### Before Test Play
 
@@ -316,7 +313,7 @@ Before relying on an imported starter, confirm these three things:
 
 2. **Confirm the Client Control Template indexes.** Open the Global Script variables and verify that all ten template-ID variables still contain the Index of the matching Client Control Template. Use the mapping table in [Step 7](#7-add-the-template-ids-as-global-script-variables) to compare them.
 
-3. **Confirm the installed runtime version.** Check the `MiliUI/init.lua` version (`UI.VERSION`). If it is older than `0.9.0-beta.3`, use MiliUI Manager to install beta.3 before running the new examples. Restart Test Play after changing the runtime.
+3. **Check your MiliUI version.** In a script, print `UI.VERSION` to the Sandbox Log. If the starter contains an older runtime than `0.9.0-beta.4`, use MiliUI Manager to install beta.4. Restart Test Play after changing the runtime.
 
 After those checks, enter Test Play. The included **Hello, MiliUI!** interface should appear immediately. If Client Script Log monitoring is enabled, clicking **CLICK ME** should print:
 

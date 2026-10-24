@@ -8,6 +8,7 @@ on:
       - "tools/check_markdown.py"
       - ".github/workflows/docs.yml"
   pull_request:
+    types: [opened, synchronize, reopened, ready_for_review]
     paths:
       - "**/*.md"
       - "examples/**/*.lua"
@@ -19,6 +20,7 @@ permissions:
 
 jobs:
   docs:
+    if: github.event_name != 'pull_request' || !github.event.pull_request.draft
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -1,12 +1,14 @@
 # Controller Navigation V2
 
-**Status:** Native-tested and independently integrated into development `main` through PR #119. The public beta.3 runtime predates V2; these instructions apply to a runtime that includes Controller Navigation V2. The reported in-game tests covered automatic navigation, nested ScrollArea ownership, scrollbar Left return, and chevron/focus recovery; they do not constitute exhaustive cross-platform testing.
+**Available in MiliUI beta.4 and later.** Controller Navigation V2 helps players move around a menu with a controller without you having to connect every Button by hand. It is **optional**: existing screens keep working as before until you turn it on.
 
-[Controller Support](ControllerSupport.md) · [Migration guide](ControllerNavigationV2Migration.md) · [ScrollArea](ScrollArea.md) · [Example](../examples/ControllerNavigationV2Menu.lua) · [Focus API reference](Reference/focus.md)
+**What is focus?** Focus is the Button or other control that will respond when the player presses Confirm. The small arrow beside it is called the *focus chevron*. It shows which control is focused.
+
+[Controller Support](ControllerSupport.md) | [Upgrade an existing menu](ControllerNavigationV2Migration.md) | [Complete menu example](../examples/ControllerNavigationV2Menu.lua) | [Focus API details](Reference/focus.md)
 
 ## Opt in to managed navigation
 
-Create a Screen with `controllerNavigation = "auto"` and group related controls in Rows, Columns or other containers. The normal hierarchy needs **no manual directional links**:
+Start with a Screen, put Buttons inside a Column or Row, and choose the Button that should be focused first:
 
 ```lua
 local screen = UI.Screen(parent, {
@@ -26,65 +28,67 @@ UI.Button(sidebar, {
 screen:SetInitialFocus(play)
 ```
 
-`SetInitialFocus` should be called after the target is constructed. `isolateNavigation` is suitable for full-screen menus, not all HUDs. Omitting `controllerNavigation = "auto"` preserves the existing legacy behavior.
+Here is what matters:
+
+- `controllerNavigation = "auto"` turns V2 on for this Screen.
+- `isolateNavigation = true` keeps focus inside this menu. Use it for a full-screen menu, not for every HUD.
+- `focusKey` gives a Button a stable name so focus can find it again if the Page is rebuilt.
+- `screen:SetInitialFocus(play)` chooses the first focused Button. Call it **after** creating that Button.
+
+For a normal Row or Column, MiliUI works out where Up, Down, Left, and Right should go. No manual links are needed.
 
 ## Central focus ownership
 
-`Systems/ControllerFocus.lua` is the **single writer** of native `SetControllerNavigation` directional edges within a managed Screen:
+When V2 is on, MiliUI manages controller movement for that Screen. It looks for Buttons and other focusable controls that are visible, enabled, and part of the active Page. It normally moves between nearby controls in the same Row or Column before moving to another section of the Screen.
 
-1. Exclude dead, hidden, disabled, inactive or out-of-modal native targets.
-2. Honor `UI.Focus.Block` / `UI.Focus.Link` overrides.
-3. Apply component navigation policies (including Selection and Dropdown).
-4. When focus is on a ScrollArea's passive scrollbar proxy, **Left** prefers its own eligible content.
-5. Otherwise navigate through the actual UI ancestry: sibling groups first, then parent regions.
-6. At a genuine boundary, write a native `None` edge instead of escaping arbitrarily.
+**Important:** Do not call native `SetControllerNavigation` on controls in a V2 Screen. MiliUI manages those links and may replace yours. For an unusual layout, use `UI.Focus.Link` to choose a destination or `UI.Focus.Block` to stop movement in one direction.
 
-The manager verifies requests against `game.GetControllerFocus()`. The controller chevron represents the **actual native focused control**, not a separate predicted selection. Managed Stacks contribute their native containment hierarchy; unmanaged Stacks retain legacy direct native links.
-
-**Do not call native `SetControllerNavigation` yourself on controls inside a managed Screen.** The manager can overwrite those links during refresh. Use `UI.Focus.Link` or `UI.Focus.Block` only for exceptional layouts.
+The chevron follows the control that Miliastra **actually** focused. This keeps the visual indicator and controller input in sync.
 
 ## Right-stick scrolling
 
-- **Left stick / D-pad:** Navigate between focusable Buttons, Hitboxes and components.
-- **Right stick:** Scroll the ScrollArea that currently owns controller input. Nested and adjacent ScrollAreas scroll independently.
-- **Button still fully visible:** Chevron stays on the actual focused Button as content scrolls.
-- **Focused Button moves offscreen:** Focus transfers to a passive ScrollArea proxy; the chevron appears beside *that area's scrollbar*.
-- **Left from scrollbar proxy:** Focus returns into the proxy's own list, preferring visible eligible items. With only passive content visible, an offscreen eligible item can be revealed after an intentional focus change.
-- **At the physical top/bottom:** An additional right-stick event at the same boundary may exit the scrolling region.
+Think of a long list of Buttons that does not fit on the screen:
 
-Auto-reveal listens to **confirmed managed focus**, not transient native Focus events. A short deferred focus check reconciles native focus changes after right-stick callbacks. There is no per-frame polling and no second artificial chevron.
+- **Left stick or D-pad:** Move between Buttons.
+- **Right stick:** Move the list up or down. If two lists are side by side, it scrolls the one that owns focus.
+- **Focused Button is visible:** The chevron stays beside that Button.
+- **Focused Button scrolls out of view:** The chevron moves beside that list’s scrollbar. This is expected, not a lost focus bug.
+- **Press Left while the scrollbar has focus:** Return to a Button in the same list. MiliUI prefers a visible one.
+- **Reach the very top or bottom:** An extra right-stick movement may move focus outside that list.
 
-Managed ScrollArea scrollbar arrow Buttons remain pointer/touch controls by default; the focusable proxy handles passive right-stick scrolling.
+This also works with a ScrollArea inside another ScrollArea. The controller should scroll the list the player is using, not a different list. MiliUI waits for native focus to settle before changing the chevron or revealing a focused Button, which helps prevent sudden jumps back to an old position.
+
+The small scrollbar arrow Buttons are still usable with mouse or touch. By default, they are not separate controller focus targets.
 
 ## Pages, Dropdowns and lifecycle
 
-Each opted-in Screen owns a focus scope tied to its attached Host generation. Opening a different logical Page suspends sibling Screen scopes in the same Host. Returning to a Page recovers valid focus; use stable `focusKey` values across Page recreation. Reopening an already active Page should not steal eligible focus.
+- **Pages:** When you open another Page in the same Host, focus moves to that Page. Returning to the earlier Page restores a valid focus target when possible. Stable `focusKey` names help.
+- **Dropdowns:** Opening a Dropdown keeps controller focus inside its list of choices. Closing it normally returns focus to the Dropdown field.
+- **Hidden, disabled, or removed controls:** MiliUI normally moves focus to a usable control instead of leaving it on one that no longer works.
 
-An open Dropdown temporarily restricts focus to its modal menu; closing it restores the trigger when applicable. MiliUI automatically handles common wrapped disabled/hidden/destroyed changes. After *direct* native visibility, active-state, focusability or geometry mutations, call `UI.Focus.Refresh(screen)` or `screen:RefreshControllerNavigation()`.
-
-Do not keep destroyed native handles as controller links or reuse an old Host's controls after Control Group recreation.
+If you change a **native** control directly (for example, by changing its position or visibility without a MiliUI method), call `UI.Focus.Refresh(screen)` afterward so MiliUI can check the controls again. Do not reuse old control references after the UI Control Group has been removed and recreated.
 
 ## Public API
 
-| API | Purpose |
-| --- | --- |
-| `screen:SetInitialFocus(target)` | Preferred initial target in a managed Screen. |
-| `screen:RefreshControllerNavigation()` | Recompute graph and recover focus. |
-| `UI.Focus.Get(screen)` | Read current native-focused registered wrapper in this Screen. |
-| `UI.Focus.Set(target)` | Request and verify actual native focus. |
-| `UI.Focus.Link(source, direction, destination)` | Override an exceptional directional route. |
-| `UI.Focus.Block(source, direction)` | Prohibit a direction. |
-| `UI.Focus.Refresh(screen)` | Refresh after direct native mutations. |
-| `UI.Focus.Explain(screen)` | Diagnostics: focus identity, eligible count and last request. |
+You can build most menus without these extra functions. They are here when you need more control or want to check what is happening.
 
-Direction strings are `"Up"`, `"Down"`, `"Left"`, `"Right"`. `UI.Focus.Set` can return `false, "not-yet-confirmed"` when native focus has not settled yet; this alone does not prove permanent failure.
+| Function | What it does |
+| --- | --- |
+| `screen:SetInitialFocus(button)` | Chooses the Button to focus first. |
+| `UI.Focus.Get(screen)` | Gets the control that currently has focus in this Screen. |
+| `UI.Focus.Set(button)` | Asks Miliastra to focus a specific Button. |
+| `UI.Focus.Link(from, "Down", to)` | Makes Down move to a specific control. |
+| `UI.Focus.Block(button, "Up")` | Stops movement in that direction. |
+| `UI.Focus.Refresh(screen)` | Updates focus after a direct native change. |
+| `screen:RefreshControllerNavigation()` | Another way to refresh this Screen. |
+| `UI.Focus.Explain(screen)` | Returns useful information for debugging focus. |
+
+Directions are `"Up"`, `"Down"`, `"Left"`, and `"Right"`. `UI.Focus.Set` may return `false, "not-yet-confirmed"` while Miliastra is still changing focus. That message alone does not mean the request failed permanently.
 
 ## Testing and availability
 
-On some PC Test Play builds, controller focus will initialize correctly only if the level **starts in Controller mode**. Switching from keyboard after loading can report controller input while `game.GetControllerFocus()` remains nil.
+In PC Test Play, **start the level in Controller mode**. Switching from keyboard to controller after the level starts may leave native focus unavailable on some builds.
 
-A green Lua CI simulator is not a native Test Play pass. The development validation included the 64-case controller audit and eight additional stress scenarios, but not every case was individually certified as PASS on every platform.
+Check that Buttons, Dropdowns, Pages, and long lists behave correctly in your own game. beta.4 was tested in Miliastra, but not every device and screen layout has been tested.
 
-**Publication gate:** Publish the compatible runtime, IntelliSense, generated API reference, and guides together. Validate Manager, IntelliSense and API Audit on the exact release source, repeat a native Controller-start smoke test, and validate public documentation links.
-
-See [migration and troubleshooting](ControllerNavigationV2Migration.md).
+If something acts strangely, start with the [short migration and troubleshooting guide](ControllerNavigationV2Migration.md).
