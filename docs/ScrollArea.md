@@ -92,7 +92,7 @@ If your Screen has `controllerNavigation = "auto"` (available in beta.4 and late
 
 Passive content after the last selectable item remains right-stick scrollable. An extra right-stick input at the physical top/bottom may exit the region. Auto-reveal reacts to confirmed focus changes only, preventing temporary native Focus events from resetting the scroll position.
 
-Managed ScrollArea scrollbar arrows are mouse/touch targets by default, not separate controller focus buttons. Legacy unmanaged behavior is unchanged. See the [V2 guide](ControllerNavigationV2.md) and [migration checklist](ControllerNavigationV2Migration.md).
+Managed ScrollArea scrollbar arrows are mouse/touch targets by default, not separate controller focus buttons. Legacy unmanaged behavior is unchanged. See the [Controller Navigation V2 guide](ControllerNavigationV2.md#upgrading-an-existing-menu) and its [troubleshooting section](ControllerNavigationV2.md#troubleshooting).
 
 
 ## Coordinate model

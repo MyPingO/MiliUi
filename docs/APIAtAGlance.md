@@ -36,7 +36,7 @@ The `{ ... }` part holds settings (called *props*), such as a Button's label. `b
 | Change Pages and support Back | [Navigation](Navigation.md) |
 | Watch game signals or variables | [Signals and Custom Variables](Subscriptions.md) |
 | Support controller focus | [Controller Support](ControllerSupport.md) |
-| Create a controller-navigable multi-region menu | [Controller Navigation V2](ControllerNavigationV2.md) · [Migration](ControllerNavigationV2Migration.md) |
+| Create a controller-navigable multi-region menu | [Controller Navigation V2 and upgrade checklist](ControllerNavigationV2.md#upgrading-an-existing-menu) |
 | Handle different screen sizes | [Responsive Components](ResponsiveComponents.md) |
 | Reuse visual styles | [Theming](Theming.md) |
 | Make things animate | [Motion](Motion.md) |

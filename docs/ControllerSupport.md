@@ -36,7 +36,7 @@ Most menus only need the Screen setting above. For extra control:
 
 **Pages and Dropdowns:** MiliUI keeps focus in the active Page or open Dropdown and restores a usable Button when possible. Give important Buttons a `focusKey` so they can be found again.
 
-See the [step-by-step Controller V2 guide](ControllerNavigationV2.md), [upgrade checklist](ControllerNavigationV2Migration.md), or [complete menu example](../examples/ControllerNavigationV2Menu.lua). V2 is available in beta.4 and later.
+See the [step-by-step Controller V2 guide](ControllerNavigationV2.md), its [upgrade checklist](ControllerNavigationV2.md#upgrading-an-existing-menu), or the [complete menu example](../examples/ControllerNavigationV2Menu.lua). V2 is available in beta.4 and later.
 
 **Below are details of older controller behavior.** They still apply to Screens that do not enable V2.
 
