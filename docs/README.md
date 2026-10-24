@@ -13,7 +13,7 @@ Pick the path that matches what you want to do:
 | Update an older MiliUI project | [Upgrade to beta.4](UpgradeBeta4.md) (read earlier upgrade guides if needed) |
 | Find one function or setting | [API at a glance](APIAtAGlance.md) |
 
-**New to Lua?** Start with the Quick Start and try changing the Button text. You can come back to the longer reference pages when you need them.
+**New to Lua?** Start with the Quick Start and try changing the Button text. You can come back to the longer reference pages when you need them. For editor assistance, [MiliUI IntelliSense v0.1.15](IntelliSense.md) explains autocomplete, settings tables, and how to diagnose oversized Lua files.
 
 ## A few terms worth knowing
 

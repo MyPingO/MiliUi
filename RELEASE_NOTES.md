@@ -9,7 +9,7 @@ This update makes controller menus easier to build and fixes problems with scrol
 - **Cleaner focus arrows:** Fewer temporary flashes and less overlap with nearby controls.
 - **Faster long lists:** `UI.ListView` performed better in tests with 2,400 rows.
 - **Bug fixes:** More reliable Repeater cleanup and safer automatic text height.
-- **Editor help:** MiliUI IntelliSense **0.1.10** includes the new controller functions and explanations.
+- **Editor help (current beta.4 download):** MiliUI IntelliSense **0.1.15** includes controller documentation, settings-table suggestions, and diagnostics for LuaLS skipping oversized runtime files. The runtime version remains beta.4.
 
 ## Upgrade and compatibility
 

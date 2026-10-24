@@ -251,16 +251,15 @@ MiliUI IntelliSense is separate from the runtime.
 
 It adds MiliUI autocomplete, hover information, and type information to VS Code through Lua Language Server (LuaLS). It does **not** install or change the runtime used by Miliastra.
 
-The recommended installation is:
+The current beta.4 GitHub Release provides **MiliUI IntelliSense v0.1.15**. To install this version:
 
-1. open the VS Code **Extensions** view;
-2. search for **MiliUI IntelliSense**;
-3. confirm it is published by **MyPing0**;
-4. click **Install**.
+1. download [**MiliUI-IntelliSense.vsix**](https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.4/MiliUI-IntelliSense.vsix);
+2. in VS Code, open **Extensions**, then **... → Install from VSIX...**;
+3. choose the downloaded file and open a Lua script.
 
-You can also open [MiliUI IntelliSense on the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense).
+The [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense) also offers the extension, but its listed version may differ from the current GitHub Release.
 
-See [MiliUI IntelliSense](IntelliSense.md) for the VSIX fallback, expected editor behavior, and troubleshooting.
+See [MiliUI IntelliSense](IntelliSense.md) for examples, the new table-setting suggestions, and help if a formatted `MiliUI/init.lua` is too large for Lua Language Server.
 
 ## Setup checklist
 

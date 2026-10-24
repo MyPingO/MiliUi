@@ -28,7 +28,7 @@ The recommended installation path is **MiliUI Manager**, which installs the prod
 
 For a new project, the release also includes `MiliUI-Template-Save-File.gil`, a ready-to-use starter save with the one-time MiliUI setup and Quick Start example already configured. See [Installation + Setup](docs/Installation.md#starter-template) before entering Test Play.
 
-For VS Code editor support, install [MiliUI IntelliSense from the Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense). The GitHub Release keeps a VSIX as a manual/offline fallback.
+For VS Code editor support, the public beta.4 GitHub Release currently includes **[MiliUI IntelliSense v0.1.15](https://github.com/MyPingO/MiliUI/releases/download/v0.9.0-beta.4/MiliUI-IntelliSense.vsix)**. Install the VSIX using **Extensions → ... → Install from VSIX...**. The [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=MyPing0.miliui-intellisense) also lists MiliUI IntelliSense; its version may differ. See the [IntelliSense setup and troubleshooting guide](docs/IntelliSense.md).
 
 Advanced users can also download the production `MiliUI-init.lua` runtime directly.
 

@@ -6,7 +6,7 @@ Beta.4 adds easier controller movement for menus and fixes several bugs. **You d
 
 1. Back up your Miliastra project or use a disposable test copy.
 2. Update MiliUI to **beta.4** with MiliUI Manager or manual installation. In your Lua script, run `print(UI.VERSION)` and look for `0.9.0-beta.4` in the Sandbox Log.
-3. If you use VS Code, install the current [MiliUI IntelliSense](IntelliSense.md) version from the [release manifest](../manifest.json). It includes the Screen and `UI.Focus` APIs; editor updates may have newer version numbers than the original beta.4 release.
+3. If you use VS Code, install **MiliUI IntelliSense v0.1.15** from the [beta.4 release](https://github.com/MyPingO/MiliUI/releases/tag/v0.9.0-beta.4), or check the [release manifest](../manifest.json) for later updates. It includes the Screen and `UI.Focus` APIs; the editor extension can update without changing the runtime.
 4. Restart Test Play. Changing a Lua file while Test Play is running does not reload the runtime.
 
 MiliUI Manager `0.2.0` still works with beta.4. You do not need a newer Manager just for this update.
