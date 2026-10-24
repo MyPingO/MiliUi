@@ -204,6 +204,131 @@ explicit fixed text height -> UI.SafeTextHeight(...) / UI.SafeTextWindowHeight(.
 
 This applies equally to initial constructor text and later `SetText`, `SetLabel`, or localization updates.
 
+## Safe text height and native text geometry
+
+In Miliastra, font size alone does not guarantee that the native text rectangle is tall enough to display every letter. MiliUI uses conservative safety estimates to reduce clipped or missing glyphs.
+
+### Runtime-confirmed behavior
+
+Testing in Miliastra found two differences between the text controls:
+
+- `UI.Text` has a hard vertical cutoff. Below its native threshold, the text may render nothing at all.
+- `UI.TextWindow` is more viewport-like. It can still render in a short rectangle, but descenders such as `g`, `y`, `j`, `p`, and `q` are clipped before the rest of the glyph.
+
+Measured first fully visible `UI.Text` heights:
+
+| Font size | Measured minimum |
+| ---: | ---: |
+| 10 | 21 |
+| 13 | 23 |
+| 16 | 28 |
+| 17 | 29 |
+| 20 | 33 |
+| 22 | 35 |
+| 26 | 40 |
+| 34 | 49 |
+| 44 | 62 |
+| 56 | 77 |
+| 68 | 91 |
+
+A conservative rule was then validated across 24 font sizes from 10 through 68 and with Middle, Top, and Bottom `UI.Text` alignment:
+
+```lua
+math.ceil(fontSize * 1.2 + 10)
+```
+
+For `TextWindow`, descender calibration requires two additional units:
+
+```lua
+math.ceil(fontSize * 1.2 + 12)
+```
+
+These are safety rules, not claims about the exact internal engine font metrics. The same principle applies to MiliUI's width and wrapped-height estimators: they are conservative layout aids, not a pixel-accurate reproduction of Miliastra text rendering across every supported language.
+
+### MiliUI behavior
+
+MiliUI exposes:
+
+```lua
+UI.SafeTextHeight(fontSize)
+UI.SafeTextWindowHeight(fontSize)
+```
+
+When a `UI.Text` or `UI.TextWindow` does **not** explicitly own its vertical size:
+
+- a normal fixed control receives the calibrated safe height automatically;
+- a `grow`/`fillHeight` control receives that value as its default `minHeight`;
+- an explicit `height` or explicit `minHeight` remains authoritative;
+- an explicit `aspectRatio` is not silently overridden.
+- `fitContentHeight = true` is supported by `UI.TextWindow` for wrapped prose. It is **not supported by `UI.Text`** and is ignored when deciding the normal `UI.Text` safe height. Passing it accidentally does not remove the safe-height fallback.
+
+This follows normal layout expectations: MiliUI supplies a useful intrinsic size when the developer leaves the axis automatic, while explicit geometry remains the developer's choice.
+
+Examples:
+
+```lua
+-- Gets an intrinsic safe height automatically.
+UI.Text(parent, {
+    text = "READY",
+    textSize = 22,
+})
+
+-- Flexible height: MiliUI supplies a safe minimum.
+UI.TextWindow(column, {
+    text = longText,
+    textSize = 16,
+    grow = 1,
+})
+
+-- Explicit geometry is preserved exactly.
+UI.Text(parent, {
+    text = "Compact",
+    textSize = 22,
+    height = 26,
+})
+```
+
+### Horizontal clipping is separate
+
+These safe-height rules prevent vertical cutoffs, but they cannot guarantee that long or translated text fits horizontally. For options such as `fitWidth`, `adaptiveFontSize`, and wrapping with `UI.TextWindow`, use [Avoiding clipped text](#avoiding-clipped-text) above.
+
+### Diagnostics
+
+`UI.CheckLayout(...)` remains strictly about parent/child bounds.
+
+Text-height safety is a separate opt-in check:
+
+```lua
+local issues = UI.CheckTextGeometry(root, {
+    recursive = true,
+    print = true,
+})
+```
+
+An undersized tracked text rectangle prints a compact warning:
+
+```text
+MILIUI_TEXT_WARNING | control=Label | kind=text | fontSize=22 | height=26.00 | recommendedMinimum=37 | shortage=11.00
+```
+
+Keeping the checks separate prevents intentional component composition from changing normal layout issue counts.
+
+### TextWindow responsive rule
+
+Responsive layouts should keep one live native `TextWindow` and resize/reposition that same control as the layout changes. Do not maintain hidden Wide/Medium/Narrow native TextWindow copies. Runtime probing showed hidden/overlapping native TextWindows can produce clipping/masking artifacts, while a single-tree responsive TextWindow remains clean.
+
+For vertically constrained responsive layouts, prefer:
+
+```lua
+UI.TextWindow(column, {
+    text = longText,
+    grow = 1,
+    minHeight = 80,
+})
+```
+
+rather than manual remaining-height arithmetic.
+
 ## Wrapped TextWindow Height
 
 Long localized text should not require a manually guessed rectangle height. Use a full-width `TextWindow` and let MiliUI derive its height from the current resolved text and current width:

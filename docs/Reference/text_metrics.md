@@ -9,7 +9,7 @@
 
 [Reference index](README.md) · [Documentation index](../README.md)
 
-**Usage guides:** [TextGeometry](../TextGeometry.md)
+**Usage guides:** [Safe text height and native geometry](../IntrinsicSizing.md#safe-text-height-and-native-text-geometry)
 
 ## Classes, component props and return types
 

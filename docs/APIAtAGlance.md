@@ -36,7 +36,7 @@ The `{ ... }` part holds settings (called *props*), such as a Button's label. `b
 | Change Pages and support Back | [Navigation](Navigation.md) |
 | Watch game signals or variables | [Signals and Custom Variables](Subscriptions.md) |
 | Support controller focus | [Controller Support](ControllerSupport.md) |
-| Create a controller-navigable multi-region menu | [Controller Navigation V2 and upgrade checklist](ControllerNavigationV2.md#upgrading-an-existing-menu) |
+| Create a controller-navigable multi-region menu | [Controller Navigation V2 and upgrade checklist](ControllerSupport.md#upgrading-an-existing-menu) |
 | Handle different screen sizes | [Responsive Components](ResponsiveComponents.md) |
 | Reuse visual styles | [Theming](Theming.md) |
 | Make things animate | [Motion](Motion.md) |
@@ -123,6 +123,6 @@ These aren't called as `UI.Function(...)`; they are namespaces with their own fu
 | `UI.Layout`, `UI.ResponsiveLayout` | Positioning and responsive rules | [Responsive Foundation](ResponsiveFoundation.md) |
 | `UI.Localization` | Translated text support | [Localization](Localization.md) |
 | `UI.Audio`, `UI.Interaction` | UI sound and cursor interaction | [Components](Components.md) |
-| `UI.Diagnostics`, `UI.TextMetrics` | Inspect overflow and measure text | [Text Geometry](TextGeometry.md) |
+| `UI.Diagnostics`, `UI.TextMetrics` | Inspect overflow and measure text | [Text sizing and geometry](IntrinsicSizing.md#safe-text-height-and-native-text-geometry) |
 
 **For newcomers:** You do not need to learn all these at once. Start with `UI.Screen`, `UI.Column`, `UI.Text`, and `UI.Button`. Add Pages or Navigation only when your interface needs multiple screens.

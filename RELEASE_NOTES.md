@@ -34,4 +34,4 @@ Beta.4 is now published. The release passed development tests and received an in
 - Wrapped-text preferred heights are conservatively estimated, not pixel-exact across all languages.
 - Managed navigation may require explicit `UI.Focus.Link` overrides for intentionally unconventional or overlapping controls.
 
-See [Controller Navigation V2](https://github.com/MyPingO/MiliUI/blob/main/docs/ControllerNavigationV2.md), [Controller Support](https://github.com/MyPingO/MiliUI/blob/main/docs/ControllerSupport.md), and [Known Issues](https://github.com/MyPingO/MiliUI/blob/main/KNOWN_ISSUES.md).
+See [Controller Support and Navigation V2](https://github.com/MyPingO/MiliUI/blob/main/docs/ControllerSupport.md) and [Known Issues](https://github.com/MyPingO/MiliUI/blob/main/KNOWN_ISSUES.md).

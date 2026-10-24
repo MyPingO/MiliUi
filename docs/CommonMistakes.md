@@ -26,7 +26,7 @@ If your Screen uses `controllerNavigation = "auto"` (beta.4 or later), MiliUI de
 
 If you scroll a Button out of view with the right stick, the focus arrow may move beside that list's scrollbar. **That is normal.** Keep scrolling with the right stick or press Left to go back into the same list. A list inside another list can scroll on its own.
 
-If advanced direct native hide, disable, active-state or geometry changes confuse navigation, call `UI.Focus.Refresh(screen)`. PC Test Play may require starting the level in Controller mode rather than switching after it loads. See the [Controller Navigation V2 guide](ControllerNavigationV2.md#upgrading-an-existing-menu) and [troubleshooting](ControllerNavigationV2.md#troubleshooting).
+If advanced direct native hide, disable, active-state or geometry changes confuse navigation, call `UI.Focus.Refresh(screen)`. PC Test Play may require starting the level in Controller mode rather than switching after it loads. See the [Controller Navigation V2 guide](ControllerSupport.md#upgrading-an-existing-menu) and [troubleshooting](ControllerSupport.md#troubleshooting).
 
 ## Do not use `UI.DestroyAll()` in every Control Group script
 
@@ -636,7 +636,7 @@ UI.TextWindow(parent, {
 })
 ```
 
-Do not solve wrapped prose by guessing one English-sized fixed height. See `IntrinsicSizing.md` and `TextGeometry.md` for the full sizing rules.
+Do not solve wrapped prose by guessing one English-sized fixed height. See [Intrinsic Sizing and Text Geometry](IntrinsicSizing.md#safe-text-height-and-native-text-geometry) for the full sizing rules.
 
 ## When a diagnostic warning looks impossible
 

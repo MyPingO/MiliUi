@@ -9,7 +9,7 @@ Pick the path that matches what you want to do:
 | Start a new project quickly | [Installation + Setup](Installation.md), then the [Quick Start](../QUICK_START.md) |
 | Learn by changing a working script | [Getting Started Examples](../examples/getting-started/README.md) |
 | Add a Button, Slider, or other control | [Components](Components.md) |
-| Make a menu that works with a controller | [Controller Navigation V2](ControllerNavigationV2.md) |
+| Make a menu that works with a controller | [Controller Support and Navigation V2](ControllerSupport.md#controller-navigation-v2-opt-in) |
 | Update an older MiliUI project | [Upgrade to beta.4](UpgradeBeta4.md) (read earlier upgrade guides if needed) |
 | Find one function or setting | [API at a glance](APIAtAGlance.md) |
 
@@ -35,8 +35,7 @@ See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these
 
 ## Building interfaces
 
-- [Intrinsic and Localization-Safe Sizing](IntrinsicSizing.md)
-- [Text Geometry](TextGeometry.md)
+- [Intrinsic Sizing and Text Geometry](IntrinsicSizing.md)
 - [Responsive Layout](ResponsiveLayout.md)
 - [Responsive Foundation](ResponsiveFoundation.md)
 - [Responsive Components](ResponsiveComponents.md)
@@ -51,8 +50,7 @@ See [Control Groups and Hosts](ControlGroups.md) for a diagram showing how these
 - [Anchored Overlays](AnchoredOverlays.md)
 - [Masking](Masking.md)
 - [Data Views](DataViews.md)
-- [Controller Support](ControllerSupport.md)
-- [Controller Navigation V2](ControllerNavigationV2.md)
+- [Controller Support (including Navigation V2)](ControllerSupport.md)
 
 ## Application structure
 
